@@ -56,14 +56,21 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 60px;
             position: relative;
             overflow: hidden;
+        }
+        
+        .idiom-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            image-rendering: pixelated; /* For pixel art */
         }
         
         .placeholder-image {
             text-align: center;
             color: #999;
+            font-size: 60px;
         }
         
         .placeholder-image-text {
@@ -450,7 +457,8 @@
                 etymology: "This phrase dates back to the 1500s. Ships would sometimes get stuck in frozen waters, and smaller boats called 'icebreakers' would go ahead to break up the ice and clear a path. The metaphor was extended to social situations - someone needed to 'break the ice' to get conversation flowing smoothly.",
                 words: ['break', 'the', 'ice'],
                 blanks: { answers: ['break', 'ice'] },
-                emoji: '🧊🔨'
+                emoji: '🧊🔨',
+                image: 'idiom_images_pixel/idiom_01_break_the_ice.png'
             },
             {
                 id: 2,
@@ -662,12 +670,18 @@
                     ${alreadyPlayedMessage}
                     
                     <div class="image-container">
-                        <div class="placeholder-image">
-                            <div style="font-size: 80px;">${idiom.emoji}</div>
-                            <div class="placeholder-image-text">
-                                Today's Idiom
-                            </div>
-                        </div>
+                        ${idiom.image ? 
+                            `<img src="${idiom.image}" alt="${idiom.text}" class="idiom-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                             <div class="placeholder-image" style="display: none;">
+                                 <div style="font-size: 80px;">${idiom.emoji}</div>
+                                 <div class="placeholder-image-text">Today's Idiom</div>
+                             </div>`
+                            :
+                            `<div class="placeholder-image">
+                                 <div style="font-size: 80px;">${idiom.emoji}</div>
+                                 <div class="placeholder-image-text">Today's Idiom</div>
+                             </div>`
+                        }
                     </div>
                     
                     <button class="btn btn-primary" onclick="goToScreen('difficulty')">
@@ -698,9 +712,16 @@
                     </div>
                     
                     <div class="image-container">
-                        <div class="placeholder-image">
-                            <div style="font-size: 80px;">${idiom.emoji}</div>
-                        </div>
+                        ${idiom.image ? 
+                            `<img src="${idiom.image}" alt="${idiom.text}" class="idiom-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                             <div class="placeholder-image" style="display: none;">
+                                 <div style="font-size: 80px;">${idiom.emoji}</div>
+                             </div>`
+                            :
+                            `<div class="placeholder-image">
+                                 <div style="font-size: 80px;">${idiom.emoji}</div>
+                             </div>`
+                        }
                     </div>
                     
                     <div class="difficulty-buttons">
@@ -777,9 +798,16 @@
                     </div>
                     
                     <div class="image-container">
-                        <div class="placeholder-image">
-                            <div style="font-size: 80px;">${idiom.emoji}</div>
-                        </div>
+                        ${idiom.image ? 
+                            `<img src="${idiom.image}" alt="${idiom.text}" class="idiom-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                             <div class="placeholder-image" style="display: none;">
+                                 <div style="font-size: 80px;">${idiom.emoji}</div>
+                             </div>`
+                            :
+                            `<div class="placeholder-image">
+                                 <div style="font-size: 80px;">${idiom.emoji}</div>
+                             </div>`
+                        }
                     </div>
                     
                     ${solveContent}
