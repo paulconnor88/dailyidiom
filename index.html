@@ -412,7 +412,33 @@
                 opacity: 0;
             }
         }
-    </style>
+    
+/* Floating animation - gentle up and down movement */
+.idiom-image {
+    animation: idiomFloat 3s ease-in-out infinite, idiomFadeIn 0.6s ease-in;
+}
+
+@keyframes idiomFloat {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes idiomFadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+        </style>
 </head>
 <body>
     <div id="app" class="game-container"></div>
@@ -517,7 +543,7 @@
                 words: ['raining', 'cats', 'and', 'dogs'],
                 blanks: { answers: ['cats', 'dogs'] },
                 emoji: '🐱🐕☔',
-                image: 'idiom_images_pixel/idiom_07_raining_cats_and_dogs.png'
+                image: 'idiom_images_pixel/idiom_07_raining_cats_and_dogs_sora.mp4'
             },
             {
                 id: 8,
