@@ -755,10 +755,9 @@
                     
                     <div class="image-container">
                         ${idiom.image ? 
-                            `<img src="${idiom.image}" alt="${idiom.text}" class="idiom-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                             <div class="placeholder-image" style="display: none;">
-                                 <div style="font-size: 80px;">${idiom.emoji}</div>
-                             </div>`
+                            (idiom.image.endsWith('.mp4') ?
+                                `<video src="${idiom.image}" class="idiom-image" autoplay loop muted playsinline></video>` :
+                                `<img src="${idiom.image}" alt="${idiom.text}" class="idiom-image">`)
                             :
                             `<div class="placeholder-image">
                                  <div style="font-size: 80px;">${idiom.emoji}</div>
@@ -841,10 +840,9 @@
                     
                     <div class="image-container">
                         ${idiom.image ? 
-                            `<img src="${idiom.image}" alt="${idiom.text}" class="idiom-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                             <div class="placeholder-image" style="display: none;">
-                                 <div style="font-size: 80px;">${idiom.emoji}</div>
-                             </div>`
+                            (idiom.image.endsWith('.mp4') ?
+                                `<video src="${idiom.image}" class="idiom-image" autoplay loop muted playsinline></video>` :
+                                `<img src="${idiom.image}" alt="${idiom.text}" class="idiom-image">`)
                             :
                             `<div class="placeholder-image">
                                  <div style="font-size: 80px;">${idiom.emoji}</div>
