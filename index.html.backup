@@ -412,33 +412,7 @@
                 opacity: 0;
             }
         }
-    
-/* Floating animation - gentle up and down movement */
-.idiom-image {
-    animation: idiomFloat 3s ease-in-out infinite, idiomFadeIn 0.6s ease-in;
-}
-
-@keyframes idiomFloat {
-    0%, 100% {
-        transform: translateY(0px);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
-}
-
-@keyframes idiomFadeIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-        </style>
+    </style>
 </head>
 <body>
     <div id="app" class="game-container"></div>
@@ -484,7 +458,7 @@
                 words: ['break', 'the', 'ice'],
                 blanks: { answers: ['break', 'ice'] },
                 emoji: '🧊🔨',
-                image: 'idiom_images_pixel/idiom_01_break_the_ice_sora.mp4'
+                image: 'idiom_images_pixel/idiom_01_break_the_ice.png'
             },
             {
                 id: 2,
@@ -493,8 +467,7 @@
                 etymology: "The origin is debated, but one theory suggests it comes from an ancient Greek voting method where white beans meant 'yes' and black beans meant 'no'. If someone knocked over the jar before votes were counted, they would 'spill the beans' and reveal the results early. First recorded use in English was in the early 1900s.",
                 words: ['spill', 'the', 'beans'],
                 blanks: { answers: ['spill', 'beans'] },
-                emoji: '🫘💧',
-                image: 'idiom_images_pixel/idiom_02_spill_the_beans_sora.mp4'
+                emoji: '🫘💧'
             },
             {
                 id: 3,
@@ -503,8 +476,7 @@
                 etymology: "This phrase originated in the United States in the 1870s. It may reference cakewalks, competitions where the prize was a cake, or simply the idea that eating cake is easy and pleasant. The Royal Air Force popularised it in the 1930s-40s as slang for an easy mission.",
                 words: ['piece', 'of', 'cake'],
                 blanks: { answers: ['piece', 'cake'] },
-                emoji: '🍰✨',
-                image: 'idiom_images_pixel/idiom_03_piece_of_cake_sora.mp4'
+                emoji: '🍰✨'
             },
             {
                 id: 4,
@@ -522,8 +494,7 @@
                 etymology: "This phrase has been used since at least the 1500s. It comes from carpentry - hitting a nail precisely on its head drives it in effectively, whilst missing causes damage. The metaphor was quickly adopted to mean getting something exactly right.",
                 words: ['hit', 'the', 'nail', 'on', 'the', 'head'],
                 blanks: { answers: ['nail', 'head'] },
-                emoji: '🔨💅',
-                image: 'idiom_images_pixel/idiom_05_hit_the_nail_on_the_head_sora.mp4'
+                emoji: '🔨💅'
             },
             {
                 id: 6,
@@ -532,8 +503,7 @@
                 etymology: "Dating from the 1700s, this phrase likely comes from a market fraud where piglets were sold in bags. Dishonest merchants would substitute a cat, and if the buyer opened the bag before leaving, they would 'let the cat out of the bag' and discover the deception. The secret would be revealed.",
                 words: ['let', 'the', 'cat', 'out', 'of', 'the', 'bag'],
                 blanks: { answers: ['cat', 'bag'] },
-                emoji: '🐱👜',
-                image: 'idiom_images_pixel/idiom_06_let_the_cat_out_of_the_bag_sora.mp4'
+                emoji: '🐱👜'
             },
             {
                 id: 7,
@@ -542,8 +512,7 @@
                 etymology: "The origin is uncertain, but there are several theories. One suggests that in 17th century England, heavy rain would wash dead animals through the streets, making it appear they had fallen from the sky. Another theory links it to Norse mythology where cats represented rain and dogs represented wind. First recorded in Jonathan Swift's writings in 1738.",
                 words: ['raining', 'cats', 'and', 'dogs'],
                 blanks: { answers: ['cats', 'dogs'] },
-                emoji: '🐱🐕☔',
-                image: 'idiom_images_pixel/idiom_07_raining_cats_and_dogs_sora.mp4'
+                emoji: '🐱🐕☔'
             },
             {
                 id: 8,
@@ -552,8 +521,7 @@
                 etymology: "Despite popular belief linking it to portrait painting prices, this phrase is actually quite modern, appearing after World War II in the 1940s. It likely emerged from wartime, where soldiers literally gave arms and legs, creating a powerful metaphor for the highest possible cost.",
                 words: ['costs', 'an', 'arm', 'and', 'a', 'leg'],
                 blanks: { answers: ['arm', 'leg'] },
-                emoji: '💪🦵💰',
-                image: 'idiom_images_pixel/idiom_08_costs_an_arm_and_a_leg_sora.mp4'
+                emoji: '💪🦵💰'
             },
             {
                 id: 9,
@@ -562,8 +530,7 @@
                 etymology: "This phrase comes from maritime language. When sailors felt seasick, they would go below deck to get away from the weather and rough seas. Being 'under the weather' literally meant being below deck, sheltered from the elements, because you felt unwell. First used in this sense in the early 1800s.",
                 words: ['under', 'the', 'weather'],
                 blanks: { answers: ['under', 'weather'] },
-                emoji: '☁️🤒',
-                image: 'idiom_images_pixel/idiom_09_under_the_weather_sora.mp4'
+                emoji: '☁️🤒'
             },
             {
                 id: 10,
@@ -572,8 +539,7 @@
                 etymology: "There are several theories about this morbid phrase from the 1700s. One suggests it comes from the wooden frame (bucket) that pigs stood on before slaughter - when it was kicked away, they would hang. Another theory relates to people standing on a bucket to hang themselves, then kicking it away.",
                 words: ['kick', 'the', 'bucket'],
                 blanks: { answers: ['kick', 'bucket'] },
-                emoji: '🪣👞',
-                image: 'idiom_images_pixel/idiom_10_kick_the_bucket_sora.mp4'
+                emoji: '🪣👞'
             },
             {
                 id: 11,
@@ -582,8 +548,7 @@
                 etymology: "This American phrase from the early 1800s comes from hunting. Dogs would chase prey up trees and bark at the base. Sometimes the animal would escape to another tree, but the dog would keep barking at the wrong one. Coon hunting was particularly associated with this phenomenon.",
                 words: ['barking', 'up', 'the', 'wrong', 'tree'],
                 blanks: { answers: ['barking', 'tree'] },
-                emoji: '🐕🌳',
-                image: 'idiom_images_pixel/idiom_11_barking_up_the_wrong_tree_sora.mp4'
+                emoji: '🐕🌳'
             },
             {
                 id: 12,
@@ -592,8 +557,7 @@
                 etymology: "This phrase dates back to the 1600s and is found in similar forms across many languages. It likely originated from hunting, where throwing a stone and hitting two birds at once would be remarkably efficient. The phrase emphasises cleverness and efficiency in problem-solving.",
                 words: ['kill', 'two', 'birds', 'with', 'one', 'stone'],
                 blanks: { answers: ['two', 'birds', 'stone'] },
-                emoji: '🪨🐦🐦',
-                image: 'idiom_images_pixel/idiom_12_kill_two_birds_with_one_stone_sora.mp4'
+                emoji: '🪨🐦🐦'
             },
             {
                 id: 13,
@@ -602,8 +566,7 @@
                 etymology: "This phrase comes from tennis and similar court sports, emerging in the mid-1900s. When the ball is literally in your court, you must respond - you cannot wait for the other player to act. The metaphor perfectly captures the transfer of responsibility.",
                 words: ['the', 'ball', 'is', 'in', 'your', 'court'],
                 blanks: { answers: ['ball', 'court'] },
-                emoji: '🎾⚖️',
-                image: 'idiom_images_pixel/idiom_13_the_ball_is_in_your_court_sora.mp4'
+                emoji: '🎾⚖️'
             },
             {
                 id: 14,
@@ -612,8 +575,7 @@
                 etymology: "This American phrase appeared in the early 1900s, but the concept is ancient. It may come from Homer's Odyssey, where sailors had to navigate between Scylla (a rock) and Charybdis (a whirlpool). The modern phrase emphasises being trapped between two undesirable options.",
                 words: ['caught', 'between', 'a', 'rock', 'and', 'a', 'hard', 'place'],
                 blanks: { answers: ['rock', 'hard', 'place'] },
-                emoji: '🪨😰🪨',
-                image: 'idiom_images_pixel/idiom_14_caught_between_a_rock_and_a_hard_place_sora.mp4'
+                emoji: '🪨😰🪨'
             },
             {
                 id: 15,
@@ -622,8 +584,7 @@
                 etymology: "This phrase has military origins. Armies would literally burn bridges after crossing them to prevent enemy pursuit or to prevent their own retreat, forcing commitment to moving forward. The metaphor has been used figuratively since the 1800s to describe irreversible actions in relationships or careers.",
                 words: ['burning', 'bridges'],
                 blanks: { answers: ['burning', 'bridges'] },
-                emoji: '🌉🔥',
-                image: 'idiom_images_pixel/idiom_15_burning_bridges_sora.mp4'
+                emoji: '🌉🔥'
             },
             {
                 id: 16,
@@ -632,8 +593,7 @@
                 etymology: "This theatre superstition dates to the early 1900s. In theatre, wishing someone 'good luck' is considered bad luck, so the opposite is said instead. One theory suggests it refers to bending (breaking) your leg in a bow after a successful performance. Another links it to understudies hoping the main actor would break their leg so they could perform.",
                 words: ['break', 'a', 'leg'],
                 blanks: { answers: ['break', 'leg'] },
-                emoji: '🦵💥',
-                image: 'idiom_images_pixel/idiom_16_break_a_leg_sora.mp4'
+                emoji: '🦵💥'
             },
             {
                 id: 17,
@@ -642,8 +602,7 @@
                 etymology: "This phrase comes from a 1746 hymn by James Hervey: 'O ye mysterious Joys, whose very Darknesses are filled with Light, ye are indeed but Blessings in Disguise.' The idea that difficult experiences can bring unexpected benefits has been a philosophical concept for centuries.",
                 words: ['a', 'blessing', 'in', 'disguise'],
                 blanks: { answers: ['blessing', 'disguise'] },
-                emoji: '🎭👼',
-                image: 'idiom_images_pixel/idiom_17_a_blessing_in_disguise.png'
+                emoji: '🎭👼'
             },
             {
                 id: 18,
@@ -652,8 +611,7 @@
                 etymology: "This phrase emerged in the 1950s, though the metaphor of an elephant representing something large and impossible to ignore is older. The phrase highlights how people can collectively pretend not to see even the most obvious problems when they are uncomfortable to address.",
                 words: ['the', 'elephant', 'in', 'the', 'room'],
                 blanks: { answers: ['elephant', 'room'] },
-                emoji: '🐘🛋️',
-                image: 'idiom_images_pixel/idiom_18_the_elephant_in_the_room_sora.mp4'
+                emoji: '🐘🛋️'
             },
             {
                 id: 19,
@@ -662,8 +620,7 @@
                 etymology: "A 'blue moon' is the second full moon in a calendar month, which happens approximately every 2-3 years. The moon doesn't actually appear blue. The phrase has been used since the 1800s to describe rare events. The astronomical definition was actually a mistake from 1946 that became widely accepted.",
                 words: ['once', 'in', 'a', 'blue', 'moon'],
                 blanks: { answers: ['blue', 'moon'] },
-                emoji: '🌙💙',
-                image: 'idiom_images_pixel/idiom_19_once_in_a_blue_moon_sora.mp4'
+                emoji: '🌙💙'
             },
             {
                 id: 20,
@@ -672,8 +629,7 @@
                 etymology: "This phrase dates back to the early 1700s. Eggs were a precious food, and the skill of sucking out their contents without breaking the shell was common knowledge. Teaching this to a grandmother (someone with decades of experience) would be absurd and insulting.",
                 words: ['teaching', 'your', 'grandmother', 'to', 'suck', 'eggs'],
                 blanks: { answers: ['grandmother', 'suck', 'eggs'] },
-                emoji: '👵🥚',
-                image: 'idiom_images_pixel/idiom_20_teaching_your_grandmother_to_suck_eggs.png'
+                emoji: '👵🥚'
             }
         ];
 
@@ -715,9 +671,11 @@
                     
                     <div class="image-container">
                         ${idiom.image ? 
-                            (idiom.image.endsWith('.mp4') ?
-                                `<video src="${idiom.image}" class="idiom-image" autoplay loop muted playsinline></video>` :
-                                `<img src="${idiom.image}" alt="${idiom.text}" class="idiom-image">`)
+                            `<img src="${idiom.image}" alt="${idiom.text}" class="idiom-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                             <div class="placeholder-image" style="display: none;">
+                                 <div style="font-size: 80px;">${idiom.emoji}</div>
+                                 <div class="placeholder-image-text">Today's Idiom</div>
+                             </div>`
                             :
                             `<div class="placeholder-image">
                                  <div style="font-size: 80px;">${idiom.emoji}</div>
@@ -755,9 +713,10 @@
                     
                     <div class="image-container">
                         ${idiom.image ? 
-                            (idiom.image.endsWith('.mp4') ?
-                                `<video src="${idiom.image}" class="idiom-image" autoplay loop muted playsinline></video>` :
-                                `<img src="${idiom.image}" alt="${idiom.text}" class="idiom-image">`)
+                            `<img src="${idiom.image}" alt="${idiom.text}" class="idiom-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                             <div class="placeholder-image" style="display: none;">
+                                 <div style="font-size: 80px;">${idiom.emoji}</div>
+                             </div>`
                             :
                             `<div class="placeholder-image">
                                  <div style="font-size: 80px;">${idiom.emoji}</div>
@@ -840,9 +799,10 @@
                     
                     <div class="image-container">
                         ${idiom.image ? 
-                            (idiom.image.endsWith('.mp4') ?
-                                `<video src="${idiom.image}" class="idiom-image" autoplay loop muted playsinline></video>` :
-                                `<img src="${idiom.image}" alt="${idiom.text}" class="idiom-image">`)
+                            `<img src="${idiom.image}" alt="${idiom.text}" class="idiom-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                             <div class="placeholder-image" style="display: none;">
+                                 <div style="font-size: 80px;">${idiom.emoji}</div>
+                             </div>`
                             :
                             `<div class="placeholder-image">
                                  <div style="font-size: 80px;">${idiom.emoji}</div>
