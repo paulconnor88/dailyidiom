@@ -415,13 +415,10 @@
     
 /* Floating animation - gentle up and down movement */
 .idiom-image {
-    animation: idiomFloat 3s ease-in-out infinite, idiomFadeIn 0.6s ease-in;
+    animation: idiomFadeIn 0.6s ease-in;
 }
 
-@keyframes idiomFloat {
-    0%, 100% {
-        transform: translateY(0px);
-    }
+
     50% {
         transform: translateY(-10px);
     }
@@ -444,6 +441,19 @@
     <div id="app" class="game-container"></div>
 
     <script>
+
+        // Launch date: Jan 17, 2025
+        const LAUNCH_DATE = new Date('2026-01-03T00:00:00Z');
+        
+        function getDaysSinceLaunch() {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            LAUNCH_DATE.setHours(0, 0, 0, 0);
+            const diffTime = today - LAUNCH_DATE;
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            return Math.max(0, diffDays) + 1;  // Day 1 = launch day
+        }
+
         // Game state
         let state = {
             screen: 'landing',
@@ -528,7 +538,7 @@
                 words: ["let", "the", "cat", "out", "of", "the", "bag"],
                 blanks: {answers: ["cat", "bag"]},
                 emoji: "🐱",
-                image: "idiom_images_pixel/idiom_06_let_the_cat_out_of_the_bag_sora.mp4",
+                image: "idiom_images_pixel/idiom_06_let_the_cat_out_of_the_bag_sora_v3.mp4",
                 hardModeAccepts: ["let the cat out of the bag", "let cat out of bag", "let the cat out the bag", "letting the cat out of the bag", "lets the cat out of the bag"]
             },
             {
@@ -620,9 +630,9 @@
         }
 
         function getTodaysIdiomIndex() {
-            // Get day of year and mod by library length for cycling
-            const dayOfYear = getDayOfYear();
-            return dayOfYear % idiomLibrary.length;
+            // Day 1 = index 0, Day 5 = index 4
+            const dayNumber = getDaysSinceLaunch();
+            return (dayNumber - 1) % idiomLibrary.length;
         }
 
         let currentIdiomIndex = getTodaysIdiomIndex();
@@ -633,7 +643,7 @@
             
             if (state.screen === 'landing') {
                 const alreadyPlayedMessage = state.hasPlayedToday ? 
-                    `<div style="background: #fff3cd; padding: 15px; border-radius: 10px; margin-bottom: 20px; color: #856404;">
+                    `<div style="background: #fff3cd;  border-radius: 10px; margin-bottom: 20px; color: #856404;">
                         ✅ You've already completed today's idiom!<br/>
                         Come back tomorrow for a new challenge.
                     </div>` : '';
@@ -670,7 +680,7 @@
                         </div>
                     ` : ''}
                     
-                    <button class="btn btn-secondary" onclick="goToScreen('archive')" style="margin-top: 15px;">
+                    <button class="btn btn-secondary" onclick="goToScreen('archive')" style="margin-top: 15px; display: ${getDaysSinceLaunch() === 1 ? 'none' : 'block'};">
                         📚 Browse All Idioms
                     </button>
                     
@@ -865,7 +875,7 @@
                     </div>
                     
                     <div class="learning-content">
-                        <div style="background: #fff3cd; padding: 12px; border-radius: 8px; margin-bottom: 20px; font-size: 13px; color: #856404;">
+                        <div style="background: #fff3cd;  border-radius: 8px; margin-bottom: 20px; font-size: 13px; color: #856404;">
                             ⚠️ Translations are AI-generated and may not be 100% accurate
                         </div>
                         
@@ -911,7 +921,7 @@
                     
                     <div class="learning-content">
                         <div class="learning-title">Use it in a sentence</div>
-                        <div class="learning-text" style="font-style: italic; background: #f9f9f9; padding: 20px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <div class="learning-text" style="font-style: italic; background: #f9f9f9;  border-radius: 10px; border-left: 4px solid #667eea;">
                             ${idiom.examples.map(ex => `<div style="font-style: italic; margin-bottom: 10px;">• ${ex}</div>`).join('')}
                         </div>
                     </div>
@@ -941,7 +951,7 @@
                         📤 Share Your Result
                     </button>
                     
-                    <button class="btn btn-secondary" onclick="goToScreen('archive')">
+                    <button class="btn btn-secondary" onclick="goToScreen('archive')" style="display: ${getDaysSinceLaunch() === 1 ? 'none' : 'block'};">
                         📚 Browse Past Idioms
                     </button>
                     
@@ -959,16 +969,19 @@
                     </div>
                     
                     <div style="max-height: 400px; overflow-y: auto; margin-bottom: 20px;">
-                        ${idiomLibrary.map((item, index) => `
-                            <div class="archive-item" onclick="playIdiom(${index})">
-                                <div class="archive-emoji">${item.emoji}</div>
-                                <div class="archive-details">
-                                    <div class="archive-title">${item.text}</div>
-                                    <div class="archive-subtitle">Idiom #${index + 1}</div>
+                        ${(() => {
+                            const daysSince = getDaysSinceLaunch();
+                            const dayNumber = getDaysSinceLaunch();
+                            const availableCount = dayNumber === 1 ? 0 : Math.min(dayNumber - 1, idiomLibrary.length);
+                            return idiomLibrary.slice(0, availableCount).map((item, index) => `
+                                <div class="archive-item" onclick="playIdiom(${index})">
+                                    <div class="archive-details" style="flex: 1;">
+                                        <div class="archive-title">Day ${index + 1}</div>
+                                    </div>
+                                    <div class="archive-arrow">▶</div>
                                 </div>
-                                <div class="archive-arrow">▶</div>
-                            </div>
-                        `).join('')}
+                            `).join('');
+                        })()}
                     </div>
                     
                     <button class="btn btn-secondary" onclick="goToScreen('landing')">
