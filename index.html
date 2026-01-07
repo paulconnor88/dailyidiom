@@ -639,7 +639,7 @@
         let idiom = idiomLibrary[currentIdiomIndex];
 
         
-        function shareToWhatsApp() {
+        async function shareToWhatsApp() {
             const idiom = idiomLibrary[currentIdiomIndex];
             const difficulty = state.difficulty.toUpperCase();
             const difficultyStars = state.difficulty === 'easy' ? '⭐' : state.difficulty === 'medium' ? '⭐⭐' : '⭐⭐⭐';
@@ -651,12 +651,28 @@ ${difficultyStars} ${difficulty}
 🔥 ${streak} day streak
 
 Can you solve it?
-dailyidiom.com
+https://vermillion-salamander-187eaa.netlify.app
 
 Follow @dailyidiomgame for more`;
 
-            const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
-            window.open(url, '_blank');
+            // Try native share (mobile) - includes video option
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'Daily Idiom',
+                        text: text,
+                        url: 'https://vermillion-salamander-187eaa.netlify.app'
+                    });
+                } catch (err) {
+                    // User cancelled or error - fallback to WhatsApp web
+                    const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+                    window.open(url, '_blank');
+                }
+            } else {
+                // Desktop - WhatsApp web link
+                const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+                window.open(url, '_blank');
+            }
         }
 
         function render() {
@@ -1039,7 +1055,7 @@ ${result} Idiom #${currentIdiomIndex + 1}
 ${difficultyEmoji[state.difficulty]} ${difficultyLabel} difficulty
 🔥 ${state.streak} day streak
 
-Play today's idiom: [YOUR-URL-HERE]`;
+Play today's idiom: https://vermillion-salamander-187eaa.netlify.app`;
         }
 
         async function shareResult() {
