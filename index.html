@@ -638,6 +638,27 @@
         let currentIdiomIndex = getTodaysIdiomIndex();
         let idiom = idiomLibrary[currentIdiomIndex];
 
+        
+        function shareToWhatsApp() {
+            const idiom = idiomLibrary[currentIdiomIndex];
+            const difficulty = state.difficulty.toUpperCase();
+            const difficultyStars = state.difficulty === 'easy' ? '⭐' : state.difficulty === 'medium' ? '⭐⭐' : '⭐⭐⭐';
+            const streak = state.currentStreak || 1;
+            
+            const text = `I solved today's Daily Idiom! 🎉
+
+${difficultyStars} ${difficulty}
+🔥 ${streak} day streak
+
+Can you solve it?
+dailyidiom.com
+
+Follow @dailyidiomgame for more`;
+
+            const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+            window.open(url, '_blank');
+        }
+
         function render() {
             const app = document.getElementById('app');
             
