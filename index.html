@@ -1000,9 +1000,36 @@
         // IDIOM SELECTION
         // ==========================================
         
+        // Secret debug override: ?debug=H0m3r15mym8&day=5
+        function getDebugDayOverride() {
+            const params = new URLSearchParams(window.location.search);
+            const debug = params.get('debug');
+            const day = params.get('day');
+            if (debug === 'H0m3r15mym8' && day) {
+                const dayNum = parseInt(day);
+                if (dayNum >= 1 && dayNum <= idiomLibrary.length) {
+                    return dayNum;
+                }
+            }
+            return null;
+        }
+        
         function getTodaysIdiomIndex() {
+            const debugDay = getDebugDayOverride();
+            if (debugDay !== null) {
+                return debugDay - 1; // Day 1 = index 0
+            }
             const dayNumber = getDaysSinceLaunch();
             return (dayNumber - 1) % idiomLibrary.length;
+        }
+        
+        // Override day number for display if debug active
+        function getDisplayDayNumber() {
+            const debugDay = getDebugDayOverride();
+            if (debugDay !== null) {
+                return debugDay;
+            }
+            return getDaysSinceLaunch();
         }
 
         let currentIdiomIndex = getTodaysIdiomIndex();
@@ -1014,7 +1041,7 @@
         
         function render() {
             const app = document.getElementById('app');
-            const dayNumber = getDaysSinceLaunch();
+            const dayNumber = getDisplayDayNumber();
             
             // ==========================================
             // SCREEN: LANDING
