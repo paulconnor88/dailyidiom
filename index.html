@@ -835,7 +835,9 @@
             hasPlayedToday: localStorage.getItem('lastPlayedDay') === getDayOfYear().toString(),
             activeTab: 'meaning',
             selectedLanguage: 'es',
-            translatedContent: null
+            translatedContent: null,
+            isPlayingArchive: false,
+            archiveIdiomIndex: null
         };
 
         function getDayOfYear() {
@@ -1444,6 +1446,13 @@
         // ==========================================
         
         function goToScreen(screen) {
+            // When going back to landing, reset to today's idiom
+            if (screen === 'landing') {
+                state.isPlayingArchive = false;
+                state.archiveIdiomIndex = null;
+                currentIdiomIndex = getTodaysIdiomIndex();
+                idiom = idiomLibrary[currentIdiomIndex];
+            }
             state.screen = screen;
             render();
         }
@@ -1507,12 +1516,17 @@
             // In debug mode, don't save progress (allows testing all idioms freely)
             const isDebugMode = getDebugDayOverride() !== null;
             
-            if (correct && !state.hasPlayedToday && !isDebugMode) {
-                state.streak++;
-                state.totalXP += XP_VALUES[state.difficulty];
-                saveProgress();
-                markTodayComplete();
+            if (correct && !isDebugMode) {
+                // Always mark the idiom as completed
                 markIdiomCompleted(currentIdiomIndex);
+                
+                // Only update streak/XP/today for today's idiom (not archive)
+                if (!state.hasPlayedToday && !state.isPlayingArchive) {
+                    state.streak++;
+                    state.totalXP += XP_VALUES[state.difficulty];
+                    saveProgress();
+                    markTodayComplete();
+                }
             }
             
             state.activeTab = 'meaning';
@@ -1536,6 +1550,8 @@
         function playArchiveIdiom(index) {
             currentIdiomIndex = index;
             idiom = idiomLibrary[index];
+            state.isPlayingArchive = true;
+            state.archiveIdiomIndex = index;
             state.screen = 'difficulty';
             state.difficulty = null;
             state.selectedWords = [];
