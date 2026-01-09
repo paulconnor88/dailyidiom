@@ -881,7 +881,8 @@
                 blanks: {answers: ["break", "ice"]},
                 emoji: "🧊",
                 image: "idiom_images_pixel/idiom_01_break_the_ice_sora.mp4",
-                hardModeAccepts: ["break the ice", "break ice", "breaking the ice", "broke the ice", "ice breaker", "icebreaker", "ice-breaker", "an ice-breaker"]
+                hardModeAccepts: ["break the ice", "break ice", "breaking the ice", "broke the ice", "ice breaker", "icebreaker", "ice-breaker", "an ice-breaker"],
+                boldVariations: ["break the ice", "ice-breaker"]
             },
             {
                 text: "spill the beans",
@@ -892,7 +893,8 @@
                 blanks: {answers: ["spill", "beans"]},
                 emoji: "🫘",
                 image: "idiom_images_pixel/idiom_02_spill_the_beans_sora_v2.mp4",
-                hardModeAccepts: ["spill the beans", "spill beans", "spilling the beans", "spilled the beans", "spilt the beans", "to spill the beans"]
+                hardModeAccepts: ["spill the beans", "spill beans", "spilling the beans", "spilled the beans", "spilt the beans", "to spill the beans"],
+                boldVariations: ["spill the beans", "spilled the beans"]
             },
             {
                 text: "piece of cake",
@@ -914,7 +916,8 @@
                 blanks: {answers: ["nail", "head"]},
                 emoji: "🔨",
                 image: "idiom_images_pixel/idiom_05_hit_the_nail_on_the_head_sora_v2.mp4",
-                hardModeAccepts: ["hit the nail on the head", "hit nail on head", "hit the nail on head", "hitting the nail on the head", "hits the nail on the head"]
+                hardModeAccepts: ["hit the nail on the head", "hit nail on head", "hit the nail on head", "hitting the nail on the head", "hits the nail on the head"],
+                boldVariations: ["hit the nail on the head", "hitting the nail on the head"]
             },
             {
                 text: "let the cat out of the bag",
@@ -936,7 +939,8 @@
                 blanks: {answers: ["cats", "dogs"]},
                 emoji: "🌧️",
                 image: "idiom_images_pixel/idiom_07_raining_cats_and_dogs_sora.mp4",
-                hardModeAccepts: ["raining cats and dogs", "its raining cats and dogs", "it's raining cats and dogs", "rain cats and dogs", "rains cats and dogs", "to rain cats and dogs"]
+                hardModeAccepts: ["raining cats and dogs", "its raining cats and dogs", "it's raining cats and dogs", "rain cats and dogs", "rains cats and dogs", "to rain cats and dogs"],
+                boldVariations: ["raining cats and dogs", "rained cats and dogs"]
             },
             {
                 text: "under the weather",
@@ -958,7 +962,8 @@
                 blanks: {answers: ["kick", "bucket"]},
                 emoji: "🪣",
                 image: "idiom_images_pixel/idiom_10_kick_the_bucket_sora.mp4",
-                hardModeAccepts: ["kick the bucket", "kick bucket", "kicked the bucket", "kicking the bucket", "kicks the bucket", "to kick the bucket"]
+                hardModeAccepts: ["kick the bucket", "kick bucket", "kicked the bucket", "kicking the bucket", "kicks the bucket", "to kick the bucket"],
+                boldVariations: ["kick the bucket", "kicked the bucket"]
             },
             {
                 text: "barking up the wrong tree",
@@ -980,7 +985,8 @@
                 blanks: {answers: ["two", "birds", "stone"]},
                 emoji: "🪨",
                 image: "idiom_images_pixel/idiom_12_kill_two_birds_with_one_stone_sora.mp4",
-                hardModeAccepts: ["kill two birds with one stone", "kill 2 birds with one stone", "kill two birds with 1 stone", "kill 2 birds with 1 stone", "killing two birds with one stone", "kills two birds with one stone"]
+                hardModeAccepts: ["kill two birds with one stone", "kill 2 birds with one stone", "kill two birds with 1 stone", "kill 2 birds with 1 stone", "killing two birds with one stone", "kills two birds with one stone"],
+                boldVariations: ["kill two birds with one stone", "two birds with one stone"]
             },
             {
                 text: "caught between a rock and a hard place",
@@ -1002,7 +1008,8 @@
                 blanks: {answers: ["burning", "bridges"]},
                 emoji: "🔥",
                 image: "idiom_images_pixel/idiom_15_burning_bridges_sora_v2.mp4",
-                hardModeAccepts: ["burning bridges", "burn bridges", "burned bridges", "burns bridges", "burning your bridges", "burn your bridges"]
+                hardModeAccepts: ["burning bridges", "burn bridges", "burned bridges", "burns bridges", "burning your bridges", "burn your bridges"],
+                boldVariations: ["burning bridges", "burned those bridges", "burn bridges", "burn any bridges"]
             }
         ];
 
@@ -1271,9 +1278,13 @@
                 if (activeTab === 'meaning') {
                     tabContent = `<p>${idiom.meaning}</p>`;
                 } else if (activeTab === 'useit') {
-                    // Bold the idiom text in examples
+                    // Bold the idiom text and variations in examples
+                    const variations = idiom.boldVariations || [idiom.text];
                     tabContent = idiom.examples.map(ex => {
-                        const boldedEx = ex.replace(new RegExp(idiom.text, 'gi'), `<strong>$&</strong>`);
+                        let boldedEx = ex;
+                        variations.forEach(v => {
+                            boldedEx = boldedEx.replace(new RegExp(v, 'gi'), `<strong>$&</strong>`);
+                        });
                         return `<p style="margin-bottom: 10px;">• ${boldedEx}</p>`;
                     }).join('');
                 } else if (activeTab === 'origin') {
