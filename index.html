@@ -1047,7 +1047,9 @@
             // SCREEN: LANDING
             // ==========================================
             if (state.screen === 'landing') {
-                const showReturnState = state.hasPlayedToday;
+                // Debug mode bypasses "already played" state for testing
+                const isDebugMode = getDebugDayOverride() !== null;
+                const showReturnState = state.hasPlayedToday && !isDebugMode;
                 
                 if (showReturnState) {
                     // RETURN STATE - Already completed today
@@ -1500,7 +1502,10 @@
             
             state.isCorrect = correct;
             
-            if (correct && !state.hasPlayedToday) {
+            // In debug mode, don't save progress (allows testing all idioms freely)
+            const isDebugMode = getDebugDayOverride() !== null;
+            
+            if (correct && !state.hasPlayedToday && !isDebugMode) {
                 state.streak++;
                 state.totalXP += XP_VALUES[state.difficulty];
                 saveProgress();
