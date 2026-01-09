@@ -1045,6 +1045,26 @@
         let currentIdiomIndex = getTodaysIdiomIndex();
         let idiom = idiomLibrary[currentIdiomIndex];
 
+        // Pixel Trophy SVG
+        const pixelTrophy = `<svg width="64" height="64" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" style="image-rendering: pixelated;">
+            <rect x="5" y="1" width="6" height="1" fill="#FFD700"/>
+            <rect x="4" y="2" width="8" height="5" fill="#FFD700"/>
+            <rect x="5" y="7" width="6" height="1" fill="#FFD700"/>
+            <rect x="2" y="2" width="2" height="1" fill="#FFD700"/>
+            <rect x="1" y="3" width="2" height="1" fill="#FFD700"/>
+            <rect x="1" y="4" width="2" height="1" fill="#FFD700"/>
+            <rect x="2" y="5" width="2" height="1" fill="#FFD700"/>
+            <rect x="12" y="2" width="2" height="1" fill="#FFD700"/>
+            <rect x="13" y="3" width="2" height="1" fill="#FFD700"/>
+            <rect x="13" y="4" width="2" height="1" fill="#FFD700"/>
+            <rect x="12" y="5" width="2" height="1" fill="#FFD700"/>
+            <rect x="5" y="3" width="1" height="2" fill="#FFFACD"/>
+            <rect x="7" y="8" width="2" height="2" fill="#DAA520"/>
+            <rect x="5" y="10" width="6" height="1" fill="#DAA520"/>
+            <rect x="4" y="11" width="8" height="2" fill="#B8860B"/>
+            <rect x="3" y="13" width="10" height="1" fill="#8B6914"/>
+        </svg>`;
+
         // ==========================================
         // RENDER FUNCTION
         // ==========================================
@@ -1285,42 +1305,38 @@
             // SCREEN: COMPLETE
             // ==========================================
             else if (state.screen === 'complete') {
-                const difficultyStars = state.difficulty === 'easy' ? '⭐' : state.difficulty === 'medium' ? '⭐⭐' : '⭐⭐⭐';
-                const xpEarned = state.isCorrect ? XP_VALUES[state.difficulty] : 0;
-                
                 app.innerHTML = `
                     <button class="back-btn" onclick="goToScreen('answer')">← Back</button>
                     
-                    <div class="celebration">🎉</div>
-                    <div class="result-title correct">WELL DONE!</div>
+                    <div class="logo">
+                        <span class="daily">DAILY</span>
+                        <span class="idiom">IDIOM</span>
+                    </div>
                     
-                    <div class="video-container" style="height: 180px;">
+                    <div class="stats-row-top">
+                        <div class="stat-pill streak">
+                            <span class="icon">🔥</span>
+                            <span class="text">${state.streak} streak</span>
+                        </div>
+                        <div class="stat-pill xp">
+                            <span class="icon">⚡</span>
+                            <span class="text">${state.totalXP} XP</span>
+                        </div>
+                    </div>
+                    
+                    <div class="done-message" style="background: var(--cream); border-radius: 14px; padding: 16px; text-align: center; margin-bottom: 16px;">
+                        <div style="margin-bottom: 8px;">${pixelTrophy}</div>
+                        <div style="font-family: 'Nunito', sans-serif; font-weight: 800; color: var(--navy); font-size: 18px;">You're all done!</div>
+                        <div style="font-family: 'DM Sans', sans-serif; color: var(--text-muted); margin-top: 4px;">Practice again or come back tomorrow</div>
+                    </div>
+                    
+                    <div class="video-container" style="height: 200px;">
                         ${renderMedia(idiom)}
                     </div>
+                    <div class="video-caption"><strong>Day ${dayNumber}</strong> · "${idiom.text}" ✓</div>
                     
-                    <div class="stats-row">
-                        <div class="stat-box">
-                            <div class="number">${difficultyStars}</div>
-                            <div class="label">Difficulty</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="number coral">🔥 ${state.streak}</div>
-                            <div class="label">Streak</div>
-                        </div>
-                        <div class="stat-box">
-                            <div class="number coral">+${xpEarned}</div>
-                            <div class="label">XP</div>
-                        </div>
-                    </div>
-                    
-                    <div class="video-caption" style="margin-bottom: 12px;"><strong>"${idiom.text}"</strong></div>
-                    
-                    <div class="done-message" style="background: var(--cream); border-radius: 14px; padding: 14px; text-align: center; margin-bottom: 16px;">
-                        <div style="font-family: 'Nunito', sans-serif; font-weight: 800; color: var(--navy);">Come back tomorrow for a new idiom! 🎉</div>
-                    </div>
-                    
+                    <button class="btn btn-primary" onclick="startPractice()">🔄 Practice Again</button>
                     <button class="btn btn-gold" onclick="shareResult()">📲 Share with Friends</button>
-                    <button class="btn btn-secondary" onclick="startPractice()">🔄 Practice Again</button>
                     <button class="btn btn-secondary" onclick="goToScreen('archive')" style="display: ${dayNumber === 1 ? 'none' : 'block'};">📚 Play Past Idioms</button>
                 `;
             }
