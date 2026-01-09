@@ -1294,7 +1294,7 @@
                     <div class="celebration">🎉</div>
                     <div class="result-title correct">WELL DONE!</div>
                     
-                    <div class="video-container" style="height: 200px;">
+                    <div class="video-container" style="height: 180px;">
                         ${renderMedia(idiom)}
                     </div>
                     
@@ -1313,11 +1313,14 @@
                         </div>
                     </div>
                     
-                    <div class="answer-reminder">
-                        <div class="idiom-text">"${idiom.text}"</div>
+                    <div class="video-caption" style="margin-bottom: 12px;"><strong>"${idiom.text}"</strong></div>
+                    
+                    <div class="done-message" style="background: var(--cream); border-radius: 14px; padding: 14px; text-align: center; margin-bottom: 16px;">
+                        <div style="font-family: 'Nunito', sans-serif; font-weight: 800; color: var(--navy);">Come back tomorrow for a new idiom! 🎉</div>
                     </div>
                     
                     <button class="btn btn-gold" onclick="shareResult()">📲 Share with Friends</button>
+                    <button class="btn btn-secondary" onclick="startPractice()">🔄 Practice Again</button>
                     <button class="btn btn-secondary" onclick="goToScreen('archive')" style="display: ${dayNumber === 1 ? 'none' : 'block'};">📚 Play Past Idioms</button>
                 `;
             }
@@ -1620,7 +1623,7 @@ https://dailyidiom.com
                 await navigator.clipboard.writeText(text);
                 showToast('📋 Copied to clipboard!');
             } catch (err) {
-                alert('Share this:\n\n' + text);
+                showToast('Unable to share');
             }
         }
         
