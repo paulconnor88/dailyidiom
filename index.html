@@ -1093,11 +1093,6 @@
                         <button class="btn btn-secondary" onclick="startPractice()">🔄 Practice Again</button>
                         <button class="btn btn-secondary" onclick="goToScreen('archive')" style="display: ${dayNumber === 1 ? 'none' : 'block'};">📚 Browse Archive</button>
                         
-                        <div class="kofi-banner">
-                            <p>Enjoying Daily Idiom? Help keep it free! ☕</p>
-                            <a href="https://ko-fi.com/dailyidiom" target="_blank">Support on Ko-fi</a>
-                        </div>
-                        
                         <div class="footer-legal">
                             <a href="#">Terms of Service</a>
                             <a href="#">Privacy Policy</a>
@@ -1319,11 +1314,6 @@
                     
                     <button class="btn btn-gold" onclick="shareResult()">📲 Share with Friends</button>
                     <button class="btn btn-secondary" onclick="goToScreen('archive')" style="display: ${dayNumber === 1 ? 'none' : 'block'};">📚 Browse Archive</button>
-                    
-                    <div class="kofi-banner">
-                        <p>Enjoying Daily Idiom? Help keep it free! ☕</p>
-                        <a href="https://ko-fi.com/dailyidiom" target="_blank">Support on Ko-fi</a>
-                    </div>
                 `;
             }
             
@@ -1337,16 +1327,14 @@
                 for (let i = 0; i < availableCount; i++) {
                     const item = idiomLibrary[i];
                     const itemDate = getDateForDay(i + 1);
-                    const completed = isIdiomCompleted(i);
                     
                     archiveItems += `
-                        <div class="archive-item ${completed ? 'completed' : ''}" onclick="playArchiveIdiom(${i})">
+                        <div class="archive-item" onclick="playArchiveIdiom(${i})">
                             <div>
                                 <div class="archive-day">Day ${i + 1}</div>
                                 <div class="archive-date">${itemDate}</div>
-                                ${completed ? `<div class="archive-answer">${capitalizeFirst(item.text)} ✓</div>` : ''}
                             </div>
-                            <span class="archive-status">${completed ? '✅' : '▶️'}</span>
+                            <span class="archive-status">▶️</span>
                         </div>
                     `;
                 }
