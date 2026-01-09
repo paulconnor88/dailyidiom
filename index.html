@@ -4,6 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Daily Idiom</title>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QP92X8DDCN"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-QP92X8DDCN');
+        
+        // Custom event helper
+        function trackEvent(eventName, params = {}) {
+            gtag('event', eventName, params);
+        }
+    </script>
+    
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=DM+Sans:wght@400;500;600&family=Bungee&display=swap" rel="stylesheet">
     <style>
         * {
@@ -1492,6 +1507,10 @@
         // ==========================================
         
         function goToScreen(screen) {
+            // Track archive visits
+            if (screen === 'archive') {
+                trackEvent('archive_visited');
+            }
             // When going back to landing, reset to today's idiom
             if (screen === 'landing') {
                 state.isPlayingArchive = false;
@@ -1509,6 +1528,7 @@
         }
         
         function selectDifficulty(level) {
+            trackEvent('difficulty_selected', { difficulty: level });
             state.difficulty = level;
             state.shuffledWords = null; // Reset for new game
             state.selectedWords = [];
@@ -1587,10 +1607,16 @@
             
             state.activeTab = 'meaning';
             state.screen = 'answer';
+            trackEvent('game_completed', { 
+                difficulty: state.difficulty, 
+                result: correct ? 'correct' : 'incorrect',
+                day: getDisplayDayNumber()
+            });
             render();
         }
         
         function startPractice() {
+            trackEvent('game_started', { day: getDisplayDayNumber() });
             state.screen = 'difficulty';
             state.difficulty = null;
             state.selectedWords = [];
@@ -1630,6 +1656,7 @@
         // ==========================================
         
         async function shareResult() {
+            trackEvent('share_clicked', { difficulty: state.difficulty });
             const difficultyStars = state.difficulty === 'easy' ? '⭐' : state.difficulty === 'medium' ? '⭐⭐' : '⭐⭐⭐';
             const difficultyLabel = state.difficulty.charAt(0).toUpperCase() + state.difficulty.slice(1);
             
