@@ -1046,7 +1046,7 @@
         let idiom = idiomLibrary[currentIdiomIndex];
 
         // Pixel Trophy SVG
-        const pixelTrophy = `<svg width="64" height="64" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" style="image-rendering: pixelated;">
+        const pixelTrophy = `<svg width="40" height="40" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" style="image-rendering: pixelated;">
             <rect x="5" y="1" width="6" height="1" fill="#FFD700"/>
             <rect x="4" y="2" width="8" height="5" fill="#FFD700"/>
             <rect x="5" y="7" width="6" height="1" fill="#FFD700"/>
@@ -1305,6 +1305,13 @@
             // SCREEN: COMPLETE
             // ==========================================
             else if (state.screen === 'complete') {
+                const doneMessage = state.isCorrect 
+                    ? `<div style="margin-bottom: 8px;">${pixelTrophy}</div>
+                       <div style="font-family: 'Nunito', sans-serif; font-weight: 800; color: var(--navy); font-size: 18px;">Today's level complete!</div>
+                       <div style="font-family: 'DM Sans', sans-serif; color: var(--text-muted); margin-top: 4px;">Come back tomorrow for a new idiom</div>`
+                    : `<div style="font-family: 'Nunito', sans-serif; font-weight: 800; color: var(--navy); font-size: 18px;">Today's level complete!</div>
+                       <div style="font-family: 'DM Sans', sans-serif; color: var(--text-muted); margin-top: 4px;">Try again to earn the trophy 🏆</div>`;
+                
                 app.innerHTML = `
                     <button class="back-btn" onclick="goToScreen('answer')">← Back</button>
                     
@@ -1325,18 +1332,16 @@
                     </div>
                     
                     <div class="done-message" style="background: var(--cream); border-radius: 14px; padding: 16px; text-align: center; margin-bottom: 16px;">
-                        <div style="margin-bottom: 8px;">${pixelTrophy}</div>
-                        <div style="font-family: 'Nunito', sans-serif; font-weight: 800; color: var(--navy); font-size: 18px;">You're all done!</div>
-                        <div style="font-family: 'DM Sans', sans-serif; color: var(--text-muted); margin-top: 4px;">Practice again or come back tomorrow</div>
+                        ${doneMessage}
                     </div>
                     
                     <div class="video-container" style="height: 200px;">
                         ${renderMedia(idiom)}
                     </div>
-                    <div class="video-caption"><strong>Day ${dayNumber}</strong> · "${idiom.text}" ✓</div>
+                    <div class="video-caption"><strong>Day ${dayNumber}</strong> · "${idiom.text}" ${state.isCorrect ? '✓' : ''}</div>
                     
-                    <button class="btn btn-primary" onclick="startPractice()">🔄 Practice Again</button>
-                    <button class="btn btn-gold" onclick="shareResult()">📲 Share with Friends</button>
+                    <button class="btn btn-primary" onclick="startPractice()">🔄 ${state.isCorrect ? 'Practice Again' : 'Try Again'}</button>
+                    <button class="btn btn-gold" onclick="shareResult()" style="display: ${state.isCorrect ? 'block' : 'none'};">📲 Share with Friends</button>
                     <button class="btn btn-secondary" onclick="goToScreen('archive')" style="display: ${dayNumber === 1 ? 'none' : 'block'};">📚 Play Past Idioms</button>
                 `;
             }
