@@ -603,7 +603,7 @@
         }
 
         .archive-item:hover {
-            transform: translateX(4px);
+            transform: scale(1.01);
             border-color: var(--coral);
         }
 
@@ -1125,7 +1125,7 @@
                 app.innerHTML = `
                     <button class="back-btn" onclick="goToScreen('landing')">← Back</button>
                     
-                    <div class="video-container" style="height: 180px;">
+                    <div class="video-container" style="height: 200px;">
                         ${renderMedia(idiom)}
                     </div>
                     
@@ -1219,7 +1219,7 @@
                     
                     <div class="mode-title">${difficultyStars} +${xpReward} XP</div>
                     
-                    <div class="video-container" style="height: 160px;">
+                    <div class="video-container" style="height: 200px;">
                         ${renderMedia(idiom)}
                     </div>
                     
@@ -1276,10 +1276,12 @@
                 const xpEarned = state.isCorrect ? XP_VALUES[state.difficulty] : 0;
                 
                 app.innerHTML = `
+                    <button class="back-btn" onclick="goToScreen('landing')">← Home</button>
+                    
                     <div class="celebration">🎉</div>
                     <div class="result-title correct">WELL DONE!</div>
                     
-                    <div class="video-container" style="height: 150px;">
+                    <div class="video-container" style="height: 200px;">
                         ${renderMedia(idiom)}
                     </div>
                     
