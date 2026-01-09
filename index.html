@@ -1071,7 +1071,8 @@
         
         function render() {
             const app = document.getElementById('app');
-            const dayNumber = getDisplayDayNumber();
+            // Show archive day number if playing from archive, otherwise today's day
+            const dayNumber = state.isPlayingArchive ? (state.archiveIdiomIndex + 1) : getDisplayDayNumber();
             
             // ==========================================
             // SCREEN: LANDING
@@ -1147,8 +1148,9 @@
             // SCREEN: DIFFICULTY SELECT
             // ==========================================
             else if (state.screen === 'difficulty') {
+                const backDestination = state.isPlayingArchive ? 'archive' : 'landing';
                 app.innerHTML = `
-                    <button class="back-btn" onclick="goToScreen('landing')">← Back</button>
+                    <button class="back-btn" onclick="goToScreen('${backDestination}')">← Back</button>
                     
                     <div class="video-container" style="height: 200px;">
                         ${renderMedia(idiom)}
@@ -1267,8 +1269,7 @@
                 
                 let tabContent = '';
                 if (activeTab === 'meaning') {
-                    tabContent = `<p>${idiom.meaning}</p>
-                        <button class="translate-btn" onclick="goToScreen('translate')">🌐 Translate</button>`;
+                    tabContent = `<p>${idiom.meaning}</p>`;
                 } else if (activeTab === 'useit') {
                     // Bold the idiom text in examples
                     tabContent = idiom.examples.map(ex => {
@@ -1276,8 +1277,7 @@
                         return `<p style="margin-bottom: 10px;">• ${boldedEx}</p>`;
                     }).join('');
                 } else if (activeTab === 'origin') {
-                    tabContent = `<p>${idiom.etymology}</p>
-                        <button class="translate-btn" onclick="goToScreen('translate')">🌐 Translate</button>`;
+                    tabContent = `<p>${idiom.etymology}</p>`;
                 }
                 
                 app.innerHTML = `
@@ -1305,12 +1305,20 @@
             // SCREEN: COMPLETE
             // ==========================================
             else if (state.screen === 'complete') {
+                const levelText = state.isPlayingArchive ? `Day ${dayNumber} complete!` : "Today's level complete!";
+                const subText = state.isPlayingArchive 
+                    ? "Try another day or come back tomorrow"
+                    : "Come back tomorrow for a new idiom";
+                const tryAgainSubText = state.isPlayingArchive
+                    ? "Try again to earn the trophy 🏆"
+                    : "Try again to earn the trophy 🏆";
+                
                 const doneMessage = state.isCorrect 
                     ? `<div style="margin-bottom: 8px;">${pixelTrophy}</div>
-                       <div style="font-family: 'Nunito', sans-serif; font-weight: 800; color: var(--navy); font-size: 18px;">Today's level complete!</div>
-                       <div style="font-family: 'DM Sans', sans-serif; color: var(--text-muted); margin-top: 4px;">Come back tomorrow for a new idiom</div>`
-                    : `<div style="font-family: 'Nunito', sans-serif; font-weight: 800; color: var(--navy); font-size: 18px;">Today's level complete!</div>
-                       <div style="font-family: 'DM Sans', sans-serif; color: var(--text-muted); margin-top: 4px;">Try again to earn the trophy 🏆</div>`;
+                       <div style="font-family: 'Nunito', sans-serif; font-weight: 800; color: var(--navy); font-size: 18px;">${levelText}</div>
+                       <div style="font-family: 'DM Sans', sans-serif; color: var(--text-muted); margin-top: 4px;">${subText}</div>`
+                    : `<div style="font-family: 'Nunito', sans-serif; font-weight: 800; color: var(--navy); font-size: 18px;">${levelText}</div>
+                       <div style="font-family: 'DM Sans', sans-serif; color: var(--text-muted); margin-top: 4px;">${tryAgainSubText}</div>`;
                 
                 app.innerHTML = `
                     <button class="back-btn" onclick="goToScreen('answer')">← Back</button>
@@ -1355,13 +1363,12 @@
                 let archiveItems = '';
                 for (let i = 0; i < availableCount; i++) {
                     const item = idiomLibrary[i];
-                    const itemDate = getDateForDay(i + 1);
                     
                     archiveItems += `
                         <div class="archive-item" onclick="playArchiveIdiom(${i})">
                             <div>
                                 <div class="archive-day">Day ${i + 1}</div>
-                                <div class="archive-date">${itemDate}</div>
+                                <div class="archive-date">"${item.text}"</div>
                             </div>
                             <span class="archive-status">▶️</span>
                         </div>
