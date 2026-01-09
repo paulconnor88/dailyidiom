@@ -1091,7 +1091,7 @@
                         <div class="video-caption"><strong>Day ${dayNumber}</strong> · "${idiom.text}" ✓</div>
                         
                         <button class="btn btn-secondary" onclick="startPractice()">🔄 Practice Again</button>
-                        <button class="btn btn-secondary" onclick="goToScreen('archive')" style="display: ${dayNumber === 1 ? 'none' : 'block'};">📚 Browse Archive</button>
+                        <button class="btn btn-secondary" onclick="goToScreen('archive')" style="display: ${dayNumber === 1 ? 'none' : 'block'};">📚 Play Past Idioms</button>
                         
                         <div class="footer-legal">
                             <a href="#">Terms of Service</a>
@@ -1111,7 +1111,7 @@
                         <div class="video-container">
                             ${renderMedia(idiom)}
                         </div>
-                        <div class="video-caption"><strong>Day ${dayNumber}</strong> · ${getTodaysDate()}</div>
+                        <div class="video-caption"><strong>Day ${dayNumber}</strong></div>
                         
                         <button class="btn btn-primary" onclick="goToScreen('difficulty')">▶ Play</button>
                         
@@ -1133,6 +1133,7 @@
                     <div class="video-container" style="height: 200px;">
                         ${renderMedia(idiom)}
                     </div>
+                    <div class="video-caption"><strong>Day ${dayNumber}</strong></div>
                     
                     <div class="difficulty-title">Choose your challenge</div>
                     
@@ -1249,7 +1250,11 @@
                     tabContent = `<p>${idiom.meaning}</p>
                         <button class="translate-btn" onclick="goToScreen('translate')">🌐 Translate</button>`;
                 } else if (activeTab === 'useit') {
-                    tabContent = idiom.examples.map(ex => `<p style="margin-bottom: 10px;">• ${ex}</p>`).join('');
+                    // Bold the idiom text in examples
+                    tabContent = idiom.examples.map(ex => {
+                        const boldedEx = ex.replace(new RegExp(idiom.text, 'gi'), `<strong>$&</strong>`);
+                        return `<p style="margin-bottom: 10px;">• ${boldedEx}</p>`;
+                    }).join('');
                 } else if (activeTab === 'origin') {
                     tabContent = `<p>${idiom.etymology}</p>
                         <button class="translate-btn" onclick="goToScreen('translate')">🌐 Translate</button>`;
@@ -1284,7 +1289,7 @@
                 const xpEarned = state.isCorrect ? XP_VALUES[state.difficulty] : 0;
                 
                 app.innerHTML = `
-                    <button class="back-btn" onclick="goToScreen('landing')">← Home</button>
+                    <button class="back-btn" onclick="goToScreen('answer')">← Back</button>
                     
                     <div class="celebration">🎉</div>
                     <div class="result-title correct">WELL DONE!</div>
@@ -1313,7 +1318,7 @@
                     </div>
                     
                     <button class="btn btn-gold" onclick="shareResult()">📲 Share with Friends</button>
-                    <button class="btn btn-secondary" onclick="goToScreen('archive')" style="display: ${dayNumber === 1 ? 'none' : 'block'};">📚 Browse Archive</button>
+                    <button class="btn btn-secondary" onclick="goToScreen('archive')" style="display: ${dayNumber === 1 ? 'none' : 'block'};">📚 Play Past Idioms</button>
                 `;
             }
             
@@ -1523,14 +1528,16 @@
             // In debug mode, don't save progress (allows testing all idioms freely)
             const isDebugMode = getDebugDayOverride() !== null;
             
-            if (correct && !isDebugMode) {
+            if (!isDebugMode) {
                 // Always mark the idiom as completed
                 markIdiomCompleted(currentIdiomIndex);
                 
                 // Only update streak/XP/today for today's idiom (not archive)
                 if (!state.hasPlayedToday && !state.isPlayingArchive) {
-                    state.streak++;
-                    state.totalXP += XP_VALUES[state.difficulty];
+                    state.streak++; // Streak always goes up on completion
+                    if (correct) {
+                        state.totalXP += XP_VALUES[state.difficulty]; // XP only if correct
+                    }
                     saveProgress();
                     markTodayComplete();
                 }
