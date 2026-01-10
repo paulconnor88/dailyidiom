@@ -19,7 +19,7 @@
         }
     </script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=DM+Sans:wght@400;500;600&family=Bungee&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=DM+Sans:wght@400;500;600&family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -28,15 +28,20 @@
         }
 
         :root {
-            --sky-blue: #5B9BD5;
-            --sky-light: #7CB9E8;
-            --coral: #FF6B4A;
-            --coral-dark: #E85A3A;
+            --sky-blue: #5eb3d9;
+            --sky-light: #7ec8e8;
+            --coral: #ff6b4a;
+            --coral-light: #ff8a70;
+            --coral-dark: #e55a3a;
             --white: #FFFFFF;
-            --cream: #FFF8F0;
-            --navy: #1a1f36;
-            --gold: #FFD166;
-            --green: #22C55E;
+            --cream: #fffbf7;
+            --navy: #1e3a5f;
+            --navy-light: #3a5a7f;
+            --yellow: #fbbf24;
+            --yellow-light: #fcd34d;
+            --yellow-dark: #d9a520;
+            --green: #22c55e;
+            --green-light: #4ade80;
             --red: #EF4444;
             --text-secondary: #4a5568;
             --text-muted: #718096;
@@ -50,83 +55,160 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
+            position: relative;
+        }
+
+        /* Decorative pixels in background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle, rgba(255,255,255,0.25) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
         }
 
         .game-container {
-            background: var(--white);
-            border-radius: 28px;
-            padding: 28px;
-            max-width: 420px;
+            background: var(--cream);
+            border-radius: 20px;
+            padding: 20px;
+            max-width: 400px;
             width: 100%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
         }
 
-        /* LOGO */
+        /* NEW LOGO - Press Start 2P */
         .logo {
-            font-family: 'Bungee', cursive;
-            font-size: 36px;
+            font-family: 'Press Start 2P', cursive;
             text-align: center;
-            margin-bottom: 6px;
-            line-height: 1.1;
-            letter-spacing: -1px;
+            margin-bottom: 12px;
         }
 
         .logo .daily {
             color: var(--navy);
             display: block;
-            text-shadow: 3px 3px 0 var(--coral);
+            font-size: 22px;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+            margin-bottom: 2px;
         }
 
         .logo .idiom {
             color: var(--coral);
             display: block;
-            text-shadow: 3px 3px 0 var(--navy);
+            font-size: 22px;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+        }
+
+        .logo-game-badge {
+            display: inline-block;
+            background: var(--yellow);
+            color: var(--navy);
+            font-family: 'Press Start 2P', cursive;
+            font-size: 8px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-top: 6px;
+            box-shadow: 0 3px 0 var(--yellow-dark);
         }
 
         .logo-tagline {
-            font-family: 'Nunito', sans-serif;
-            font-size: 15px;
-            color: var(--text-secondary);
-            text-align: center;
-            margin-bottom: 4px;
-            font-weight: 700;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 8px;
         }
 
         .logo-sub {
-            font-size: 13px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
             color: var(--text-muted);
             text-align: center;
-            margin-bottom: 24px;
-            font-weight: 500;
-            font-style: italic;
+            margin-top: 4px;
         }
 
-        /* VIDEO */
+        /* COMPLETION BANNER */
+        .completion-banner {
+            background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            text-align: center;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 3px 0 #1a9f4a;
+        }
+
+        /* VIDEO - Console style frame */
         .video-container {
+            background: var(--navy);
+            border-radius: 12px;
+            padding: 6px;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .video-inner {
             background: linear-gradient(135deg, #e8e8e8 0%, #f5f5f5 100%);
-            border-radius: 20px;
-            height: 220px;
+            border-radius: 8px;
+            height: 200px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 12px;
             overflow: hidden;
-            border: 2px solid rgba(0,0,0,0.05);
+            border: 2px solid var(--navy-light);
         }
 
-        .video-container video,
-        .video-container img {
+        .video-inner video,
+        .video-inner img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 18px;
+            border-radius: 6px;
+        }
+
+        .playing-indicator {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 6px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .playing-dot {
+            width: 6px;
+            height: 6px;
+            background: #ef4444;
+            border-radius: 50%;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
         }
 
         .video-caption {
             text-align: center;
             font-size: 13px;
             color: var(--text-muted);
-            margin-bottom: 24px;
+            margin-bottom: 16px;
+            margin-top: 8px;
         }
 
         .video-caption strong {
@@ -134,92 +216,116 @@
             font-weight: 700;
         }
 
-        /* STATS ROW */
+        /* DAY BADGE */
+        .day-badge {
+            display: inline-block;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 7px;
+            background: #e8f4f8;
+            color: var(--navy);
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-right: 6px;
+        }
+
+        /* STATS ROW - Trophies & XP */
         .stats-row-top {
             display: flex;
             justify-content: center;
-            gap: 12px;
-            margin-bottom: 20px;
+            gap: 10px;
+            margin-bottom: 16px;
         }
 
         .stat-pill {
-            background: var(--cream);
-            border-radius: 30px;
-            padding: 10px 18px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            border: 2px solid rgba(0,0,0,0.05);
+            gap: 6px;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 10px;
+            border: 3px solid;
+            box-shadow: 0 3px 0;
         }
 
-        .stat-pill .icon { font-size: 18px; }
-
-        .stat-pill .text {
-            font-family: 'Nunito', sans-serif;
-            font-size: 14px;
-            font-weight: 800;
+        .stat-pill.trophies {
+            background: var(--cream);
+            border-color: var(--yellow);
+            box-shadow: 0 3px 0 var(--yellow-dark);
             color: var(--navy);
-        }
-
-        .stat-pill.streak {
-            background: linear-gradient(135deg, var(--gold) 0%, #E5B84D 100%);
-            border: none;
         }
 
         .stat-pill.xp {
-            background: linear-gradient(135deg, var(--coral) 0%, var(--coral-dark) 100%);
-            border: none;
+            background: var(--coral);
+            border-color: var(--coral-light);
+            box-shadow: 0 3px 0 var(--coral-dark);
+            color: white;
         }
 
-        .stat-pill.xp .text { color: white; }
+        .stat-pill .icon {
+            font-size: 14px;
+        }
 
-        /* BUTTONS */
+        /* BUTTONS - 3D style */
         .btn {
             font-family: 'Nunito', sans-serif;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 800;
-            padding: 18px 24px;
-            border: none;
-            border-radius: 16px;
+            padding: 14px 20px;
+            border: 3px solid;
+            border-radius: 12px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.1s ease;
             width: 100%;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
+            position: relative;
         }
 
         .btn:hover {
-            transform: translateY(-3px);
+            transform: translateY(-2px);
         }
 
         .btn:active {
-            transform: translateY(-1px);
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 !important;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--coral) 0%, var(--coral-dark) 100%);
+            background: linear-gradient(180deg, var(--coral-light) 0%, var(--coral) 100%);
+            border-color: var(--coral-dark);
+            box-shadow: 0 4px 0 var(--coral-dark);
             color: white;
-            box-shadow: 0 6px 20px rgba(255, 107, 74, 0.4);
-        }
-
-        .btn-primary:hover {
-            box-shadow: 0 10px 30px rgba(255, 107, 74, 0.5);
         }
 
         .btn-secondary {
-            background: var(--cream);
+            background: linear-gradient(180deg, var(--yellow-light) 0%, var(--yellow) 100%);
+            border-color: var(--yellow-dark);
+            box-shadow: 0 4px 0 var(--yellow-dark);
             color: var(--navy);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            border: 2px solid rgba(0,0,0,0.05);
-        }
-
-        .btn-secondary:hover {
-            background: #fff;
         }
 
         .btn-gold {
-            background: linear-gradient(135deg, var(--gold) 0%, #E5B84D 100%);
+            background: linear-gradient(180deg, var(--yellow-light) 0%, var(--yellow) 100%);
+            border-color: var(--yellow-dark);
+            box-shadow: 0 4px 0 var(--yellow-dark);
             color: var(--navy);
-            box-shadow: 0 6px 20px rgba(255, 209, 102, 0.4);
+        }
+
+        /* Share link (not button) */
+        .share-link {
+            text-align: center;
+            margin: 12px 0;
+        }
+
+        .share-link a {
+            color: var(--coral);
+            font-weight: 700;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .share-link a:hover {
+            text-decoration: underline;
         }
 
         /* DIFFICULTY GRID */
@@ -235,37 +341,40 @@
         .difficulty-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 20px;
         }
 
         .diff-btn {
-            padding: 20px 10px;
-            border: 2px solid rgba(0,0,0,0.05);
-            border-radius: 16px;
+            padding: 16px 8px;
+            border: 3px solid var(--navy-light);
+            border-radius: 12px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.1s ease;
             text-align: center;
             background: var(--cream);
+            box-shadow: 0 4px 0 var(--navy);
         }
 
         .diff-btn:hover {
-            transform: translateY(-4px);
+            transform: translateY(-2px);
             border-color: var(--coral);
-            background: rgba(255, 107, 74, 0.08);
-            box-shadow: 0 8px 25px rgba(255, 107, 74, 0.2);
+        }
+
+        .diff-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 var(--navy);
         }
 
         .diff-btn .stars {
             display: block;
-            font-size: 20px;
-            margin-bottom: 8px;
+            font-size: 18px;
+            margin-bottom: 6px;
         }
 
         .diff-btn .xp-reward {
-            font-family: 'Nunito', sans-serif;
-            font-size: 15px;
-            font-weight: 800;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 8px;
             color: var(--coral);
             display: block;
         }
@@ -418,21 +527,27 @@
 
         /* ANSWER REVEAL */
         .answer-title {
-            font-family: 'Bungee', cursive;
-            font-size: 26px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 36px;
+            font-weight: 900;
             text-align: center;
             margin-bottom: 20px;
-            letter-spacing: -1px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .answer-title.correct {
             color: var(--green);
-            text-shadow: 2px 2px 0 var(--navy);
+            -webkit-text-stroke: 3px var(--navy);
+            paint-order: stroke fill;
+            text-shadow: 4px 4px 0 var(--navy);
         }
 
         .answer-title.incorrect {
-            color: var(--red);
-            text-shadow: 2px 2px 0 var(--navy);
+            color: var(--coral);
+            -webkit-text-stroke: 3px var(--navy);
+            paint-order: stroke fill;
+            text-shadow: 4px 4px 0 var(--navy);
         }
 
         .idiom-display {
@@ -756,13 +871,14 @@
         <div class="logo">
             <span class="daily">DAILY</span>
             <span class="idiom">IDIOM</span>
+            <div class="logo-game-badge">GAME</div>
         </div>
         <div class="logo-tagline">Master English Expressions</div>
         
-        <div style="margin: 40px 0;">
-            <div style="font-size: 48px; margin-bottom: 16px;">🚀</div>
-            <h2 style="font-family: 'Nunito', sans-serif; font-size: 24px; color: var(--navy); margin-bottom: 8px;">Coming Soon!</h2>
-            <p style="color: var(--text-muted); font-size: 15px;">Launching January 17th, 2026</p>
+        <div style="margin: 30px 0;">
+            <div style="font-size: 40px; margin-bottom: 12px;">🚀</div>
+            <h2 style="font-family: 'Press Start 2P', cursive; font-size: 12px; color: var(--navy); margin-bottom: 8px;">COMING SOON!</h2>
+            <p style="color: var(--text-muted); font-size: 14px;">Launching January 17th, 2026</p>
         </div>
         
         <div class="input-group">
@@ -853,7 +969,7 @@
             blank2: '',
             blank3: '',
             isCorrect: false,
-            streak: parseInt(localStorage.getItem('idiomStreak') || '0'),
+            trophies: parseInt(localStorage.getItem('idiomTrophies') || '0'),
             totalXP: parseInt(localStorage.getItem('idiomTotalXP') || '0'),
             hasPlayedToday: localStorage.getItem('lastPlayedDay') === getDayOfYear().toString(),
             activeTab: 'meaning',
@@ -872,7 +988,7 @@
         }
 
         function saveProgress() {
-            localStorage.setItem('idiomStreak', state.streak.toString());
+            localStorage.setItem('idiomTrophies', state.trophies.toString());
             localStorage.setItem('idiomTotalXP', state.totalXP.toString());
             localStorage.setItem('lastPlayedDay', getDayOfYear().toString());
         }
@@ -880,6 +996,11 @@
         function markTodayComplete() {
             localStorage.setItem('lastPlayedDay', getDayOfYear().toString());
             state.hasPlayedToday = true;
+        }
+
+        // Get total available idioms count
+        function getTotalIdioms() {
+            return 12; // Update this as you add more
         }
 
         // ==========================================
@@ -1079,26 +1200,6 @@
         let currentIdiomIndex = getTodaysIdiomIndex();
         let idiom = idiomLibrary[currentIdiomIndex];
 
-        // Pixel Trophy SVG
-        const pixelTrophy = `<svg width="40" height="40" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" style="image-rendering: pixelated;">
-            <rect x="5" y="1" width="6" height="1" fill="#FFD700"/>
-            <rect x="4" y="2" width="8" height="5" fill="#FFD700"/>
-            <rect x="5" y="7" width="6" height="1" fill="#FFD700"/>
-            <rect x="2" y="2" width="2" height="1" fill="#FFD700"/>
-            <rect x="1" y="3" width="2" height="1" fill="#FFD700"/>
-            <rect x="1" y="4" width="2" height="1" fill="#FFD700"/>
-            <rect x="2" y="5" width="2" height="1" fill="#FFD700"/>
-            <rect x="12" y="2" width="2" height="1" fill="#FFD700"/>
-            <rect x="13" y="3" width="2" height="1" fill="#FFD700"/>
-            <rect x="13" y="4" width="2" height="1" fill="#FFD700"/>
-            <rect x="12" y="5" width="2" height="1" fill="#FFD700"/>
-            <rect x="5" y="3" width="1" height="2" fill="#FFFACD"/>
-            <rect x="7" y="8" width="2" height="2" fill="#DAA520"/>
-            <rect x="5" y="10" width="6" height="1" fill="#DAA520"/>
-            <rect x="4" y="11" width="8" height="2" fill="#B8860B"/>
-            <rect x="3" y="13" width="10" height="1" fill="#8B6914"/>
-        </svg>`;
-
         // ==========================================
         // RENDER FUNCTION
         // ==========================================
@@ -1107,6 +1208,9 @@
             const app = document.getElementById('app');
             // Show archive day number if playing from archive, otherwise today's day
             const dayNumber = state.isPlayingArchive ? (state.archiveIdiomIndex + 1) : getDisplayDayNumber();
+            const totalIdioms = getTotalIdioms();
+            // Available idioms = current day number (day 1 = 1 available, day 12 = 12 available)
+            const availableIdioms = Math.min(getDisplayDayNumber(), totalIdioms);
             
             // ==========================================
             // SCREEN: LANDING
@@ -1118,35 +1222,41 @@
                 
                 if (showReturnState) {
                     // RETURN STATE - Already completed today
+                    const hasTodayTrophy = hasIdiomTrophy(currentIdiomIndex);
                     app.innerHTML = `
+                        ${hasTodayTrophy ? `<div class="completion-banner">🏆 Day ${dayNumber} complete – new idiom tomorrow!</div>` : ''}
+                        
                         <div class="logo">
                             <span class="daily">DAILY</span>
                             <span class="idiom">IDIOM</span>
+                            <div class="logo-game-badge">GAME</div>
                         </div>
                         
                         <div class="stats-row-top">
-                            <div class="stat-pill streak">
-                                <span class="icon">🔥</span>
-                                <span class="text">${state.streak} streak</span>
+                            <div class="stat-pill trophies">
+                                <span class="icon">🏆</span>
+                                <span>${state.trophies}/${availableIdioms}</span>
                             </div>
                             <div class="stat-pill xp">
                                 <span class="icon">⚡</span>
-                                <span class="text">${state.totalXP} XP</span>
+                                <span>${state.totalXP}</span>
                             </div>
-                        </div>
-                        
-                        <div class="tomorrow-message">
-                            <h3>You're all done for today! 🎉</h3>
-                            <p>Come back tomorrow for a new idiom</p>
                         </div>
                         
                         <div class="video-container">
                             ${renderMedia(idiom)}
                         </div>
-                        <div class="video-caption"><strong>Day ${dayNumber}</strong> · "${idiom.text}" ✓</div>
+                        <div class="video-caption"><span class="day-badge">DAY ${dayNumber}</span> "${idiom.text}" ${hasTodayTrophy ? '✓' : ''}</div>
                         
-                        <button class="btn btn-secondary" onclick="startPractice()">🔄 Practice Again</button>
-                        <button class="btn btn-secondary" onclick="goToScreen('archive')" style="display: ${dayNumber === 1 ? 'none' : 'block'};">📚 Play Past Idioms</button>
+                        ${hasTodayTrophy ? `
+                            <button class="btn btn-primary" onclick="goToScreen('archive')" style="display: ${dayNumber === 1 ? 'none' : 'block'};">📚 Play Past Idioms</button>
+                            <button class="btn btn-secondary" onclick="startPractice()">🔄 Practice Again</button>
+                        ` : `
+                            <button class="btn btn-primary" onclick="startPractice()">🔄 Try Again</button>
+                            <button class="btn btn-secondary" onclick="goToScreen('archive')" style="display: ${dayNumber === 1 ? 'none' : 'block'};">📚 Play Past Idioms</button>
+                        `}
+                        
+                        <div class="share-link"><a href="#" onclick="shareResult(); return false;">Share with friends →</a></div>
                         
                         <div class="footer-legal">
                             <a href="#">Terms of Service</a>
@@ -1159,14 +1269,24 @@
                         <div class="logo">
                             <span class="daily">DAILY</span>
                             <span class="idiom">IDIOM</span>
+                            <div class="logo-game-badge">GAME</div>
                         </div>
-                        <div class="logo-tagline">Master English Expressions</div>
-                        <div class="logo-sub">Play it · Learn it · Use it</div>
+                        
+                        <div class="stats-row-top">
+                            <div class="stat-pill trophies">
+                                <span class="icon">🏆</span>
+                                <span>${state.trophies}/${availableIdioms}</span>
+                            </div>
+                            <div class="stat-pill xp">
+                                <span class="icon">⚡</span>
+                                <span>${state.totalXP}</span>
+                            </div>
+                        </div>
                         
                         <div class="video-container">
                             ${renderMedia(idiom)}
                         </div>
-                        <div class="video-caption"><strong>Day ${dayNumber}</strong></div>
+                        <div class="video-caption"><span class="day-badge">DAY ${dayNumber}</span> Guess the idiom from the video!</div>
                         
                         <button class="btn btn-primary" onclick="goToScreen('difficulty')">▶ Play</button>
                         
@@ -1186,28 +1306,28 @@
                 app.innerHTML = `
                     <button class="back-btn" onclick="goToScreen('${backDestination}')">← Back</button>
                     
-                    <div class="video-container" style="height: 200px;">
+                    <div class="video-container">
                         ${renderMedia(idiom)}
                     </div>
-                    <div class="video-caption"><strong>Day ${dayNumber}</strong></div>
+                    <div class="video-caption"><span class="day-badge">DAY ${dayNumber}</span></div>
                     
                     <div class="difficulty-title">Choose your challenge</div>
                     
                     <div class="difficulty-grid">
                         <div class="diff-btn" onclick="selectDifficulty('easy')">
                             <span class="stars">⭐</span>
-                            <span class="xp-reward">+10 XP</span>
-                            <span class="diff-desc">Reorder the words</span>
+                            <span class="xp-reward">+10</span>
+                            <span class="diff-desc">Reorder</span>
                         </div>
                         <div class="diff-btn" onclick="selectDifficulty('medium')">
                             <span class="stars">⭐⭐</span>
-                            <span class="xp-reward">+50 XP</span>
-                            <span class="diff-desc">Fill in the blanks</span>
+                            <span class="xp-reward">+50</span>
+                            <span class="diff-desc">Fill in</span>
                         </div>
                         <div class="diff-btn" onclick="selectDifficulty('hard')">
                             <span class="stars">⭐⭐⭐</span>
-                            <span class="xp-reward">+100 XP</span>
-                            <span class="diff-desc">Type the full idiom</span>
+                            <span class="xp-reward">+100</span>
+                            <span class="diff-desc">Type it</span>
                         </div>
                     </div>
                 `;
@@ -1343,52 +1463,42 @@
             // SCREEN: COMPLETE
             // ==========================================
             else if (state.screen === 'complete') {
-                const levelText = state.isPlayingArchive ? `Day ${dayNumber} complete!` : "Today's level complete!";
-                const subText = state.isPlayingArchive 
-                    ? "Try another day or come back tomorrow"
-                    : "Come back tomorrow for a new idiom";
-                const tryAgainSubText = state.isPlayingArchive
-                    ? "Try again to earn the trophy 🏆"
-                    : "Try again to earn the trophy 🏆";
-                
-                const doneMessage = state.isCorrect 
-                    ? `<div style="margin-bottom: 8px;">${pixelTrophy}</div>
-                       <div style="font-family: 'Nunito', sans-serif; font-weight: 800; color: var(--navy); font-size: 18px;">${levelText}</div>
-                       <div style="font-family: 'DM Sans', sans-serif; color: var(--text-muted); margin-top: 4px;">${subText}</div>`
-                    : `<div style="font-family: 'Nunito', sans-serif; font-weight: 800; color: var(--navy); font-size: 18px;">${levelText}</div>
-                       <div style="font-family: 'DM Sans', sans-serif; color: var(--text-muted); margin-top: 4px;">${tryAgainSubText}</div>`;
+                const hasTrophy = hasIdiomTrophy(currentIdiomIndex);
                 
                 app.innerHTML = `
-                    <button class="back-btn" onclick="goToScreen('answer')">← Back</button>
+                    ${hasTrophy ? `<div class="completion-banner">🏆 Day ${dayNumber} complete – new idiom tomorrow!</div>` : ''}
                     
                     <div class="logo">
                         <span class="daily">DAILY</span>
                         <span class="idiom">IDIOM</span>
+                        <div class="logo-game-badge">GAME</div>
                     </div>
                     
                     <div class="stats-row-top">
-                        <div class="stat-pill streak">
-                            <span class="icon">🔥</span>
-                            <span class="text">${state.streak} streak</span>
+                        <div class="stat-pill trophies">
+                            <span class="icon">🏆</span>
+                            <span>${state.trophies}/${availableIdioms}</span>
                         </div>
                         <div class="stat-pill xp">
                             <span class="icon">⚡</span>
-                            <span class="text">${state.totalXP} XP</span>
+                            <span>${state.totalXP}</span>
                         </div>
                     </div>
                     
-                    <div class="done-message" style="background: var(--cream); border-radius: 14px; padding: 16px; text-align: center; margin-bottom: 16px;">
-                        ${doneMessage}
-                    </div>
-                    
-                    <div class="video-container" style="height: 200px;">
+                    <div class="video-container">
                         ${renderMedia(idiom)}
                     </div>
-                    <div class="video-caption"><strong>Day ${dayNumber}</strong> · "${idiom.text}" ${state.isCorrect ? '✓' : ''}</div>
+                    <div class="video-caption"><span class="day-badge">DAY ${dayNumber}</span> "${idiom.text}" ${hasTrophy ? '✓' : ''}</div>
                     
-                    <button class="btn btn-primary" onclick="startPractice()">🔄 ${state.isCorrect ? 'Practice Again' : 'Try Again'}</button>
-                    <button class="btn btn-gold" onclick="shareResult()" style="display: ${state.isCorrect ? 'block' : 'none'};">📲 Share with Friends</button>
-                    <button class="btn btn-secondary" onclick="goToScreen('archive')" style="display: ${dayNumber === 1 ? 'none' : 'block'};">📚 Play Past Idioms</button>
+                    ${hasTrophy ? `
+                        <button class="btn btn-primary" onclick="goToScreen('archive')" style="display: ${dayNumber === 1 ? 'none' : 'block'};">📚 Play Past Idioms</button>
+                        <button class="btn btn-secondary" onclick="startPractice()">🔄 Practice Again</button>
+                    ` : `
+                        <button class="btn btn-primary" onclick="startPractice()">🔄 Try Again</button>
+                        <button class="btn btn-secondary" onclick="goToScreen('archive')" style="display: ${dayNumber === 1 ? 'none' : 'block'};">📚 Play Past Idioms</button>
+                    `}
+                    
+                    <div class="share-link"><a href="#" onclick="shareResult(); return false;">Share with friends →</a></div>
                 `;
             }
             
@@ -1396,19 +1506,21 @@
             // SCREEN: ARCHIVE
             // ==========================================
             else if (state.screen === 'archive') {
-                const availableCount = dayNumber === 1 ? 0 : Math.min(dayNumber - 1, idiomLibrary.length);
+                const todayDayNumber = getDisplayDayNumber();
+                const availableCount = todayDayNumber === 1 ? 0 : Math.min(todayDayNumber - 1, idiomLibrary.length);
                 
                 let archiveItems = '';
                 for (let i = 0; i < availableCount; i++) {
                     const item = idiomLibrary[i];
+                    const hasTrophy = hasIdiomTrophy(i);
                     
                     archiveItems += `
                         <div class="archive-item" onclick="playArchiveIdiom(${i})">
                             <div>
-                                <div class="archive-day">Day ${i + 1}</div>
-                                <div class="archive-date">"${item.text}"</div>
+                                <span class="day-badge">DAY ${i + 1}</span>
+                                <span style="color: var(--navy);">"${item.text}"</span>
                             </div>
-                            <span class="archive-status">▶️</span>
+                            <span class="archive-status">${hasTrophy ? '🏆' : '▶️'}</span>
                         </div>
                     `;
                 }
@@ -1416,11 +1528,12 @@
                 app.innerHTML = `
                     <button class="back-btn" onclick="goToScreen('landing')">← Home</button>
                     
-                    <div style="text-align: center; margin-bottom: 20px;">
-                        <div style="font-family: 'Bungee', cursive; font-size: 24px; color: var(--navy);">📚 Archive</div>
+                    <div style="text-align: center; margin-bottom: 16px;">
+                        <div style="font-family: 'Press Start 2P', cursive; font-size: 14px; color: var(--navy);">📚 ARCHIVE</div>
+                        <div style="font-size: 13px; color: var(--text-muted); margin-top: 6px;">🏆 ${state.trophies}/${availableIdioms} trophies collected</div>
                     </div>
                     
-                    <div style="max-height: 400px; overflow-y: auto;">
+                    <div style="max-height: 350px; overflow-y: auto;">
                         ${archiveItems || '<div style="text-align: center; color: #999; padding: 40px;">No past idioms yet.<br>Come back tomorrow!</div>'}
                     </div>
                 `;
@@ -1471,12 +1584,18 @@
         function renderMedia(idiom) {
             if (idiom.image) {
                 if (idiom.image.endsWith('.mp4')) {
-                    return `<video src="${idiom.image}" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover; border-radius: 18px;"></video>`;
+                    return `<div class="video-inner"><video src="${idiom.image}" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;"></video></div>
+                            <div class="playing-indicator"><span class="playing-dot"></span>PLAYING</div>`;
                 } else {
-                    return `<img src="${idiom.image}" alt="${idiom.text}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 18px;">`;
+                    return `<div class="video-inner"><img src="${idiom.image}" alt="${idiom.text}" style="width: 100%; height: 100%; object-fit: cover;"></div>`;
                 }
             }
-            return `<div class="emoji-placeholder">${idiom.emoji}</div>`;
+            return `<div class="video-inner"><div class="emoji-placeholder">${idiom.emoji}</div></div>`;
+        }
+
+        // Check if idiom has trophy
+        function hasIdiomTrophy(index) {
+            return localStorage.getItem(`trophy_${index}`) === 'true';
         }
         
         function capitalizeFirst(str) {
@@ -1603,16 +1722,22 @@
             const isDebugMode = getDebugDayOverride() !== null;
             
             if (!isDebugMode) {
-                // Always mark the idiom as completed
+                // Always mark the idiom as completed (for day tracking)
                 markIdiomCompleted(currentIdiomIndex);
                 
-                // Only update streak/XP/today for today's idiom (not archive)
-                if (!state.hasPlayedToday && !state.isPlayingArchive) {
-                    state.streak++; // Streak always goes up on completion
-                    if (correct) {
-                        state.totalXP += XP_VALUES[state.difficulty]; // XP only if correct
+                // Award trophy and XP only if correct (first time only for this idiom)
+                if (correct) {
+                    // Check if this idiom hasn't already earned a trophy
+                    const trophyKey = `trophy_${currentIdiomIndex}`;
+                    if (!localStorage.getItem(trophyKey)) {
+                        state.trophies++;
+                        state.totalXP += XP_VALUES[state.difficulty];
+                        localStorage.setItem(trophyKey, 'true');
+                        saveProgress();
                     }
-                    saveProgress();
+                }
+                
+                if (!state.hasPlayedToday && !state.isPlayingArchive) {
                     markTodayComplete();
                 }
             }
@@ -1670,12 +1795,11 @@
         async function shareResult() {
             trackEvent('share_clicked', { difficulty: state.difficulty });
             const difficultyStars = state.difficulty === 'easy' ? '⭐' : state.difficulty === 'medium' ? '⭐⭐' : '⭐⭐⭐';
-            const difficultyLabel = state.difficulty.charAt(0).toUpperCase() + state.difficulty.slice(1);
             
             const text = `I solved today's Daily Idiom! 🎉
 
-${difficultyStars} ${difficultyLabel}
-🔥 ${state.streak} day streak
+${difficultyStars} Day ${getDisplayDayNumber()}
+🏆 ${state.trophies}/${getTotalIdioms()} trophies
 ⚡ ${state.totalXP} XP
 
 Can you solve it?
