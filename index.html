@@ -149,22 +149,21 @@
 
         /* VIDEO - Console style frame */
         .video-container {
-            background: var(--navy);
             border-radius: 12px;
-            padding: 6px;
             margin-bottom: 8px;
             position: relative;
+            overflow: hidden;
         }
 
         .video-inner {
             background: linear-gradient(135deg, #e8e8e8 0%, #f5f5f5 100%);
-            border-radius: 8px;
+            border-radius: 12px;
             height: 200px;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            border: 2px solid var(--navy-light);
+            border: 2px solid rgba(0,0,0,0.1);
         }
 
         .video-inner video,
@@ -172,35 +171,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 6px;
-        }
-
-        .playing-indicator {
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            background: rgba(0,0,0,0.6);
-            color: white;
-            font-family: 'Press Start 2P', cursive;
-            font-size: 6px;
-            padding: 4px 8px;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .playing-dot {
-            width: 6px;
-            height: 6px;
-            background: #ef4444;
-            border-radius: 50%;
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0.3; }
+            border-radius: 10px;
         }
 
         .video-caption {
@@ -629,6 +600,178 @@
             text-decoration: underline;
         }
 
+        /* ========== DELIGHT SCREEN ========== */
+        .delight-screen {
+            position: relative;
+            min-height: 100%;
+            overflow: hidden;
+        }
+
+        .confetti-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            opacity: 0.9;
+            animation: confetti-fall linear infinite;
+        }
+
+        .confetti.square { border-radius: 2px; }
+        .confetti.circle { border-radius: 50%; }
+        .confetti.triangle {
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 10px solid;
+            background: transparent !important;
+        }
+
+        .confetti.c1 { background: #ff6b4a; }
+        .confetti.c2 { background: #fbbf24; }
+        .confetti.c3 { background: #22c55e; }
+        .confetti.c4 { background: #5eb3d9; }
+        .confetti.c5 { background: #ff69b4; }
+        .confetti.c6 { background: #8b5cf6; }
+
+        .confetti.triangle.c1 { border-bottom-color: #ff6b4a; }
+        .confetti.triangle.c2 { border-bottom-color: #fbbf24; }
+        .confetti.triangle.c3 { border-bottom-color: #22c55e; }
+        .confetti.triangle.c4 { border-bottom-color: #5eb3d9; }
+        .confetti.triangle.c5 { border-bottom-color: #ff69b4; }
+        .confetti.triangle.c6 { border-bottom-color: #8b5cf6; }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(600px) rotate(720deg);
+                opacity: 0.5;
+            }
+        }
+
+        .confetti:nth-child(1) { left: 5%; animation-duration: 3s; animation-delay: 0s; }
+        .confetti:nth-child(2) { left: 15%; animation-duration: 3.5s; animation-delay: 0.2s; }
+        .confetti:nth-child(3) { left: 25%; animation-duration: 2.8s; animation-delay: 0.4s; }
+        .confetti:nth-child(4) { left: 35%; animation-duration: 3.2s; animation-delay: 0.1s; }
+        .confetti:nth-child(5) { left: 45%; animation-duration: 3.8s; animation-delay: 0.3s; }
+        .confetti:nth-child(6) { left: 55%; animation-duration: 2.9s; animation-delay: 0.5s; }
+        .confetti:nth-child(7) { left: 65%; animation-duration: 3.4s; animation-delay: 0.15s; }
+        .confetti:nth-child(8) { left: 75%; animation-duration: 3.1s; animation-delay: 0.35s; }
+        .confetti:nth-child(9) { left: 85%; animation-duration: 3.6s; animation-delay: 0.25s; }
+        .confetti:nth-child(10) { left: 95%; animation-duration: 2.7s; animation-delay: 0.45s; }
+        .confetti:nth-child(11) { left: 10%; animation-duration: 3.3s; animation-delay: 0.6s; }
+        .confetti:nth-child(12) { left: 30%; animation-duration: 2.6s; animation-delay: 0.7s; }
+        .confetti:nth-child(13) { left: 50%; animation-duration: 3.7s; animation-delay: 0.55s; }
+        .confetti:nth-child(14) { left: 70%; animation-duration: 2.5s; animation-delay: 0.8s; }
+        .confetti:nth-child(15) { left: 90%; animation-duration: 3.0s; animation-delay: 0.65s; }
+
+        .delight-video-area {
+            margin: 16px;
+            border-radius: 12px;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .delight-video-inner {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(180deg, #87ceeb 0%, #b8d4e8 60%, #e8d4b8 100%);
+            border-radius: 12px;
+            border: 2px solid rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .delight-video-inner video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .delight-emoji {
+            font-size: 80px;
+            animation: emoji-bounce 1s ease infinite;
+        }
+
+        @keyframes emoji-bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .delight-title-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 20px 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .delight-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 20px;
+            color: var(--navy);
+            text-align: center;
+            line-height: 1.4;
+            text-shadow: 3px 3px 0 var(--yellow);
+            animation: title-pop 0.5s ease-out;
+        }
+
+        @keyframes title-pop {
+            0% { transform: scale(0.5); opacity: 0; }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .title-stars {
+            font-size: 28px;
+            animation: star-spin 3s linear infinite;
+        }
+
+        @keyframes star-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .delight-continue-btn {
+            margin: 0 16px 16px;
+            padding: 16px;
+            background: linear-gradient(180deg, var(--coral-light) 0%, var(--coral) 100%);
+            border: 3px solid var(--coral-dark);
+            box-shadow: 0 4px 0 var(--coral-dark);
+            border-radius: 12px;
+            color: white;
+            font-family: 'Nunito', sans-serif;
+            font-size: 16px;
+            font-weight: 800;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+        }
+
+        .delight-continue-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 var(--coral-dark);
+        }
+
         /* COMPLETE SCREEN */
         .celebration {
             font-size: 64px;
@@ -980,8 +1123,29 @@
             selectedLanguage: 'es',
             translatedContent: null,
             isPlayingArchive: false,
-            archiveIdiomIndex: null
+            archiveIdiomIndex: null,
+            isFirstAttempt: true,
+            showDelight: false
         };
+        
+        // Delight screen content (10-day rotation)
+        const delightScreens = [
+            { video: 'delight_videos/penguin_dive.mp4', title: "FLIPPIN'<br>AWESOME!", emoji: '🐧' },
+            { video: 'delight_videos/golf_putt.mp4', title: "HOLE IN<br>ONE!", emoji: '⛳' },
+            { video: 'delight_videos/dart_bullseye.mp4', title: "BULLSEYE!", emoji: '🎯' },
+            { video: 'delight_videos/shooting_star.mp4', title: "YOU'RE<br>A STAR!", emoji: '🌠' },
+            { video: 'delight_videos/slam_dunk.mp4', title: "NOTHING<br>BUT NET!", emoji: '🏀' },
+            { video: 'delight_videos/mexican_wave.mp4', title: "THE CROWD<br>GOES WILD!", emoji: '👋' },
+            { video: 'delight_videos/chefs_kiss.mp4', title: "PERFECTO!", emoji: '👨‍🍳' },
+            { video: 'delight_videos/dog_frisbee.mp4', title: "NICE<br>CATCH!", emoji: '🐕' },
+            { video: 'delight_videos/high_five.mp4', title: "HIGH<br>FIVE!", emoji: '🙌' },
+            { video: 'delight_videos/thumbs_up.mp4', title: "NAILED IT!", emoji: '👍' }
+        ];
+        
+        function getDelightScreen(dayNumber) {
+            const index = (dayNumber - 1) % 10;
+            return delightScreens[index];
+        }
 
         function getDayOfYear() {
             const now = new Date();
@@ -1406,12 +1570,58 @@
                     <div class="mode-title">${difficultyStars} +${xpReward} XP</div>
                     
                     <div class="video-container" style="height: 200px;">
-                        ${renderMedia(idiom, false)}
+                        ${renderMedia(idiom)}
                     </div>
                     
                     ${solveContent}
                     
                     <button class="btn btn-primary" onclick="checkAnswer()">Check Answer</button>
+                `;
+            }
+            
+            // ==========================================
+            // SCREEN: DELIGHT (First-guess celebration)
+            // ==========================================
+            else if (state.screen === 'delight') {
+                const delight = getDelightScreen(getDisplayDayNumber());
+                const confettiHTML = `
+                    <div class="confetti square c1"></div>
+                    <div class="confetti circle c2"></div>
+                    <div class="confetti triangle c3"></div>
+                    <div class="confetti square c4"></div>
+                    <div class="confetti circle c5"></div>
+                    <div class="confetti triangle c6"></div>
+                    <div class="confetti square c2"></div>
+                    <div class="confetti circle c1"></div>
+                    <div class="confetti triangle c4"></div>
+                    <div class="confetti square c5"></div>
+                    <div class="confetti circle c3"></div>
+                    <div class="confetti triangle c1"></div>
+                    <div class="confetti square c6"></div>
+                    <div class="confetti circle c4"></div>
+                    <div class="confetti triangle c2"></div>
+                `;
+                
+                app.innerHTML = `
+                    <div class="delight-screen">
+                        <div class="confetti-container">
+                            ${confettiHTML}
+                        </div>
+                        
+                        <div class="delight-video-area">
+                            <div class="delight-video-inner">
+                                <span class="delight-emoji">${delight.emoji}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="delight-title-area">
+                            <span class="title-stars">⭐</span>
+                            <div class="delight-title">${delight.title}</div>
+                            <span class="title-stars">⭐</span>
+                        </div>
+                        
+                        <div class="delight-continue-btn" onclick="goToScreen('complete')">Continue →</div>
+                    </div>
                 `;
             }
             
@@ -1456,7 +1666,7 @@
                         ${tabContent}
                     </div>
                     
-                    <button class="btn btn-primary" onclick="goToScreen('complete')">Next →</button>
+                    <button class="btn btn-primary" onclick="goToNextFromAnswer()">Next →</button>
                 `;
             }
             
@@ -1487,7 +1697,7 @@
                     </div>
                     
                     <div class="video-container">
-                        ${renderMedia(idiom, false)}
+                        ${renderMedia(idiom)}
                     </div>
                     <div class="video-caption"><span class="day-badge">DAY ${dayNumber}</span> "${idiom.text}" ${hasTrophy ? '✓' : ''}</div>
                     
@@ -1582,12 +1792,10 @@
         // HELPER FUNCTIONS
         // ==========================================
         
-        function renderMedia(idiom, showIndicator = true) {
+        function renderMedia(idiom) {
             if (idiom.image) {
                 if (idiom.image.endsWith('.mp4')) {
-                    const indicator = showIndicator ? `<div class="playing-indicator"><span class="playing-dot"></span>PLAYING</div>` : '';
-                    return `<div class="video-inner"><video src="${idiom.image}" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;"></video></div>
-                            ${indicator}`;
+                    return `<div class="video-inner"><video src="${idiom.image}" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;"></video></div>`;
                 } else {
                     return `<div class="video-inner"><img src="${idiom.image}" alt="${idiom.text}" style="width: 100%; height: 100%; object-fit: cover;"></div>`;
                 }
@@ -1660,6 +1868,16 @@
             render();
         }
         
+        function goToNextFromAnswer() {
+            // If qualified for delight, show it; otherwise go to complete
+            if (state.showDelight) {
+                state.screen = 'delight';
+            } else {
+                state.screen = 'complete';
+            }
+            render();
+        }
+        
         function selectDifficulty(level) {
             trackEvent('difficulty_selected', { difficulty: level });
             state.difficulty = level;
@@ -1720,6 +1938,17 @@
             
             state.isCorrect = correct;
             
+            // Check if this qualifies for delight screen:
+            // - Correct answer
+            // - First attempt today
+            // - Not playing archive
+            // - Not already played today
+            const qualifiesForDelight = correct && state.isFirstAttempt && !state.isPlayingArchive && !state.hasPlayedToday;
+            state.showDelight = qualifiesForDelight;
+            
+            // After first attempt, mark it as no longer first
+            state.isFirstAttempt = false;
+            
             // In debug mode, don't save progress (allows testing all idioms freely)
             const isDebugMode = getDebugDayOverride() !== null;
             
@@ -1745,11 +1974,13 @@
             }
             
             state.activeTab = 'meaning';
+            // Always go to answer screen first - delight comes after if qualified
             state.screen = 'answer';
             trackEvent('game_completed', { 
                 difficulty: state.difficulty, 
                 result: correct ? 'correct' : 'incorrect',
-                day: getDisplayDayNumber()
+                day: getDisplayDayNumber(),
+                first_attempt: qualifiesForDelight
             });
             render();
         }
