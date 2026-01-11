@@ -567,30 +567,34 @@
             display: flex;
             gap: 8px;
             margin-bottom: 16px;
+            background: #f0e8e0;
+            border-radius: 12px;
+            padding: 6px;
         }
 
         .info-tab {
             flex: 1;
             padding: 12px;
             font-family: 'Nunito', sans-serif;
-            font-size: 13px;
-            font-weight: 700;
+            font-size: 14px;
+            font-weight: 800;
             text-align: center;
-            background: var(--cream);
+            background: transparent;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             cursor: pointer;
-            color: var(--text-muted);
+            color: var(--navy);
             transition: all 0.2s ease;
         }
 
         .info-tab.active {
             background: var(--navy);
             color: white;
+            box-shadow: 0 2px 0 #0f1f33;
         }
 
         .info-tab:hover:not(.active) {
-            background: #f0f0f0;
+            background: rgba(255,255,255,0.5);
         }
 
         .info-content {
@@ -603,7 +607,7 @@
 
         .info-content p {
             font-size: 15px;
-            color: var(--text-secondary);
+            color: var(--navy);
             line-height: 1.6;
         }
 
@@ -1131,7 +1135,7 @@
                 words: ["let", "the", "cat", "out", "of", "the", "bag"],
                 blanks: {answers: ["cat", "bag"]},
                 emoji: "🐱",
-                image: "idiom_images_pixel/idiom_06_let_the_cat_out_of_the_bag_sora_v3.mp4",
+                image: "idiom_images_pixel/let_the_cat_out_of_the_bag.mp4",
                 hardModeAccepts: ["let the cat out of the bag", "let cat out of bag", "let the cat out the bag", "letting the cat out of the bag", "lets the cat out of the bag", "the cat's out of the bag", "the cats out of the bag", "cats out of the bag", "cat's out of the bag", "cat out of the bag", "to let the cat out of the bag"]
             },
             // Day 11: Kill two birds with one stone
@@ -1302,10 +1306,7 @@
             // SCREEN: DIFFICULTY SELECT
             // ==========================================
             else if (state.screen === 'difficulty') {
-                const backDestination = state.isPlayingArchive ? 'archive' : 'landing';
                 app.innerHTML = `
-                    <button class="back-btn" onclick="goToScreen('${backDestination}')">← Back</button>
-                    
                     <div class="video-container">
                         ${renderMedia(idiom)}
                     </div>
@@ -1405,7 +1406,7 @@
                     <div class="mode-title">${difficultyStars} +${xpReward} XP</div>
                     
                     <div class="video-container" style="height: 200px;">
-                        ${renderMedia(idiom)}
+                        ${renderMedia(idiom, false)}
                     </div>
                     
                     ${solveContent}
@@ -1486,7 +1487,7 @@
                     </div>
                     
                     <div class="video-container">
-                        ${renderMedia(idiom)}
+                        ${renderMedia(idiom, false)}
                     </div>
                     <div class="video-caption"><span class="day-badge">DAY ${dayNumber}</span> "${idiom.text}" ${hasTrophy ? '✓' : ''}</div>
                     
@@ -1581,11 +1582,12 @@
         // HELPER FUNCTIONS
         // ==========================================
         
-        function renderMedia(idiom) {
+        function renderMedia(idiom, showIndicator = true) {
             if (idiom.image) {
                 if (idiom.image.endsWith('.mp4')) {
+                    const indicator = showIndicator ? `<div class="playing-indicator"><span class="playing-dot"></span>PLAYING</div>` : '';
                     return `<div class="video-inner"><video src="${idiom.image}" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;"></video></div>
-                            <div class="playing-indicator"><span class="playing-dot"></span>PLAYING</div>`;
+                            ${indicator}`;
                 } else {
                     return `<div class="video-inner"><img src="${idiom.image}" alt="${idiom.text}" style="width: 100%; height: 100%; object-fit: cover;"></div>`;
                 }
