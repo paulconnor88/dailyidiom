@@ -504,13 +504,6 @@
             margin-bottom: 20px;
             letter-spacing: 2px;
             text-transform: uppercase;
-            animation: title-pop 0.4s ease-out;
-        }
-
-        @keyframes title-pop {
-            0% { transform: scale(0.5); opacity: 0; }
-            70% { transform: scale(1.15); }
-            100% { transform: scale(1); opacity: 1; }
         }
 
         .answer-title.correct {
@@ -1626,7 +1619,7 @@
                         
                         <div class="delight-video-area">
                             <div class="delight-video-inner">
-                                <video src="${delight.video}" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
+                                <video id="delight-video" src="${delight.video}" autoplay loop muted playsinline webkit-playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
                             </div>
                         </div>
                         
@@ -1639,6 +1632,12 @@
                         <div class="delight-continue-btn" onclick="goToScreen('complete')">Continue →</div>
                     </div>
                 `;
+                
+                // Force play for mobile
+                const delightVid = document.getElementById('delight-video');
+                if (delightVid) {
+                    delightVid.play().catch(e => console.log('Delight video autoplay blocked:', e));
+                }
             }
             
             // ==========================================
