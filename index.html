@@ -498,27 +498,37 @@
 
         /* ANSWER REVEAL */
         .answer-title {
-            font-family: 'Nunito', sans-serif;
-            font-size: 36px;
-            font-weight: 900;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 24px;
             text-align: center;
             margin-bottom: 20px;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
             text-transform: uppercase;
+            animation: title-pop 0.4s ease-out;
+        }
+
+        @keyframes title-pop {
+            0% { transform: scale(0.5); opacity: 0; }
+            70% { transform: scale(1.15); }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         .answer-title.correct {
             color: var(--green);
-            -webkit-text-stroke: 3px var(--navy);
-            paint-order: stroke fill;
-            text-shadow: 4px 4px 0 var(--navy);
+            text-shadow: 
+                3px 3px 0 var(--navy),
+                -1px -1px 0 var(--navy),
+                1px -1px 0 var(--navy),
+                -1px 1px 0 var(--navy);
         }
 
         .answer-title.incorrect {
             color: var(--coral);
-            -webkit-text-stroke: 3px var(--navy);
-            paint-order: stroke fill;
-            text-shadow: 4px 4px 0 var(--navy);
+            text-shadow: 
+                3px 3px 0 var(--navy),
+                -1px -1px 0 var(--navy),
+                1px -1px 0 var(--navy),
+                -1px 1px 0 var(--navy);
         }
 
         .idiom-display {
@@ -718,36 +728,42 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            padding: 20px 16px;
+            gap: 16px;
+            padding: 24px 16px;
             position: relative;
             z-index: 1;
         }
 
         .delight-title {
             font-family: 'Press Start 2P', cursive;
-            font-size: 20px;
-            color: var(--navy);
+            font-size: 22px;
+            color: var(--green);
             text-align: center;
-            line-height: 1.4;
-            text-shadow: 3px 3px 0 var(--yellow);
-            animation: title-pop 0.5s ease-out;
+            line-height: 1.5;
+            text-shadow: 
+                4px 4px 0 var(--navy),
+                -1px -1px 0 var(--navy),
+                1px -1px 0 var(--navy),
+                -1px 1px 0 var(--navy);
+            animation: delight-pop 0.5s ease-out;
         }
 
-        @keyframes title-pop {
-            0% { transform: scale(0.5); opacity: 0; }
-            70% { transform: scale(1.1); }
-            100% { transform: scale(1); opacity: 1; }
+        @keyframes delight-pop {
+            0% { transform: scale(0.3) rotate(-5deg); opacity: 0; }
+            60% { transform: scale(1.15) rotate(2deg); }
+            80% { transform: scale(0.95) rotate(-1deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
         }
 
         .title-stars {
-            font-size: 28px;
-            animation: star-spin 3s linear infinite;
+            font-size: 32px;
+            animation: star-spin 2s linear infinite;
         }
 
         @keyframes star-spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1); }
         }
 
         .delight-continue-btn {
@@ -1135,7 +1151,7 @@
             { video: 'delight_videos/dart_bullseye.mp4', title: "BULLSEYE!", emoji: '🎯' },
             { video: 'delight_videos/shooting_star.mp4', title: "YOU'RE<br>A STAR!", emoji: '🌠' },
             { video: 'delight_videos/slam_dunk.mp4', title: "NOTHING<br>BUT NET!", emoji: '🏀' },
-            { video: 'delight_videos/mexican_wave.mp4', title: "THE CROWD<br>GOES WILD!", emoji: '👋' },
+            { video: 'delight_videos/rock_concert_crowd.mp4', title: "YOU ROCK!", emoji: '🎸' },
             { video: 'delight_videos/chefs_kiss.mp4', title: "PERFECTO!", emoji: '👨‍🍳' },
             { video: 'delight_videos/dog_frisbee.mp4', title: "NICE<br>CATCH!", emoji: '🐕' },
             { video: 'delight_videos/high_five.mp4', title: "HIGH<br>FIVE!", emoji: '🙌' },
@@ -1610,7 +1626,7 @@
                         
                         <div class="delight-video-area">
                             <div class="delight-video-inner">
-                                <span class="delight-emoji">${delight.emoji}</span>
+                                <video src="${delight.video}" autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
                             </div>
                         </div>
                         
