@@ -1393,7 +1393,7 @@
                 blanks: {answers: ["rock", "hard", "place"]},
                 emoji: "🪨",
                 image: "idiom_images_pixel/idiom_14_caught_between_a_rock_and_a_hard_place_sora.mp4",
-                hardModeAccepts: ["caught between a rock and a hard place", "caught between rock and hard place", "caught between a rock and hard place", "between a rock and a hard place", "catch between a rock and a hard place", "to be caught between a rock and a hard place"]
+                hardModeAccepts: ["caught between a rock and a hard place", "caught between rock and hard place", "caught between a rock and hard place", "between a rock and a hard place", "catch between a rock and a hard place", "to be caught between a rock and a hard place", "between a rock and hard place", "rock and a hard place", "a rock and a hard place"]
             }
         ];
 
@@ -1486,14 +1486,14 @@
                         <div class="video-caption"><span class="day-badge">DAY ${dayNumber}</span> "${idiom.text}" ${hasTodayTrophy ? '✓' : ''}</div>
                         
                         ${hasTodayTrophy ? `
-                            <button class="btn btn-primary" onclick="goToScreen('archive')" style="display: ${getDisplayDayNumber() === 1 ? 'none' : 'block'};">📚 Play Past Idioms</button>
+                            <button class="btn btn-primary" onclick="goToScreen('archive')" style="display: ${getDaysSinceLaunch() === 1 ? 'none' : 'block'};">📚 Play Past Idioms</button>
                             <div class="btn-row">
                                 <button class="btn btn-secondary btn-half" onclick="startPractice()">🔄 Practice</button>
                                 <button class="btn btn-outline btn-half" onclick="shareResult()">📤 Share</button>
                             </div>
                         ` : `
                             <button class="btn btn-primary" onclick="startPractice()">🔄 Try Again</button>
-                            <button class="btn btn-secondary" onclick="goToScreen('archive')" style="display: ${getDisplayDayNumber() === 1 ? 'none' : 'block'};">📚 Play Past Idioms</button>
+                            <button class="btn btn-secondary" onclick="goToScreen('archive')" style="display: ${getDaysSinceLaunch() === 1 ? 'none' : 'block'};">📚 Play Past Idioms</button>
                         `}
                         
                         <div class="footer-legal">
@@ -1779,14 +1779,14 @@
                     <div class="video-caption"><span class="day-badge">DAY ${dayNumber}</span> "${idiom.text}" ${hasTrophy ? '✓' : ''}</div>
                     
                     ${hasTrophy ? `
-                        <button class="btn btn-primary" onclick="goToScreen('archive')" style="display: ${getDisplayDayNumber() === 1 ? 'none' : 'block'};">📚 Play Past Idioms</button>
+                        <button class="btn btn-primary" onclick="goToScreen('archive')" style="display: ${getDaysSinceLaunch() === 1 ? 'none' : 'block'};">📚 Play Past Idioms</button>
                         <div class="btn-row">
                             <button class="btn btn-secondary btn-half" onclick="startPractice()">🔄 Practice</button>
                             <button class="btn btn-outline btn-half" onclick="shareResult()">📤 Share</button>
                         </div>
                     ` : `
                         <button class="btn btn-primary" onclick="startPractice()">🔄 Try Again</button>
-                        <button class="btn btn-secondary" onclick="goToScreen('archive')" style="display: ${getDisplayDayNumber() === 1 ? 'none' : 'block'};">📚 Play Past Idioms</button>
+                        <button class="btn btn-secondary" onclick="goToScreen('archive')" style="display: ${getDaysSinceLaunch() === 1 ? 'none' : 'block'};">📚 Play Past Idioms</button>
                     `}
                 `;
             }
