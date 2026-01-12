@@ -1071,62 +1071,9 @@
     </style>
 </head>
 <body>
-    <!-- PASSWORD GATE -->
-    <div id="gate" class="game-container" style="text-align: center;">
-        <div class="logo">
-            <span class="daily">DAILY</span>
-            <span class="idiom">IDIOM</span>
-            <div class="logo-game-badge">GAME</div>
-        </div>
-        
-        
-        <div style="margin: 30px 0;">
-            <div style="font-size: 40px; margin-bottom: 12px;">🚀</div>
-            <h2 style="font-family: 'Press Start 2P', cursive; font-size: 12px; color: var(--navy); margin-bottom: 8px;">COMING SOON!</h2>
-            <p style="color: var(--text-muted); font-size: 14px;">Launching January 17th, 2026</p>
-        </div>
-        
-        <div class="input-group">
-            <input type="password" id="gatePassword" class="text-input" placeholder="Enter password" style="text-align: center;">
-        </div>
-        <button class="btn btn-primary" onclick="checkGate()">Enter</button>
-        
-        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.05);">
-            <p style="color: var(--text-muted); font-size: 13px;">Follow us for updates</p>
-            <p style="color: var(--coral); font-weight: 700; font-size: 14px; margin-top: 8px;">@dailyidiomgame</p>
-        </div>
-    </div>
-    
-    <div id="app" class="game-container" style="display: none;"></div>
+    <div id="app" class="game-container"></div>
 
     <script>
-        // PASSWORD GATE
-        const GATE_PASSWORD = 'H0m3r15mym8';
-        
-        function checkGate() {
-            const input = document.getElementById('gatePassword').value;
-            if (input === GATE_PASSWORD) {
-                document.getElementById('gate').style.display = 'none';
-                document.getElementById('app').style.display = 'block';
-                sessionStorage.setItem('gateUnlocked', 'true');
-            } else {
-                document.getElementById('gatePassword').style.borderColor = '#EF4444';
-                document.getElementById('gatePassword').value = '';
-                document.getElementById('gatePassword').placeholder = 'Try again...';
-            }
-        }
-        
-        // Check if already unlocked this session
-        if (sessionStorage.getItem('gateUnlocked') === 'true') {
-            document.getElementById('gate').style.display = 'none';
-            document.getElementById('app').style.display = 'block';
-        }
-        
-        // Allow Enter key
-        document.getElementById('gatePassword').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') checkGate();
-        });
-    
         // ==========================================
         // CONFIGURATION
         // ==========================================
