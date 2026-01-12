@@ -1486,19 +1486,19 @@
                         <div class="video-caption"><span class="day-badge">DAY ${dayNumber}</span> "${idiom.text}" ${hasTodayTrophy ? '✓' : ''}</div>
                         
                         ${hasTodayTrophy ? `
-                            <button class="btn btn-primary" onclick="goToScreen('archive')" style="display: ${dayNumber === 1 ? 'none' : 'block'};">📚 Play Past Idioms</button>
+                            <button class="btn btn-primary" onclick="goToScreen('archive')" style="display: ${getDisplayDayNumber() === 1 ? 'none' : 'block'};">📚 Play Past Idioms</button>
                             <div class="btn-row">
                                 <button class="btn btn-secondary btn-half" onclick="startPractice()">🔄 Practice</button>
                                 <button class="btn btn-outline btn-half" onclick="shareResult()">📤 Share</button>
                             </div>
                         ` : `
                             <button class="btn btn-primary" onclick="startPractice()">🔄 Try Again</button>
-                            <button class="btn btn-secondary" onclick="goToScreen('archive')" style="display: ${dayNumber === 1 ? 'none' : 'block'};">📚 Play Past Idioms</button>
+                            <button class="btn btn-secondary" onclick="goToScreen('archive')" style="display: ${getDisplayDayNumber() === 1 ? 'none' : 'block'};">📚 Play Past Idioms</button>
                         `}
                         
                         <div class="footer-legal">
-                            <a href="/terms.html">Terms of Service</a>
-                            <a href="/privacy.html">Privacy Policy</a>
+                            <a href="terms.html">Terms of Service</a>
+                            <a href="privacy.html">Privacy Policy</a>
                         </div>
                         <div class="footer-copyright">© 2026 Daily Idiom Game</div>
                     `;
@@ -1531,8 +1531,8 @@
                         <button class="btn btn-primary" onclick="goToScreen('difficulty')">▶ Play</button>
                         
                         <div class="footer-legal">
-                            <a href="/terms.html">Terms of Service</a>
-                            <a href="/privacy.html">Privacy Policy</a>
+                            <a href="terms.html">Terms of Service</a>
+                            <a href="privacy.html">Privacy Policy</a>
                         </div>
                         <div class="footer-copyright">© 2026 Daily Idiom Game</div>
                     `;
@@ -1779,14 +1779,14 @@
                     <div class="video-caption"><span class="day-badge">DAY ${dayNumber}</span> "${idiom.text}" ${hasTrophy ? '✓' : ''}</div>
                     
                     ${hasTrophy ? `
-                        <button class="btn btn-primary" onclick="goToScreen('archive')" style="display: ${dayNumber === 1 ? 'none' : 'block'};">📚 Play Past Idioms</button>
+                        <button class="btn btn-primary" onclick="goToScreen('archive')" style="display: ${getDisplayDayNumber() === 1 ? 'none' : 'block'};">📚 Play Past Idioms</button>
                         <div class="btn-row">
                             <button class="btn btn-secondary btn-half" onclick="startPractice()">🔄 Practice</button>
                             <button class="btn btn-outline btn-half" onclick="shareResult()">📤 Share</button>
                         </div>
                     ` : `
                         <button class="btn btn-primary" onclick="startPractice()">🔄 Try Again</button>
-                        <button class="btn btn-secondary" onclick="goToScreen('archive')" style="display: ${dayNumber === 1 ? 'none' : 'block'};">📚 Play Past Idioms</button>
+                        <button class="btn btn-secondary" onclick="goToScreen('archive')" style="display: ${getDisplayDayNumber() === 1 ? 'none' : 'block'};">📚 Play Past Idioms</button>
                     `}
                 `;
             }
