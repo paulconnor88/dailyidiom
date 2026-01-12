@@ -1752,9 +1752,11 @@
             // ==========================================
             else if (state.screen === 'complete') {
                 const hasTrophy = hasIdiomTrophy(currentIdiomIndex);
+                const isToday = !state.isPlayingArchive;
+                const todayDayNum = getDaysSinceLaunch();
                 
                 app.innerHTML = `
-                    ${hasTrophy ? `<div class="completion-banner">🏆 Day ${dayNumber} complete – new idiom tomorrow!</div>` : ''}
+                    ${hasTrophy && isToday ? `<div class="completion-banner">🏆 Day ${todayDayNum} complete – new idiom tomorrow!</div>` : ''}
                     
                     <div class="logo">
                         <span class="daily">DAILY</span>
