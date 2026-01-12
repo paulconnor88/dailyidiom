@@ -1,0 +1,17 @@
+=================================================================
+
+1. PIECE OF CAKE
+Meaning: Something very easy to do
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation of a character opening a gift box or treasure chest, revealing a delicious slice of cake inside. The character looks delighted at the discovery. Celebratory feel, like finding a reward in a video game. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
+
+2. BURNING BRIDGES
+Meaning: Destroying relationships, making it impossible to return
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation of a river scene with multiple bridges spanning across it. All the bridges are on fire with bright orange and yellow flames. Dramatic scene with reflections in the water below. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================

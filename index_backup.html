@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Village Idiom</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .game-container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .image-container {
+            width: 100%;
+            height: 300px;
+            background: #f0f0f0;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .idiom-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            image-rendering: pixelated; /* For pixel art */
+        }
+        
+        .placeholder-image {
+            text-align: center;
+            color: #999;
+            font-size: 60px;
+        }
+        
+        .placeholder-image-text {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .difficulty-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            padding: 15px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-difficulty {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .btn-difficulty:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            width: 100%;
+        }
+        
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+            width: 100%;
+        }
+        
+        .btn-secondary:hover {
+            background: #d0d0d0;
+        }
+        
+        .word-tiles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+        
+        .word-tile {
+            background: #667eea;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .word-tile:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+        
+        .word-tile.selected {
+            background: #e0e0e0;
+            color: #999;
+            cursor: default;
+        }
+        
+        .word-tile.selected:hover {
+            transform: none;
+        }
+        
+        .answer-area {
+            background: #f9f9f9;
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            min-height: 80px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .text-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .text-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .language-select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            background: white;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+        
+        .language-select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .fill-blanks {
+            font-size: 18px;
+            line-height: 1.8;
+            text-align: center;
+        }
+        
+        .blank-input {
+            display: inline-block;
+            border: none;
+            border-bottom: 2px solid #667eea;
+            background: transparent;
+            font-size: 18px;
+            padding: 2px 8px;
+            margin: 0 5px;
+            width: 120px;
+            text-align: center;
+        }
+        
+        .blank-input:focus {
+            outline: none;
+            border-bottom-color: #764ba2;
+        }
+        
+        .result {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .result-icon {
+            font-size: 60px;
+            margin-bottom: 10px;
+        }
+        
+        .result-text {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .result-text.correct {
+            color: #10b981;
+        }
+        
+        .result-text.incorrect {
+            color: #ef4444;
+        }
+        
+        .correct-answer {
+            font-size: 18px;
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        .learning-content {
+            margin-bottom: 25px;
+        }
+        
+        .learning-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .learning-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #666;
+        }
+        
+        .idiom-display {
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 25px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .share-button {
+            background: #1DA1F2;
+            color: white;
+            margin-bottom: 10px;
+        }
+        
+        .share-button:hover {
+            background: #1a8cd8;
+        }
+        
+        .tomorrow-message {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 10px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .button-group .btn {
+            flex: 1;
+        }
+        
+        .archive-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .archive-item:hover {
+            background: #f0f0f0;
+            transform: translateX(5px);
+        }
+        
+        .archive-emoji {
+            font-size: 40px;
+            margin-right: 15px;
+        }
+        
+        .archive-details {
+            flex: 1;
+        }
+        
+        .archive-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 3px;
+        }
+        
+        .archive-subtitle {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .archive-arrow {
+            color: #667eea;
+            font-size: 20px;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translate(-50%, -100px);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideOut {
+            from {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+            to {
+                transform: translate(-50%, -100px);
+                opacity: 0;
+            }
+        }
+    
+/* Floating animation - gentle up and down movement */
+.idiom-image {
+    animation: idiomFadeIn 0.6s ease-in;
+}
+
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes idiomFadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+        </style>
+</head>
+<body>
+    <div id="app" class="game-container"></div>
+
+    <script>
+
+        // Launch date: Jan 17, 2025
+        const LAUNCH_DATE = new Date('2026-01-03T00:00:00Z');
+        
+        function getDaysSinceLaunch() {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            LAUNCH_DATE.setHours(0, 0, 0, 0);
+            const diffTime = today - LAUNCH_DATE;
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            return Math.max(0, diffDays) + 1;  // Day 1 = launch day
+        }
+
+        // Game state
+        let state = {
+            screen: 'landing',
+            difficulty: null,
+            selectedWords: [],
+            usedWordIndices: [], // Track which word tiles have been used
+            userAnswer: '',
+            blank1: '',
+            blank2: '',
+            blank3: '',
+            isCorrect: false,
+            streak: parseInt(localStorage.getItem('idiomStreak') || '0'),
+            hasPlayedToday: localStorage.getItem('lastPlayedDay') === getDayOfYear().toString(),
+            selectedLanguage: 'es',
+            translatedContent: null,
+            lastTranslatedLang: null
+        };
+
+        // Save streak to localStorage
+        function saveStreak() {
+            localStorage.setItem('idiomStreak', state.streak.toString());
+            localStorage.setItem('lastPlayedDay', getDayOfYear().toString());
+        }
+
+        // Check if user completed today
+        function markTodayComplete() {
+            localStorage.setItem('lastPlayedDay', getDayOfYear().toString());
+            state.hasPlayedToday = true;
+        }
+
+        // Library of idioms
+        const idiomLibrary = [
+            {
+                text: "break the ice",
+                meaning: "To do or say something that makes people feel more comfortable in a social situation, especially when meeting for the first time.",
+                etymology: "The phrase dates back to at least the 16th century. It originally referred to ships breaking ice to clear a path for other vessels. By the 1600s, the expression was already being used metaphorically to describe easing tension or starting social interaction.",
+                examples: ["She told a joke to break the ice at the meeting.", "Playing a game helped us break the ice on the first day of class.", "Let's play an ice-breaker before we get started."],
+                words: ["break", "the", "ice"],
+                blanks: {answers: ["break", "ice"]},
+                emoji: "🧊",
+                image: "idiom_images_pixel/idiom_01_break_the_ice_sora.mp4",
+                hardModeAccepts: ["break the ice", "break ice", "breaking the ice", "broke the ice"]
+            },
+            {
+                text: "spill the beans",
+                meaning: "To reveal secret information, either accidentally or deliberately.",
+                etymology: "The exact origin is uncertain. A commonly cited theory links the phrase to ancient Greek voting practices using beans, but there is no firm evidence this directly led to the modern idiom. What is confirmed is that the phrase first appeared in American English in the early 20th century (around 1919).",
+                examples: ["Come on, spill the beans! What happened?", "She finally spilled the beans about her promotion.", "He promised not to spill the beans about the surprise party."],
+                words: ["spill", "the", "beans"],
+                blanks: {answers: ["spill", "beans"]},
+                emoji: "🫘",
+                image: "idiom_images_pixel/idiom_02_spill_the_beans_sora_v2.mp4",
+                hardModeAccepts: ["spill the beans", "spill beans", "spilling the beans", "spilled the beans"]
+            },
+            {
+                text: "piece of cake",
+                meaning: "Something that is very easy to do.",
+                etymology: "The phrase originated in American English in the late 19th century. It is often linked to the idea that cake is pleasant and easy to enjoy. The expression was later popularised by the Royal Air Force during World War II as slang for an easy task or mission.",
+                examples: ["The test was a piece of cake.", "Don't worry, fixing this problem will be a piece of cake.", "Once you've learned it, it becomes a piece of cake."],
+                words: ["piece", "of", "cake"],
+                blanks: {answers: ["piece", "cake"]},
+                emoji: "🍰",
+                image: "idiom_images_pixel/idiom_03_piece_of_cake_sora.mp4",
+                hardModeAccepts: ["piece of cake", "piece a cake", "peice of cake", "a piece of cake"]
+            },
+            {
+                text: "hit the nail on the head",
+                meaning: "To be exactly right about the cause of a situation or problem.",
+                etymology: "This phrase dates back to at least the 1500s. It comes from carpentry: hitting a nail squarely on the head drives it in properly, while missing causes damage. The expression quickly became a metaphor for precision and accuracy.",
+                examples: ["You've hit the nail on the head — that's exactly the problem.", "Her comment really hit the nail on the head.", "I think he's finally hitting the nail on the head with this new idea."],
+                words: ["hit", "the", "nail", "on", "the", "head"],
+                blanks: {answers: ["nail", "head"]},
+                emoji: "🔨",
+                image: "idiom_images_pixel/idiom_05_hit_the_nail_on_the_head_sora_v2.mp4",
+                hardModeAccepts: ["hit the nail on the head", "hit nail on head", "hit the nail on head", "hitting the nail on the head", "hits the nail on the head"]
+            },
+            {
+                text: "let the cat out of the bag",
+                meaning: "To reveal a secret, usually by accident.",
+                etymology: "The phrase likely dates from the 18th century. One widely cited explanation links it to market fraud, where dishonest sellers would substitute a cat for a piglet in a bag. Opening the bag exposed the deception, revealing the secret.",
+                examples: ["He let the cat out of the bag about the surprise party.", "She accidentally let the cat out of the bag at dinner.", "Try not to let the cat out of the bag before Friday."],
+                words: ["let", "the", "cat", "out", "of", "the", "bag"],
+                blanks: {answers: ["cat", "bag"]},
+                emoji: "🐱",
+                image: "idiom_images_pixel/idiom_06_let_the_cat_out_of_the_bag_sora_v3.mp4",
+                hardModeAccepts: ["let the cat out of the bag", "let cat out of bag", "let the cat out the bag", "letting the cat out of the bag", "lets the cat out of the bag"]
+            },
+            {
+                text: "raining cats and dogs",
+                meaning: "Raining very heavily.",
+                etymology: "The true origin of this phrase is unknown. Many popular explanations exist, including references to animals, mythology, or historical living conditions, but none are proven. The expression is first recorded in the early 18th century.",
+                examples: ["It's raining cats and dogs, so we should stay inside.", "Yesterday it rained cats and dogs all afternoon.", "Don't forget your umbrella — it's raining cats and dogs out there."],
+                words: ["raining", "cats", "and", "dogs"],
+                blanks: {answers: ["cats", "dogs"]},
+                emoji: "🌧️",
+                image: "idiom_images_pixel/idiom_07_raining_cats_and_dogs_sora.mp4",
+                hardModeAccepts: ["raining cats and dogs", "its raining cats and dogs", "it's raining cats and dogs", "rain cats and dogs", "rains cats and dogs"]
+            },
+            {
+                text: "under the weather",
+                meaning: "Feeling ill or unwell.",
+                etymology: "This expression comes from maritime language. When sailors felt sick, they would go below deck to escape bad weather and rough seas. Being \"under the weather\" came to mean feeling unwell. The phrase appears in this sense from the early 19th century.",
+                examples: ["I'm feeling a bit under the weather today.", "He was under the weather, so he stayed home from work.", "She looked under the weather yesterday."],
+                words: ["under", "the", "weather"],
+                blanks: {answers: ["under", "weather"]},
+                emoji: "☁️",
+                image: "idiom_images_pixel/idiom_09_under_the_weather_sora.mp4",
+                hardModeAccepts: ["under the weather", "under weather", "feeling under the weather"]
+            },
+            {
+                text: "kick the bucket",
+                meaning: "To die (informal; often humorous or blunt).",
+                etymology: "The origin of this phrase is uncertain. Several theories exist — including references to hanging or animal slaughter — but none are definitively proven. Linguists generally agree the phrase dates from the 18th century.",
+                examples: ["My old car has finally kicked the bucket.", "That laptop is going to kick the bucket soon.", "The old TV kicked the bucket last year."],
+                words: ["kick", "the", "bucket"],
+                blanks: {answers: ["kick", "bucket"]},
+                emoji: "🪣",
+                image: "idiom_images_pixel/idiom_10_kick_the_bucket_sora.mp4",
+                hardModeAccepts: ["kick the bucket", "kick bucket", "kicked the bucket", "kicking the bucket", "kicks the bucket"]
+            },
+            {
+                text: "barking up the wrong tree",
+                meaning: "To be wrong about the reason for something or to pursue a mistaken course of action.",
+                etymology: "This American idiom dates to the early 19th century. It comes from hunting, where dogs sometimes barked at the wrong tree after prey had escaped elsewhere.",
+                examples: ["If you think I broke it, you're barking up the wrong tree.", "The police were barking up the wrong tree with their latest suspect.", "He's barking up the wrong tree if he thinks she's to blame."],
+                words: ["barking", "up", "the", "wrong", "tree"],
+                blanks: {answers: ["barking", "tree"]},
+                emoji: "🐕",
+                image: "idiom_images_pixel/idiom_11_barking_up_the_wrong_tree_sora.mp4",
+                hardModeAccepts: ["barking up the wrong tree", "barking up wrong tree", "bark up the wrong tree", "barked up the wrong tree"]
+            },
+            {
+                text: "kill two birds with one stone",
+                meaning: "To achieve two goals with a single action.",
+                etymology: "The phrase dates back to the 17th century and appears in many European languages. It reflects the idea of efficiency rather than a specific historical event.",
+                examples: ["Studying on the train helps me kill two birds with one stone.", "He called his friend while driving home to kill two birds with one stone.", "She tidied her room and found her necklace — two birds with one stone."],
+                words: ["kill", "two", "birds", "with", "one", "stone"],
+                blanks: {answers: ["two", "birds", "stone"]},
+                emoji: "🪨",
+                image: "idiom_images_pixel/idiom_12_kill_two_birds_with_one_stone_sora.mp4",
+                hardModeAccepts: ["kill two birds with one stone", "kill 2 birds with one stone", "kill two birds with 1 stone", "kill 2 birds with 1 stone", "killing two birds with one stone", "kills two birds with one stone"]
+            },
+            {
+                text: "caught between a rock and a hard place",
+                meaning: "Faced with two equally difficult or unpleasant choices.",
+                etymology: "The phrase entered American English in the early 20th century. While it is often compared to the ancient story of Scylla and Charybdis, this link is metaphorical rather than historical. The idiom itself developed independently in modern English.",
+                examples: ["I'm caught between a rock and a hard place — both choices are bad.", "There was no good option; she was caught between a rock and a hard place.", "He felt caught between a rock and a hard place after the argument."],
+                words: ["caught", "between", "a", "rock", "and", "a", "hard", "place"],
+                blanks: {answers: ["rock", "hard", "place"]},
+                emoji: "🪨",
+                image: "idiom_images_pixel/idiom_14_caught_between_a_rock_and_a_hard_place_sora.mp4",
+                hardModeAccepts: ["caught between a rock and a hard place", "caught between rock and hard place", "caught between a rock and hard place", "between a rock and a hard place", "catch between a rock and a hard place"]
+            },
+            {
+                text: "burning bridges",
+                meaning: "To destroy relationships or opportunities, making it impossible to return to a previous situation.",
+                etymology: "The phrase comes from military strategy, where armies destroyed bridges after crossing them to prevent retreat or enemy pursuit. It has been used metaphorically since the 19th century to describe irreversible personal or professional actions.",
+                examples: ["She burned those bridges a long time ago.", "Don't burn bridges — you might need those connections later.", "He's careful not to burn any bridges at work."],
+                words: ["burning", "bridges"],
+                blanks: {answers: ["burning", "bridges"]},
+                emoji: "🔥",
+                image: "idiom_images_pixel/idiom_15_burning_bridges_sora_v2.mp4",
+                hardModeAccepts: ["burning bridges", "burn bridges", "burned bridges", "burns bridges", "burning your bridges", "burn your bridges"]
+            }
+        ];
+
+        // Current idiom selection based on day of year
+        function getDayOfYear() {
+            const now = new Date();
+            const start = new Date(now.getFullYear(), 0, 0);
+            const diff = now - start;
+            const oneDay = 1000 * 60 * 60 * 24;
+            return Math.floor(diff / oneDay);
+        }
+
+        function getTodaysIdiomIndex() {
+            // Day 1 = index 0, Day 5 = index 4
+            const dayNumber = getDaysSinceLaunch();
+            return (dayNumber - 1) % idiomLibrary.length;
+        }
+
+        let currentIdiomIndex = getTodaysIdiomIndex();
+        let idiom = idiomLibrary[currentIdiomIndex];
+
+        
+        async function shareToWhatsApp() {
+            const idiom = idiomLibrary[currentIdiomIndex];
+            const difficulty = state.difficulty.toUpperCase();
+            const difficultyStars = state.difficulty === 'easy' ? '⭐' : state.difficulty === 'medium' ? '⭐⭐' : '⭐⭐⭐';
+            const streak = state.currentStreak || 1;
+            
+            const text = `I solved today's Daily Idiom! 🎉
+
+${difficultyStars} ${difficulty}
+🔥 ${streak} day streak
+
+Can you solve it?
+https://vermillion-salamander-187eaa.netlify.app
+
+Follow @dailyidiomgame for more`;
+
+            // Try native share (mobile) - includes video option
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'Daily Idiom',
+                        text: text,
+                        url: 'https://vermillion-salamander-187eaa.netlify.app'
+                    });
+                } catch (err) {
+                    // User cancelled or error - fallback to WhatsApp web
+                    const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+                    window.open(url, '_blank');
+                }
+            } else {
+                // Desktop - WhatsApp web link
+                const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+                window.open(url, '_blank');
+            }
+        }
+
+        function render() {
+            const app = document.getElementById('app');
+            
+            if (state.screen === 'landing') {
+                const alreadyPlayedMessage = state.hasPlayedToday ? 
+                    `<div style="background: #fff3cd;  border-radius: 10px; margin-bottom: 20px; color: #856404;">
+                        ✅ You've already completed today's idiom!<br/>
+                        Come back tomorrow for a new challenge.
+                    </div>` : '';
+                
+                app.innerHTML = `
+                    <div class="header">
+                        <div class="logo">🏘️ Daily Idiom</div>
+                        <div class="subtitle">Daily English Idiom Challenge</div>
+                    </div>
+                    
+                    ${alreadyPlayedMessage}
+                    
+                    <div class="image-container">
+                        ${idiom.image ? 
+                            (idiom.image.endsWith('.mp4') ?
+                                `<video src="${idiom.image}" class="idiom-image" autoplay loop muted playsinline></video>` :
+                                `<img src="${idiom.image}" alt="${idiom.text}" class="idiom-image">`)
+                            :
+                            `<div class="placeholder-image">
+                                 <div style="font-size: 80px;">${idiom.emoji}</div>
+                                 <div class="placeholder-image-text">Today's Idiom</div>
+                             </div>`
+                        }
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="goToScreen('difficulty')">
+                        ${state.hasPlayedToday ? 'Play Again (Practice Mode)' : "Start Today's Challenge"}
+                    </button>
+                    
+                    ${state.streak > 0 ? `
+                        <div style="text-align: center; margin-top: 20px;">
+                            <div style="font-size: 32px;">🔥 ${state.streak}</div>
+                            <div style="color: #666; font-size: 14px;">Day Streak</div>
+                        </div>
+                    ` : ''}
+                    
+                    <button class="btn btn-secondary" onclick="goToScreen('archive')" style="margin-top: 15px; display: ${getDaysSinceLaunch() === 1 ? 'none' : 'block'};">
+                        📚 Browse All Idioms
+                    </button>
+                    
+                    <div style="text-align: center; margin-top: 20px; color: #999; font-size: 14px;">
+                        A new idiom every day! Come back tomorrow.
+                    </div>
+                `;
+            }
+            
+            else if (state.screen === 'difficulty') {
+                app.innerHTML = `
+                    <div class="header">
+                        <div class="logo">Choose Your Difficulty</div>
+                    </div>
+                    
+                    <div class="image-container">
+                        ${idiom.image ? 
+                            (idiom.image.endsWith('.mp4') ?
+                                `<video src="${idiom.image}" class="idiom-image" autoplay loop muted playsinline></video>` :
+                                `<img src="${idiom.image}" alt="${idiom.text}" class="idiom-image">`)
+                            :
+                            `<div class="placeholder-image">
+                                 <div style="font-size: 80px;">${idiom.emoji}</div>
+                             </div>`
+                        }
+                    </div>
+                    
+                    <div class="difficulty-buttons">
+                        <button class="btn btn-difficulty" onclick="selectDifficulty('easy')">
+                            <strong>Easy</strong><br/>
+                            <small>Reorder</small>
+                        </button>
+                        <button class="btn btn-difficulty" onclick="selectDifficulty('medium')">
+                            <strong>Medium</strong><br/>
+                            <small>Fill Blanks</small>
+                        </button>
+                        <button class="btn btn-difficulty" onclick="selectDifficulty('hard')">
+                            <strong>Hard</strong><br/>
+                            <small>Type It</small>
+                        </button>
+                    </div>
+                `;
+            }
+            
+            else if (state.screen === 'solve') {
+                let solveContent = '';
+                
+                if (state.difficulty === 'easy') {
+                    const shuffled = [...idiom.words].sort(() => Math.random() - 0.5);
+                    // Track which word tiles have been used by index
+                    const usedIndices = state.usedWordIndices || [];
+                    
+                    solveContent = `
+                        <div class="answer-area" id="answerArea">
+                            ${state.selectedWords.length === 0 ? 
+                                '<div style="color: #999;">Tap words below to build the idiom</div>' :
+                                state.selectedWords.map((w, i) => 
+                                    `<div class="word-tile" onclick="removeWord(${i})">${w}</div>`
+                                ).join('')
+                            }
+                        </div>
+                        
+                        <div class="word-tiles">
+                            ${shuffled.map((word, index) => 
+                                `<div class="word-tile ${usedIndices.includes(index) ? 'selected' : ''}" 
+                                     onclick="addWordByIndex(${index}, '${word}')">
+                                    ${word}
+                                </div>`
+                            ).join('')}
+                        </div>
+                    `;
+                }
+                
+                else if (state.difficulty === 'medium') {
+                    const blanksText = generateBlanksText();
+                    solveContent = `
+                        <div class="fill-blanks">
+                            ${blanksText}
+                        </div>
+                    `;
+                }
+                
+                else if (state.difficulty === 'hard') {
+                    solveContent = `
+                        <div class="input-group">
+                            <label class="input-label">Type the complete idiom:</label>
+                            <input type="text" class="text-input" id="userAnswer"
+                                   value="${state.userAnswer}"
+                                   oninput="updateAnswer(this.value)"
+                                   placeholder="Enter the idiom...">
+                        </div>
+                    `;
+                }
+                
+                app.innerHTML = `
+                    <div class="header">
+                        <div class="logo">Solve the Idiom</div>
+                        <div class="subtitle">${state.difficulty.charAt(0).toUpperCase() + state.difficulty.slice(1)} Mode</div>
+                    </div>
+                    
+                    <div class="image-container">
+                        ${idiom.image ? 
+                            (idiom.image.endsWith('.mp4') ?
+                                `<video src="${idiom.image}" class="idiom-image" autoplay loop muted playsinline></video>` :
+                                `<img src="${idiom.image}" alt="${idiom.text}" class="idiom-image">`)
+                            :
+                            `<div class="placeholder-image">
+                                 <div style="font-size: 80px;">${idiom.emoji}</div>
+                             </div>`
+                        }
+                    </div>
+                    
+                    ${solveContent}
+                    
+                    <button class="btn btn-primary" onclick="checkAnswer()">
+                        Check Answer
+                    </button>
+                `;
+            }
+            
+            else if (state.screen === 'result') {
+                app.innerHTML = `
+                    <div class="result">
+                        <div class="result-icon">${state.isCorrect ? '🎉' : '😅'}</div>
+                        <div class="result-text ${state.isCorrect ? 'correct' : 'incorrect'}">
+                            ${state.isCorrect ? 'Correct!' : 'Not quite!'}
+                        </div>
+                        ${!state.isCorrect ? 
+                            `<div class="correct-answer">
+                                The answer was: <strong>${idiom.text}</strong>
+                            </div>` : ''
+                        }
+                    </div>
+                    
+                    ${state.isCorrect ? 
+                        `<button class="btn btn-secondary" onclick="shareResult()" style="margin-bottom: 10px;">
+                            📤 Share Result
+                        </button>` : ''
+                    }
+                    
+                    <button class="btn btn-primary" onclick="goToScreen('learn1')">
+                        Learn More
+                    </button>
+                `;
+            }
+            
+            else if (state.screen === 'learn1') {
+                app.innerHTML = `
+                    <div class="idiom-display">
+                        "${idiom.text}"
+                    </div>
+                    
+                    <div class="learning-content">
+                        <div class="learning-title">What it means</div>
+                        <div class="learning-text">${idiom.meaning}</div>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="goToScreen('learn2')">
+                        Next
+                    </button>
+                `;
+            }
+            
+            else if (state.screen === 'learn2') {
+                app.innerHTML = `
+                    <div class="idiom-display">
+                        "${idiom.text}"
+                    </div>
+                    
+                    <div class="learning-content">
+                        <div class="learning-title">Where it comes from</div>
+                        <div class="learning-text">${idiom.etymology}</div>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button class="btn btn-secondary" onclick="goToScreen('translate')">
+                            🌐 Translate
+                        </button>
+                        <button class="btn btn-primary" onclick="goToScreen('sentence')">
+                            Next
+                        </button>
+                    </div>
+                `;
+            }
+            
+            else if (state.screen === 'translate') {
+                const selectedLang = state.selectedLanguage || 'es';
+                
+                app.innerHTML = `
+                    <div class="idiom-display">
+                        "${idiom.text}"
+                    </div>
+                    
+                    <div class="learning-content">
+                        <div style="background: #fff3cd;  border-radius: 8px; margin-bottom: 20px; font-size: 13px; color: #856404;">
+                            ⚠️ Translations are AI-generated and may not be 100% accurate
+                        </div>
+                        
+                        <label class="input-label">Select Language:</label>
+                        <select id="languageSelect" class="language-select" onchange="changeLanguage(this.value)">
+                            <option value="es" ${selectedLang === 'es' ? 'selected' : ''}>🇪🇸 Spanish (Español)</option>
+                            <option value="fr" ${selectedLang === 'fr' ? 'selected' : ''}>🇫🇷 French (Français)</option>
+                            <option value="de" ${selectedLang === 'de' ? 'selected' : ''}>🇩🇪 German (Deutsch)</option>
+                            <option value="it" ${selectedLang === 'it' ? 'selected' : ''}>🇮🇹 Italian (Italiano)</option>
+                            <option value="pt" ${selectedLang === 'pt' ? 'selected' : ''}>🇵🇹 Portuguese (Português)</option>
+                            <option value="zh-CN" ${selectedLang === 'zh-CN' ? 'selected' : ''}>🇨🇳 Chinese (中文)</option>
+                            <option value="ja" ${selectedLang === 'ja' ? 'selected' : ''}>🇯🇵 Japanese (日本語)</option>
+                            <option value="ko" ${selectedLang === 'ko' ? 'selected' : ''}>🇰🇷 Korean (한국어)</option>
+                            <option value="ar" ${selectedLang === 'ar' ? 'selected' : ''}>🇸🇦 Arabic (العربية)</option>
+                            <option value="ru" ${selectedLang === 'ru' ? 'selected' : ''}>🇷🇺 Russian (Русский)</option>
+                        </select>
+                        
+                        <div id="translationContent" style="margin-top: 20px;">
+                            ${state.translatedContent || '<div style="text-align: center; color: #999;">Translating...</div>'}
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="goToScreen('sentence')">
+                        Continue
+                    </button>
+                `;
+                
+                // Trigger translation if not already done
+                if (!state.translatedContent || state.lastTranslatedLang !== selectedLang) {
+                    translateContent(selectedLang);
+                }
+            }
+            
+            
+            else if (state.screen === 'sentence') {
+                // Generate example sentence for the idiom
+                const exampleSentence = getExampleSentence(idiom.id);
+                
+                app.innerHTML = `
+                    <div class="idiom-display">
+                        "${idiom.text}"
+                    </div>
+                    
+                    <div class="learning-content">
+                        <div class="learning-title">Use it in a sentence</div>
+                        <div class="learning-text" style="font-style: italic; background: #f9f9f9;  border-radius: 10px; border-left: 4px solid #667eea;">
+                            ${idiom.examples.map(ex => `<div style="font-style: italic; margin-bottom: 10px;">• ${ex}</div>`).join('')}
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="goToScreen('complete')">
+                        Finish
+                    </button>
+                `;
+            }
+            
+            else if (state.screen === 'complete') {
+                const shareText = generateShareText();
+                
+                app.innerHTML = `
+                    <div class="header">
+                        <div class="logo">Well Done! 🎉</div>
+                    </div>
+                    
+                    <div class="stats">
+                        <div class="stat">
+                            <div class="stat-value">🔥 ${state.streak}</div>
+                            <div class="stat-label">Day Streak</div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary share-button" onclick="shareResult()">
+                        📤 Share Your Result
+                    </button>
+                    
+                    <button class="btn btn-secondary" onclick="goToScreen('archive')" style="display: ${getDaysSinceLaunch() === 1 ? 'none' : 'block'};">
+                        📚 Browse Past Idioms
+                    </button>
+                    
+                    <div class="tomorrow-message">
+                        ⏰ Check back tomorrow for a new idiom!
+                    </div>
+                `;
+            }
+            
+            else if (state.screen === 'archive') {
+                app.innerHTML = `
+                    <div class="header">
+                        <div class="logo">📚 Idiom Archive</div>
+                        <div class="subtitle">Browse all idioms</div>
+                    </div>
+                    
+                    <div style="max-height: 400px; overflow-y: auto; margin-bottom: 20px;">
+                        ${(() => {
+                            const daysSince = getDaysSinceLaunch();
+                            const dayNumber = getDaysSinceLaunch();
+                            const availableCount = dayNumber === 1 ? 0 : Math.min(dayNumber - 1, idiomLibrary.length);
+                            return idiomLibrary.slice(0, availableCount).map((item, index) => `
+                                <div class="archive-item" onclick="playIdiom(${index})">
+                                    <div class="archive-details" style="flex: 1;">
+                                        <div class="archive-title">Day ${index + 1}</div>
+                                    </div>
+                                    <div class="archive-arrow">▶</div>
+                                </div>
+                            `).join('');
+                        })()}
+                    </div>
+                    
+                    <button class="btn btn-secondary" onclick="goToScreen('landing')">
+                        ← Back to Today
+                    </button>
+                `;
+            }
+        }
+
+        function goToScreen(screen) {
+            state.screen = screen;
+            render();
+        }
+
+        function switchIdiom(index) {
+            currentIdiomIndex = index;
+            idiom = idiomLibrary[currentIdiomIndex];
+            reset();
+        }
+
+        function generateShareText() {
+            const difficultyEmoji = {
+                'easy': '⭐',
+                'medium': '⭐⭐',
+                'hard': '⭐⭐⭐'
+            };
+            
+            const result = state.isCorrect ? '✅' : '❌';
+            const difficultyLabel = state.difficulty.charAt(0).toUpperCase() + state.difficulty.slice(1);
+            
+            return `I ${state.isCorrect ? 'solved' : 'tried'} today's Daily Idiom! 🏘️
+
+${result} Idiom #${currentIdiomIndex + 1}
+${difficultyEmoji[state.difficulty]} ${difficultyLabel} difficulty
+🔥 ${state.streak} day streak
+
+Play today's idiom: https://vermillion-salamander-187eaa.netlify.app`;
+        }
+
+        async function shareResult() {
+            const shareText = generateShareText();
+            
+            // Try native share first (works on mobile)
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        text: shareText,
+                        url: window.location.href
+                    });
+                    showToast('Shared! 🎉');
+                    return;
+                } catch (err) {
+                    if (err.name !== 'AbortError') {
+                        console.log('Share failed, falling back to clipboard');
+                    }
+                }
+            }
+            
+            // Fallback to clipboard
+            try {
+                await navigator.clipboard.writeText(shareText);
+                showToast('📋 Copied to clipboard!');
+            } catch (err) {
+                // Final fallback - show text in alert
+                alert('Share this:\n\n' + shareText);
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #10b981;
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                font-weight: 600;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                z-index: 9999;
+                animation: slideIn 0.3s ease;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
+
+        function changeLanguage(lang) {
+            state.selectedLanguage = lang;
+            state.translatedContent = getTranslation(lang);
+            render();
+        }
+
+        function playIdiom(index) {
+            currentIdiomIndex = index;
+            idiom = idiomLibrary[index];
+            state.screen = 'difficulty';
+            state.difficulty = null;
+            state.selectedWords = [];
+            state.usedWordIndices = [];
+            state.userAnswer = '';
+            state.blank1 = '';
+            state.blank2 = '';
+            state.blank3 = '';
+            render();
+        }
+
+        function getTranslation(targetLang) {
+            // Pre-written translations for better quality and reliability
+            // For MVP, we'll provide Spanish and French, with a note that more are coming
+            const translations = {
+                'es': {
+                    meaningTitle: 'Significado',
+                    originTitle: 'Origen',
+                    meaning: idiom.meaning, // Will be translated
+                    origin: idiom.etymology  // Will be translated
+                },
+                'fr': {
+                    meaningTitle: 'Signification',
+                    originTitle: 'Origine',
+                    meaning: idiom.meaning,
+                    origin: idiom.etymology
+                }
+            };
+            
+            // For now, just show English with translated labels
+            // In production, you'd add real translations here
+            const labels = {
+                'es': { meaningTitle: 'Significado', originTitle: 'Origen' },
+                'fr': { meaningTitle: 'Signification', originTitle: 'Origine' },
+                'de': { meaningTitle: 'Bedeutung', originTitle: 'Herkunft' },
+                'it': { meaningTitle: 'Significato', originTitle: 'Origine' },
+                'pt': { meaningTitle: 'Significado', originTitle: 'Origem' },
+                'zh-CN': { meaningTitle: '含义', originTitle: '起源' },
+                'ja': { meaningTitle: '意味', originTitle: '由来' },
+                'ko': { meaningTitle: '의미', originTitle: '기원' },
+                'ar': { meaningTitle: 'المعنى', originTitle: 'الأصل' },
+                'ru': { meaningTitle: 'Значение', originTitle: 'Происхождение' }
+            };
+            
+            const lang = labels[targetLang] || labels['es'];
+            
+            return `
+                <div style="margin-bottom: 20px;">
+                    <div class="learning-title">${lang.meaningTitle}</div>
+                    <div class="learning-text">${idiom.meaning}</div>
+                    <div style="margin-top: 10px; font-size: 12px; color: #999; font-style: italic;">
+                        (English text shown - full translations coming soon)
+                    </div>
+                </div>
+                <div>
+                    <div class="learning-title">${lang.originTitle}</div>
+                    <div class="learning-text">${idiom.etymology}</div>
+                </div>
+            `;
+        }
+
+        function getExampleSentence(idiomId) {
+            // Example sentences for each idiom
+            const examples = {
+                1: "I tried to teach my boss about social media marketing, but I realized I was breaking the ice at the wrong time.",
+                2: "Don't spill the beans about the surprise party!",
+                3: "That exam was a piece of cake - I finished in 20 minutes.",
+                4: "I had to bite the bullet and tell her the truth.",
+                5: "You hit the nail on the head with that analysis.",
+                6: "He accidentally let the cat out of the bag about the merger.",
+                7: "It's raining cats and dogs outside, so bring an umbrella.",
+                8: "That designer handbag costs an arm and a leg.",
+                9: "I'm feeling a bit under the weather today, so I'll stay home.",
+                10: "When the old computer finally kicked the bucket, we had to buy a new one.",
+                11: "You're barking up the wrong tree if you think I took your keys.",
+                12: "By carpooling, we can kill two birds with one stone - save money and help the environment.",
+                13: "I've done everything I can; now the ball is in your court.",
+                14: "She was caught between a rock and a hard place when choosing between the two job offers.",
+                15: "Don't burn your bridges - you might need to work with them again someday.",
+                16: "Break a leg in your performance tonight!",
+                17: "Losing that job was a blessing in disguise - it led me to my dream career.",
+                18: "Everyone knows about his drinking problem, but it's the elephant in the room that nobody mentions.",
+                19: "My father only visits us once in a blue moon.",
+                20: "I know you're experienced, but please don't take this as teaching your grandmother to suck eggs."
+            };
+            
+            return examples[idiomId] || `Here's an example: The situation was perfect to use "${idiom.text}".`;
+        }
+
+        function generateBlanksText() {
+            const words = idiom.text.split(' ');
+            const answers = idiom.blanks.answers;
+            let blankIndex = 0;
+            
+            return words.map(word => {
+                if (answers.includes(word)) {
+                    blankIndex++;
+                    return `<input type="text" class="blank-input" id="blank${blankIndex}" 
+                                   value="${state['blank' + blankIndex] || ''}" 
+                                   oninput="updateBlank('blank${blankIndex}', this.value)"
+                                   placeholder="?">`;
+                }
+                return word;
+            }).join(' ');
+        }
+
+        function selectDifficulty(level) {
+            state.difficulty = level;
+            state.screen = 'solve';
+            render();
+        }
+
+        function addWordByIndex(index, word) {
+            if (!state.usedWordIndices.includes(index)) {
+                state.selectedWords.push(word);
+                state.usedWordIndices.push(index);
+                render();
+            }
+        }
+
+        function removeWord(selectedIndex) {
+            // Remove from selected words and free up the tile
+            const tileIndex = state.usedWordIndices[selectedIndex];
+            state.selectedWords.splice(selectedIndex, 1);
+            state.usedWordIndices.splice(selectedIndex, 1);
+            render();
+        }
+
+        function updateBlank(field, value) {
+            state[field] = value;
+        }
+
+        function updateAnswer(value) {
+            state.userAnswer = value;
+        }
+
+        function checkAnswer() {
+            let correct = false;
+            
+            if (state.difficulty === 'easy') {
+                const userPhrase = state.selectedWords.join(' ').toLowerCase();
+                correct = userPhrase === idiom.text;
+            } else if (state.difficulty === 'medium') {
+                // Check all blanks dynamically
+                const answers = idiom.blanks.answers;
+                correct = answers.every((answer, index) => {
+                    const blankValue = state['blank' + (index + 1)];
+                    return blankValue && blankValue.toLowerCase().trim() === answer.toLowerCase();
+                });
+            } else if (state.difficulty === 'hard') {
+                correct = (idiom.hardModeAccepts || [idiom.text]).some(accept => accept.toLowerCase().trim() === state.userAnswer.toLowerCase().trim());
+            }
+            
+            state.isCorrect = correct;
+            if (correct && !state.hasPlayedToday) {
+                state.streak++;
+                saveStreak();
+                markTodayComplete();
+            }
+            state.screen = 'result';
+            render();
+        }
+
+        function reset() {
+            state = {
+                screen: 'landing',
+                difficulty: null,
+                selectedWords: [],
+                usedWordIndices: [],
+                userAnswer: '',
+                blank1: '',
+                blank2: '',
+                blank3: '',
+                isCorrect: false,
+                streak: state.streak,
+                hasPlayedToday: state.hasPlayedToday
+            };
+            render();
+        }
+
+        // Initialize on load
+        window.onload = () => render();
+    </script>
+</body>
+</html>

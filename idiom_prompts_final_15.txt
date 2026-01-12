@@ -1,0 +1,128 @@
+nano idiom_prompts_final_15.txt
+```
+
+Then paste this entire content:
+```
+=================================================================
+DAILY IDIOM - FINAL 15 SORA VIDEO PROMPTS
+=================================================================
+
+1. LET THE CAT OUT OF THE BAG
+Meaning: To accidentally reveal a secret
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation that serves as a visual clue for the English idiom "let the cat out of the bag" (meaning: accidentally reveal a secret). Show a person at a dinner table with friends opening a simple bag, and a cat leaping out of it, landing on the ground and running away. The friends look very surprised when this happens. The cat should be clearly visible and animated. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
+
+2. BRING HOME THE BACON
+Meaning: To earn money for the family, to succeed
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation that serves as a visual clue for the English idiom "bring home the bacon" (meaning: earn money/succeed). Show a person walking through a front door into a home, carrying strips of bacon or a slab of bacon proudly. Family members inside look happy to see them arrive with the bacon. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
+
+3. A BULL IN A CHINA SHOP
+Meaning: A clumsy person in a delicate situation
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation that serves as a visual clue for the English idiom "a bull in a china shop" (meaning: clumsy in delicate situation). Show a large brown bull inside a fancy shop full of shelves with delicate china plates, cups and vases. The bull moves clumsily and knocks items off shelves, china smashing on the floor. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
+
+4. WALKING ON EGGSHELLS
+Meaning: Being very careful not to upset someone
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation that serves as a visual clue for the English idiom "walking on eggshells" (meaning: being very careful). Show a person tiptoeing very carefully across a floor completely covered in white eggs, arms stretched out for balance, looking nervous and cautious. Some eggs crack under their feet as they step. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
+
+5. CRY OVER SPILT MILK
+Meaning: To be upset about something that cannot be undone
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation that serves as a visual clue for the English idiom "cry over spilt milk" (meaning: upset about what can't be undone). Show a person sitting on the floor in a kitchen next to a knocked-over glass, white milk pooling on the floor. The person is crying dramatically with tears streaming down their face, very upset about the spilled milk. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
+
+6. A WOLF IN SHEEPS CLOTHING
+Meaning: Someone pretending to be harmless but is actually dangerous
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation that serves as a visual clue for the English idiom "a wolf in sheep's clothing" (meaning: dangerous person pretending to be harmless). Show a grey wolf wearing a fluffy white sheep costume, standing among a flock of real white sheep in a field. The wolf's pointy ears, eyes and snout are clearly visible poking out beneath the sheep costume. The real sheep don't notice. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
+
+7. THE ELEPHANT IN THE ROOM
+Meaning: An obvious problem everyone is ignoring
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation that serves as a visual clue for the English idiom "the elephant in the room" (meaning: obvious problem being ignored). Show a cozy living room with two or three people sitting on sofas having tea and chatting. A HUGE grey elephant is standing right in the middle of the room, taking up most of the space. Everyone deliberately avoids looking at it, pretending it's not there. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
+
+8. WHEN PIGS FLY
+Meaning: Something that will never happen
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation that serves as a visual clue for the English idiom "when pigs fly" (meaning: never). Show a happy pink pig with small feathered wings flying through a bright blue sky with fluffy white clouds. The pig flaps its little wings and soars through the air, enjoying itself. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
+
+9. OPEN A CAN OF WORMS
+Meaning: To create unforeseen problems
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation that serves as a visual clue for the English idiom "open a can of worms" (meaning: create unforeseen problems). Show a person at a table opening a tin can with a can opener. As soon as the lid comes off, dozens of pink worms suddenly spill out everywhere, wriggling all over the table and falling onto the floor. The person looks shocked. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
+
+10. A FISH OUT OF WATER
+Meaning: Someone in an uncomfortable or unfamiliar situation
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation that serves as a visual clue for the English idiom "a fish out of water" (meaning: uncomfortable in unfamiliar situation). Show a colourful fish flopping around helplessly on a wooden dock or beach, gasping for air, looking distressed and completely out of place. Water visible nearby but the fish can't reach it. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
+
+11. PUT ALL YOUR EGGS IN ONE BASKET
+Meaning: To risk everything on a single venture
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation that serves as a visual clue for the English idiom "put all your eggs in one basket" (meaning: risk everything on one thing). Show a person carefully placing many white eggs one by one into a single wicker basket. The basket becomes very full and overflowing with eggs, looking precarious and wobbly, about to tip over. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
+
+12. LONG IN THE TOOTH
+Meaning: Old, aging
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation that serves as a visual clue for the English idiom "long in the tooth" (meaning: old/aging). Show an old grey horse with comically exaggerated long teeth sticking out of its mouth. A person is inspecting the horse's teeth at a market or stable, pulling back the horse's lips to reveal the very long teeth. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
+
+13. LET SLEEPING DOGS LIE
+Meaning: Don't disturb a situation that might cause trouble
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation that serves as a visual clue for the English idiom "let sleeping dogs lie" (meaning: don't disturb a risky situation). Show a person tiptoeing very quietly and carefully past two or three dogs sleeping peacefully on the floor. The person has a finger to their lips in a 'shh' gesture, looking nervous, trying not to wake them. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
+
+14. BURN THE MIDNIGHT OIL
+Meaning: To work late into the night
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation that serves as a visual clue for the English idiom "burn the midnight oil" (meaning: work late at night). Show a person sitting at a wooden desk working by the warm glow of an old-fashioned oil lamp. A clock on the wall clearly shows midnight (12:00). The lamp flame flickers gently. Dark night sky visible through a window with stars. The person looks tired but keeps working. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
+
+15. HOLD YOUR HORSES
+Meaning: Wait, slow down, be patient
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation that serves as a visual clue for the English idiom "hold your horses" (meaning: wait/be patient). Show a person physically holding onto the reins of two energetic horses that are trying to gallop away. The person is digging their heels into the ground, leaning back, struggling to hold the horses back. The horses are straining forward. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================

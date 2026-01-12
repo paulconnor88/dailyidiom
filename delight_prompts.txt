@@ -1,0 +1,99 @@
+=================================================================
+DAILY IDIOM - DELIGHT SCREENS
+Celebration animations for correct answers
+=================================================================
+
+CONTEXT:
+These videos play when users get the idiom correct.
+Each day will rotate through a different celebration animation.
+Captions like "You're flippin' great!" will be added in the UI, NOT in the video.
+Videos save to: delight_videos/
+
+=================================================================
+
+1. PENGUIN DIVE
+Caption idea: "You're flippin' great!"
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation of a cute penguin standing on an iceberg. The penguin waves its flipper happily at the viewer, then turns and dives gracefully off the iceberg into the water with a splash. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
+
+2. GOLF PUTT
+Caption idea: "Hole in one!"
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation of a golfer on a putting green. They line up their shot and putt the ball. The ball rolls across the green and drops into the hole. The golfer raises their arms in celebration. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
+
+3. DART BULLSEYE
+Caption idea: "Bullseye!"
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation of a dart flying through the air and landing perfectly in the bullseye of a dartboard. The dartboard wobbles slightly from the impact. Maybe a small sparkle or flash effect when it hits the centre. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
+
+4. SHOOTING STAR
+Caption idea: "You're a star!"
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation of a night sky with twinkling stars. A bright shooting star streaks across the sky leaving a glowing trail behind it. Magical, dreamy atmosphere. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
+
+5. SLAM DUNK
+Caption idea: "Nothing but net!"
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation of a basketball player jumping high and performing a powerful slam dunk, slamming the ball through the hoop. The net swishes and the player hangs on the rim briefly in celebration. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
+
+6. MEXICAN WAVE
+Caption idea: "The crowd goes wild!"
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation of a stadium crowd doing a Mexican wave. Rows of colourful spectators stand up with their arms raised in sequence, creating the classic wave effect rippling across the stadium. Festive, celebratory atmosphere. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
+
+7. CHEFS KISS
+Caption idea: "Perfetto!"
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation of a happy chef in a white hat and apron. The chef brings their fingers to their lips and does the classic Italian chef's kiss gesture, then spreads their hand outward with a satisfied expression. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
+
+8. DOG FRISBEE
+Caption idea: "Nice catch!"
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation of a happy dog leaping high into the air and catching a frisbee in its mouth. The dog lands back on the grass, tail wagging proudly with the frisbee. Park or garden setting. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
+
+9. THUNDEROUS HIGH FIVE
+Caption idea: "High five!"
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation of two hands coming together for a powerful high five. When the hands connect, there's an explosive impact effect with lightning bolts, shockwaves, or energy radiating outward from the slap. Epic and dramatic. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
+
+10. THUMBS UP
+Caption idea: "You got this!"
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation of a hand emerging from water giving a strong thumbs up gesture, like a triumphant survivor. The hand is steady and confident. Water ripples around it. Clear blue water, positive vibes. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
+
+GENERATION NOTES:
+- Output folder: delight_videos/
+- Cost: ~$0.50 per video (~$5.00 total for 10)
+- Wait 70 seconds between API calls
+- Estimated time: ~20 minutes for all 10
+=================================================================

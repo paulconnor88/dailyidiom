@@ -1,0 +1,25 @@
+=================================================================
+
+1. BICYCLE KICK GOAL
+Caption idea: "Get in!"
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation of a footballer performing a spectacular overhead bicycle kick. The ball flies into the goal as the player lands. Dramatic stadium atmosphere with the crowd visible in the background. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
+
+2. OLD LADY TEA
+Caption idea: "Lovely stuff!"
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation of a cosy northern English old lady with glasses and a cardigan, sitting in a comfy armchair. She lifts a cup of tea to her lips and takes a satisfied sip, then gives a warm approving nod. Cosy living room with floral wallpaper and warm lighting. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
+
+3. DOG FRISBEE
+Caption idea: "Got it!"
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation of a happy dog leaping high into the air and catching a frisbee in its mouth. The dog lands back on the grass, tail wagging proudly with the frisbee. Park or garden setting. 16-bit pixel art animation style. Chunky pixels, limited color palette (max 16 colors), clean sprite-like characters, sharp pixel edges, no anti-aliasing. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Bright, warm colors. No text, UI elements, or watermarks.
+
+=================================================================
