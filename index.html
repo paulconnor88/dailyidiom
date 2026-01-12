@@ -67,8 +67,10 @@
             right: 0;
             bottom: 0;
             background-image: 
-                radial-gradient(circle, rgba(255,255,255,0.25) 1px, transparent 1px);
-            background-size: 40px 40px;
+                radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px),
+                radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px);
+            background-size: 50px 50px, 30px 30px;
+            background-position: 0 0, 15px 15px;
             pointer-events: none;
             z-index: 0;
         }
@@ -298,15 +300,15 @@
         }
 
         .btn-outline {
-            background: linear-gradient(180deg, var(--sky-light) 0%, var(--sky-blue) 100%);
-            border: 3px solid #3a8ab8;
-            box-shadow: 0 4px 0 #3a8ab8;
+            background: linear-gradient(180deg, var(--green-light) 0%, var(--green) 100%);
+            border: 3px solid #1a9f4a;
+            box-shadow: 0 4px 0 #1a9f4a;
             color: var(--white);
             text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
 
         .btn-outline:active {
-            box-shadow: 0 1px 0 #3a8ab8;
+            box-shadow: 0 1px 0 #1a9f4a;
         }
 
         /* Share link - game box style */
@@ -1043,6 +1045,13 @@
             color: var(--coral);
         }
 
+        .footer-copyright {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
         /* TOAST */
         @keyframes slideIn {
             from { transform: translate(-50%, -100px); opacity: 0; }
@@ -1069,7 +1078,7 @@
             <span class="idiom">IDIOM</span>
             <div class="logo-game-badge">GAME</div>
         </div>
-        <div class="logo-tagline">Watch · Guess · Learn</div>
+        
         
         <div style="margin: 30px 0;">
             <div style="font-size: 40px; margin-bottom: 12px;">🚀</div>
@@ -1122,8 +1131,8 @@
         // CONFIGURATION
         // ==========================================
         
-        // Launch date: Jan 17, 2026
-        const LAUNCH_DATE = new Date('2026-01-17T00:00:00Z');
+        // Launch date: Jan 1, 2026 (TEMP FOR TESTING - change back to Jan 17 before launch)
+        const LAUNCH_DATE = new Date('2026-01-01T00:00:00Z');
         
         // XP values per difficulty
         const XP_VALUES = { easy: 10, medium: 50, hard: 100 };
@@ -1371,7 +1380,7 @@
                 blanks: {answers: ["two", "birds", "stone"]},
                 emoji: "🪨",
                 image: "idiom_images_pixel/idiom_12_kill_two_birds_with_one_stone_sora.mp4",
-                hardModeAccepts: ["kill two birds with one stone", "kill 2 birds with one stone", "kill two birds with 1 stone", "kill 2 birds with 1 stone", "killing two birds with one stone", "kills two birds with one stone"],
+                hardModeAccepts: ["kill two birds with one stone", "kill 2 birds with one stone", "kill two birds with 1 stone", "kill 2 birds with 1 stone", "killing two birds with one stone", "kills two birds with one stone", "two birds one stone", "two birds, one stone"],
                 boldVariations: ["kill two birds with one stone", "two birds with one stone"]
             },
             // Day 12: Caught between a rock and a hard place
@@ -1457,7 +1466,7 @@
                             <span class="daily">DAILY</span>
                             <span class="idiom">IDIOM</span>
                             <div class="logo-game-badge">GAME</div>
-                            <div class="logo-tagline">Watch · Guess · Learn</div>
+                            
                         </div>
                         
                         <div class="stats-row-top">
@@ -1488,9 +1497,10 @@
                         `}
                         
                         <div class="footer-legal">
-                            <a href="#">Terms of Service</a>
-                            <a href="#">Privacy Policy</a>
+                            <a href="/terms.html">Terms of Service</a>
+                            <a href="/privacy.html">Privacy Policy</a>
                         </div>
+                        <div class="footer-copyright">© 2026 Daily Idiom Game</div>
                     `;
                 } else {
                     // FRESH LANDING - Not played today
@@ -1499,7 +1509,7 @@
                             <span class="daily">DAILY</span>
                             <span class="idiom">IDIOM</span>
                             <div class="logo-game-badge">GAME</div>
-                            <div class="logo-tagline">Watch · Guess · Learn</div>
+                            
                         </div>
                         
                         <div class="stats-row-top">
@@ -1521,9 +1531,10 @@
                         <button class="btn btn-primary" onclick="goToScreen('difficulty')">▶ Play</button>
                         
                         <div class="footer-legal">
-                            <a href="#">Terms of Service</a>
-                            <a href="#">Privacy Policy</a>
+                            <a href="/terms.html">Terms of Service</a>
+                            <a href="/privacy.html">Privacy Policy</a>
                         </div>
+                        <div class="footer-copyright">© 2026 Daily Idiom Game</div>
                     `;
                 }
             }
@@ -1796,7 +1807,7 @@
                         <div class="archive-item" onclick="playArchiveIdiom(${i})">
                             <div>
                                 <span class="day-badge">DAY ${i + 1}</span>
-                                <span style="color: var(--navy);">"${item.text}"</span>
+                                <span style="color: var(--navy);">${hasTrophy ? `"${item.text}"` : '???'}</span>
                             </div>
                             <span class="archive-status">${hasTrophy ? '🏆' : '▶️'}</span>
                         </div>
