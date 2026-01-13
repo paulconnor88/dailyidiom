@@ -1475,7 +1475,7 @@
                         </div>
                         <div class="video-caption"><span class="day-badge">DAY ${dayNumber}</span> Guess the idiom from the video!</div>
                         
-                        <button class="btn btn-primary" onclick="goToScreen('difficulty')">▶ Play</button>
+                        <button class="btn btn-primary" onclick="trackEvent('game_started', { day: getDisplayDayNumber() }); goToScreen('difficulty')">▶ Play</button>
                         
                         <div class="footer-legal">
                             <a href="terms.html">Terms of Service</a>
@@ -2033,6 +2033,7 @@
         }
         
         function playArchiveIdiom(index) {
+            trackEvent('archive_game_started', { day: index + 1 });
             currentIdiomIndex = index;
             idiom = idiomLibrary[index];
             state.isPlayingArchive = true;
@@ -2126,6 +2127,7 @@ https://dailyidiom.com
         // ==========================================
         
         window.onload = () => {
+            trackEvent('landing_page_view', { day: getDisplayDayNumber() });
             render();
             preloadDelightVideo();
         };
