@@ -52,10 +52,18 @@
             background: linear-gradient(180deg, var(--sky-light) 0%, var(--sky-blue) 100%);
             min-height: 100vh;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
             padding: 20px;
+            padding-top: 40px;
             position: relative;
+        }
+
+        @media (min-height: 800px) {
+            body {
+                align-items: center;
+                padding-top: 20px;
+            }
         }
 
         /* Decorative pixels in background */
