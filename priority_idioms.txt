@@ -1,0 +1,17 @@
+=================================================================
+
+1. KICK THE BUCKET
+Meaning: To die
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation that serves as a visual clue for the English idiom "kick the bucket". Detailed 16-bit pixel art animation style like classic SNES games such as Earthbound or Harvest Moon. Show a farmer in a barn who accidentally kicks a wooden bucket, slips comically and falls flat on their back. Cartoon stars circle around their head as they lie dazed on the hay-covered floor. Lighthearted slapstick comedy moment. Clean sprite-like characters with expressive faces and smooth shading. Rich, vibrant colors. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. No text, UI elements, or watermarks. No speech or dialogue. Upbeat chiptune video game style background music.
+
+=================================================================
+
+2. BURNING BRIDGES
+Meaning: Destroying relationships, making it impossible to return
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation that serves as a visual clue for the English idiom "burning bridges". Detailed 16-bit pixel art animation style like classic SNES RPG games such as Final Fantasy VI or Chrono Trigger. Top-down RPG game view showing a castle with a moat. A character walks across a wooden drawbridge leaving the castle. As they reach the other side, magical flames erupt behind them and the drawbridge catches fire, blocking the path back. The character continues walking forward without looking back. Fantasy castle setting. Clean sprite-like characters with expressive faces and smooth shading. Rich, vibrant colors. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. No text, UI elements, or watermarks. No speech or dialogue. Upbeat chiptune video game style background music.
+
+=================================================================

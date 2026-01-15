@@ -1,0 +1,9 @@
+=================================================================
+
+1. LET THE CAT OUT OF THE BAG
+Meaning: To accidentally reveal a secret
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation that serves as a visual clue for the English idiom "let the cat out of the bag". Show a medieval market scene like a classic SNES RPG game such as Final Fantasy VI or Chrono Trigger. A merchant hands a customer a sack, the customer opens it and a cat jumps out and runs away. The merchant looks guilty, the customer looks shocked. Detailed 16-bit pixel art with smooth shading and rich colors typical of Super Nintendo games. Clean sprite-like characters with expressive faces. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. Vibrant colors. No text, UI elements, or watermarks. No speech or dialogue. Upbeat chiptune video game style background music.
+
+=================================================================
