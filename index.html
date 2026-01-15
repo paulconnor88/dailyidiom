@@ -1397,8 +1397,16 @@
         
         function render() {
             const app = document.getElementById('app');
-            // Scroll to top on screen change
+            // Scroll to top on screen change - multiple methods for browser compatibility
             window.scrollTo(0, 0);
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+            // Delayed scroll for mobile keyboard dismissal
+            setTimeout(() => {
+                window.scrollTo(0, 0);
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }, 100);
             // Show archive day number if playing from archive, otherwise today's day
             const dayNumber = state.isPlayingArchive ? (state.archiveIdiomIndex + 1) : getDisplayDayNumber();
             const totalIdioms = getTotalIdioms();
@@ -2048,6 +2056,7 @@
             idiom = idiomLibrary[index];
             state.isPlayingArchive = true;
             state.archiveIdiomIndex = index;
+            state.isFirstAttempt = true;
             state.screen = 'difficulty';
             state.difficulty = null;
             state.selectedWords = [];
