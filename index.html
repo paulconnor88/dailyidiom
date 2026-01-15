@@ -1234,7 +1234,7 @@
                 blanks: {answers: ["cats", "dogs"]},
                 emoji: "🌧️",
                 image: "idiom_images_pixel/idiom_07_raining_cats_and_dogs_sora.mp4",
-                hardModeAccepts: ["raining cats and dogs", "its raining cats and dogs", "it's raining cats and dogs", "rain cats and dogs", "rains cats and dogs", "to rain cats and dogs"],
+                hardModeAccepts: ["raining cats and dogs", "its raining cats and dogs", "it's raining cats and dogs", "rain cats and dogs", "rains cats and dogs", "to rain cats and dogs", "it is raining cats and dogs", "its raining cats and dogs"],
                 boldVariations: ["raining cats and dogs", "rained cats and dogs"]
             },
             // Day 4: Kick the bucket
@@ -1397,6 +1397,8 @@
         
         function render() {
             const app = document.getElementById('app');
+            // Scroll to top on screen change
+            window.scrollTo(0, 0);
             // Show archive day number if playing from archive, otherwise today's day
             const dayNumber = state.isPlayingArchive ? (state.archiveIdiomIndex + 1) : getDisplayDayNumber();
             const totalIdioms = getTotalIdioms();
