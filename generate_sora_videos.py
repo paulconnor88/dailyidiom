@@ -15,7 +15,7 @@ import re
 import requests
 
 API_KEY = os.environ.get('OPENAI_API_KEY')
-OUTPUT_DIR = 'idiom_images_pixel'
+OUTPUT_DIR = 'idiom_images_pixel/To Review'
 WAIT_BETWEEN_JOBS = 70  # seconds between starting new jobs
 
 def parse_prompts_file(filepath):

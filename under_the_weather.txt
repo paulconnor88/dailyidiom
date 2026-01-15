@@ -1,0 +1,9 @@
+=================================================================
+
+1. UNDER THE WEATHER
+Meaning: Feeling ill or unwell
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation that serves as a visual clue for the English idiom "under the weather". Detailed 16-bit pixel art animation style like classic SNES platformer games such as Super Mario World or Donkey Kong Country. Show a side-scrolling game level with a single ill-looking character trying to walk forward. A small personal rain cloud hovers directly above them, raining only on them. The character keeps stopping to sneeze — each big sneeze pushes them backwards a little. They struggle to make progress, two steps forward then a sneeze pushes them back. Red nose, tired eyes, clearly unwell. The level scrolls as they move. Clean sprite-like character with expressive face and smooth shading. Rich, vibrant colors but grey tones around the character. Consistent character design throughout with stable anatomy. Smooth, coherent motion with no morphing or distortion. No text, UI elements, or watermarks. No speech or dialogue. Slow melancholic chiptune video game style background music.
+
+=================================================================
