@@ -51,19 +51,9 @@
             font-family: 'DM Sans', sans-serif;
             background: linear-gradient(180deg, var(--sky-light) 0%, var(--sky-blue) 100%);
             min-height: 100vh;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            padding: 20px;
-            padding-top: 40px;
+            padding: 10px;
+            margin: 0;
             position: relative;
-        }
-
-        @media (min-height: 800px) {
-            body {
-                align-items: center;
-                padding-top: 20px;
-            }
         }
 
         /* Decorative pixels in background */
@@ -88,7 +78,7 @@
             border-radius: 20px;
             padding: 20px;
             max-width: 400px;
-            width: 100%;
+            margin: 0 auto;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
             position: relative;
             z-index: 1;
@@ -1397,16 +1387,8 @@
         
         function render() {
             const app = document.getElementById('app');
-            // Scroll to top on screen change - multiple methods for browser compatibility
-            window.scrollTo(0, 0);
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
-            // Delayed scroll for mobile keyboard dismissal
-            setTimeout(() => {
-                window.scrollTo(0, 0);
-                document.body.scrollTop = 0;
-                document.documentElement.scrollTop = 0;
-            }, 100);
+            // Always scroll to top
+            window.scrollTo({ top: 0, behavior: 'instant' });
             // Show archive day number if playing from archive, otherwise today's day
             const dayNumber = state.isPlayingArchive ? (state.archiveIdiomIndex + 1) : getDisplayDayNumber();
             const totalIdioms = getTotalIdioms();
@@ -2011,13 +1993,19 @@
                 if (correct) {
                     // Check if this idiom hasn't already earned a trophy
                     const trophyKey = `trophy_${currentIdiomIndex}`;
+                    console.log('Saving trophy:', trophyKey, 'isArchive:', state.isPlayingArchive);
                     if (!localStorage.getItem(trophyKey)) {
                         state.trophies++;
                         state.totalXP += XP_VALUES[state.difficulty];
                         localStorage.setItem(trophyKey, 'true');
                         saveProgress();
+                        console.log('Trophy saved!');
+                    } else {
+                        console.log('Trophy already exists');
                     }
                 }
+            } else {
+                console.log('Debug mode - not saving');
                 
                 if (!state.hasPlayedToday && !state.isPlayingArchive) {
                     markTodayComplete();
@@ -2081,11 +2069,12 @@
         async function shareResult() {
             trackEvent('share_clicked', { difficulty: state.difficulty });
             const difficultyStars = state.difficulty === 'easy' ? '⭐' : state.difficulty === 'medium' ? '⭐⭐' : '⭐⭐⭐';
+            const availableTrophies = Math.min(getDisplayDayNumber(), getTotalIdioms());
             
             const text = `I solved today's Daily Idiom! 🎉
 
 ${difficultyStars} Day ${getDisplayDayNumber()}
-🏆 ${state.trophies}/${getTotalIdioms()} trophies
+🏆 ${state.trophies}/${availableTrophies} trophies
 ⚡ ${state.totalXP} XP
 
 Can you solve it?
