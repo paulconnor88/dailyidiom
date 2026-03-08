@@ -10063,7 +10063,15 @@
         // ============================================
 
         const urlParams = new URLSearchParams(window.location.search);
-        
+
+        // One-time game reset via ?reset=1 (clears in-progress game so player can restart today)
+        if (urlParams.get('reset') === '1') {
+            localStorage.removeItem('phrazyGameInProgress');
+            // Strip the param and reload clean
+            const cleanUrl = window.location.origin + window.location.pathname;
+            window.location.replace(cleanUrl);
+        }
+
         // Stale cache detection: if today's level exceeds what this HTML knows about, force refresh
         const BUILD_VERSION = '2026-02-18';
         const todayLevelCheck = getTodayLevel();
