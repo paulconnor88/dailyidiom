@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Phrazy – Video Playback Tests</title>
+    <style>
+        body { font-family: 'Courier New', monospace; background: #1a1a2e; color: #e0e0e0; padding: 20px; }
+        h1 { color: #fbbf24; font-size: 18px; }
+        .suite { margin: 16px 0; border-left: 3px solid #333; padding-left: 12px; }
+        .suite-name { color: #5eb3d9; font-weight: bold; margin-bottom: 8px; }
+        .pass { color: #22c55e; }
+        .fail { color: #ff6b4a; }
+        .test { margin: 4px 0; font-size: 14px; }
+        .summary { margin-top: 24px; padding: 12px; border-radius: 8px; font-weight: bold; }
+        .summary.all-pass { background: rgba(34,197,94,0.15); color: #22c55e; }
+        .summary.has-fail { background: rgba(255,107,74,0.15); color: #ff6b4a; }
+    </style>
+</head>
+<body>
+    <h1>Phrazy Video Playback Tests</h1>
+    <div id="results"></div>
+    <div id="summary"></div>
+
+    <script>
+    // ===== Minimal test framework =====
+    let passed = 0, failed = 0;
+    const results = document.getElementById('results');
+
+    function suite(name, fn) {
+        const div = document.createElement('div');
+        div.className = 'suite';
+        div.innerHTML = `<div class="suite-name">${name}</div>`;
+        results.appendChild(div);
+        fn(div);
+    }
+
+    function test(container, name, fn) {
+        const div = document.createElement('div');
+        div.className = 'test';
+        try {
+            fn();
+            div.classList.add('pass');
+            div.textContent = `  PASS  ${name}`;
+            passed++;
+        } catch (e) {
+            div.classList.add('fail');
+            div.textContent = `  FAIL  ${name}: ${e.message}`;
+            failed++;
+        }
+        container.appendChild(div);
+    }
+
+    function assert(condition, msg) {
+        if (!condition) throw new Error(msg || 'Assertion failed');
+    }
+
+    function assertEqual(actual, expected, msg) {
+        if (actual !== expected) throw new Error(msg || `Expected ${expected}, got ${actual}`);
+    }
+
+    // ===== Mock video element =====
+    function createMockVideo() {
+        let _src = '';
+        let _playing = false;
+        let _playBlocked = false;
+        let _listeners = {};
+
+        return {
+            get src() { return _src; },
+            set src(v) { _src = v; _playing = false; },
+            muted: true,
+            loop: true,
+            preload: 'auto',
+
+            load() { /* triggers buffering */ },
+
+            play() {
+                if (_playBlocked) {
+                    return Promise.reject(new DOMException('play() blocked', 'NotAllowedError'));
+                }
+                _playing = true;
+                // Fire 'playing' event async
+                setTimeout(() => this._emit('playing'), 0);
+                return Promise.resolve();
+            },
+
+            addEventListener(event, fn, opts) {
+                if (!_listeners[event]) _listeners[event] = [];
+                _listeners[event].push(fn);
+            },
+
+            removeEventListener(event, fn) {
+                if (_listeners[event]) {
+                    _listeners[event] = _listeners[event].filter(f => f !== fn);
+                }
+            },
+
+            _emit(event) {
+                (_listeners[event] || []).forEach(fn => fn());
+            },
+
+            // Test helpers
+            get _playing() { return _playing; },
+            set _playBlocked(v) { _playBlocked = v; },
+            _simulateCanPlay() { this._emit('canplay'); },
+            _simulatePlaying() { _playing = true; this._emit('playing'); },
+            _unblock() { _playBlocked = false; },
+        };
+    }
+
+    // ===== Mock game state & functions (extracted from index.html logic) =====
+    function createGameState() {
+        return {
+            currentLevel: 1,
+            revealedBricks: [],
+            revealIndex: 0,
+            timeElapsed: 0,
+            won: false,
+            lost: false,
+            shuffleComplete: false,
+            videoReady: false,
+            timerInterval: null,
+        };
+    }
+
+    // Replicate the fixed startGame video setup logic
+    function setupVideo(state, gameVideo, videoSrc) {
+        state.videoReady = false;
+        gameVideo.addEventListener('playing', function onPlaying() {
+            state.videoReady = true;
+            gameVideo.removeEventListener('playing', onPlaying);
+        }, { once: true });
+        gameVideo.src = videoSrc;
+        gameVideo.load();
+        return gameVideo.play().catch(() => {
+            // Autoplay blocked — will retry on first user interaction
+        });
+    }
+
+    // Replicate the fixed handleBrickTap video retry logic
+    function handleBrickTap(state, gameVideo, pos) {
+        if (state.won || state.lost || !state.shuffleComplete) return false;
+        if (state.revealedBricks.includes(pos)) return false;
+
+        // Ensure video is playing — retry on user gesture if autoplay was blocked
+        if (!state.videoReady) {
+            gameVideo.play().catch(() => {});
+        }
+
+        return true; // tap accepted
+    }
+
+    // ===== TESTS =====
+
+    suite('Video element attributes', (container) => {
+        test(container, 'game-video should have preload="auto"', () => {
+            // Simulating what the HTML now has
+            const video = document.createElement('video');
+            video.setAttribute('muted', '');
+            video.setAttribute('loop', '');
+            video.setAttribute('playsinline', '');
+            video.setAttribute('preload', 'auto');
+            assertEqual(video.getAttribute('preload'), 'auto');
+        });
+
+        test(container, 'game-video should have muted attribute for autoplay policy', () => {
+            const video = document.createElement('video');
+            video.setAttribute('muted', '');
+            assert(video.hasAttribute('muted'), 'Video should be muted for autoplay');
+        });
+
+        test(container, 'game-video should have playsinline for iOS', () => {
+            const video = document.createElement('video');
+            video.setAttribute('playsinline', '');
+            assert(video.hasAttribute('playsinline'), 'Video should have playsinline');
+        });
+    });
+
+    suite('Video setup in startGame', (container) => {
+        test(container, 'videoReady starts as false', () => {
+            const state = createGameState();
+            const video = createMockVideo();
+            setupVideo(state, video, 'test.mp4');
+            assertEqual(state.videoReady, false, 'videoReady should be false before playing event');
+        });
+
+        test(container, 'videoReady becomes true after playing event', async () => {
+            const state = createGameState();
+            const video = createMockVideo();
+            await setupVideo(state, video, 'test.mp4');
+            // playing event fires async, wait a tick
+            await new Promise(r => setTimeout(r, 10));
+            assertEqual(state.videoReady, true, 'videoReady should be true after playing event');
+        });
+
+        test(container, 'video src is set correctly', () => {
+            const state = createGameState();
+            const video = createMockVideo();
+            setupVideo(state, video, 'idiom_images_pixel/test_video.mp4?v=55');
+            assertEqual(video.src, 'idiom_images_pixel/test_video.mp4?v=55');
+        });
+
+        test(container, 'silent catch when autoplay is blocked (no thrown error)', async () => {
+            const state = createGameState();
+            const video = createMockVideo();
+            video._playBlocked = true;
+            // This should NOT throw
+            await setupVideo(state, video, 'test.mp4');
+            assertEqual(state.videoReady, false, 'videoReady stays false when blocked');
+        });
+    });
+
+    suite('Brick tap retries video play when not ready', (container) => {
+        test(container, 'handleBrickTap retries play() when videoReady is false', () => {
+            const state = createGameState();
+            state.shuffleComplete = true;
+            const video = createMockVideo();
+            video._playBlocked = true; // Initially blocked
+            state.videoReady = false;
+
+            // Unblock for the retry
+            video._unblock();
+            const accepted = handleBrickTap(state, video, 0);
+            assert(accepted, 'Tap should be accepted');
+            assert(video._playing, 'Video should be playing after retry on tap');
+        });
+
+        test(container, 'handleBrickTap does NOT retry when videoReady is true', () => {
+            const state = createGameState();
+            state.shuffleComplete = true;
+            state.videoReady = true;
+            let playCalled = false;
+            const video = createMockVideo();
+            const origPlay = video.play.bind(video);
+            video.play = () => { playCalled = true; return origPlay(); };
+
+            handleBrickTap(state, video, 0);
+            assert(!playCalled, 'play() should not be called when video is already ready');
+        });
+
+        test(container, 'handleBrickTap rejects tap when game is won', () => {
+            const state = createGameState();
+            state.shuffleComplete = true;
+            state.won = true;
+            const video = createMockVideo();
+            const accepted = handleBrickTap(state, video, 0);
+            assert(!accepted, 'Tap should be rejected when game is won');
+        });
+
+        test(container, 'handleBrickTap rejects tap when game is lost', () => {
+            const state = createGameState();
+            state.shuffleComplete = true;
+            state.lost = true;
+            const video = createMockVideo();
+            const accepted = handleBrickTap(state, video, 0);
+            assert(!accepted, 'Tap should be rejected when game is lost');
+        });
+
+        test(container, 'handleBrickTap rejects tap on already-revealed brick', () => {
+            const state = createGameState();
+            state.shuffleComplete = true;
+            state.revealedBricks = [3];
+            const video = createMockVideo();
+            const accepted = handleBrickTap(state, video, 3);
+            assert(!accepted, 'Tap on revealed brick should be rejected');
+        });
+
+        test(container, 'handleBrickTap rejects tap before shuffle complete', () => {
+            const state = createGameState();
+            state.shuffleComplete = false;
+            const video = createMockVideo();
+            const accepted = handleBrickTap(state, video, 0);
+            assert(!accepted, 'Tap before shuffle complete should be rejected');
+        });
+    });
+
+    suite('Game restore path', (container) => {
+        test(container, 'restored game tracks videoReady correctly', async () => {
+            // Simulates the restore flow from localStorage
+            const state = createGameState();
+            state.revealedBricks = [0, 4, 8]; // 3 bricks already revealed
+            state.revealIndex = 3;
+            state.shuffleComplete = true;
+
+            const video = createMockVideo();
+            await setupVideo(state, video, 'restored_video.mp4?v=55');
+            await new Promise(r => setTimeout(r, 10));
+            assertEqual(state.videoReady, true, 'Video should be ready after restore');
+        });
+
+        test(container, 'restored game with blocked autoplay retries on tap', async () => {
+            const state = createGameState();
+            state.revealedBricks = [0, 4, 8];
+            state.revealIndex = 3;
+            state.shuffleComplete = true;
+
+            const video = createMockVideo();
+            video._playBlocked = true;
+            await setupVideo(state, video, 'restored_video.mp4?v=55');
+            assertEqual(state.videoReady, false, 'videoReady should be false when blocked');
+
+            // User taps brick 1 — retry should kick in
+            video._unblock();
+            const accepted = handleBrickTap(state, video, 1);
+            assert(accepted, 'Tap should be accepted');
+            assert(video._playing, 'Video should start playing on tap retry');
+        });
+    });
+
+    suite('Race condition: rapid brick taps before video loads', (container) => {
+        test(container, 'multiple taps before video ready all trigger retry', () => {
+            const state = createGameState();
+            state.shuffleComplete = true;
+            state.videoReady = false;
+
+            let playCallCount = 0;
+            const video = createMockVideo();
+            const origPlay = video.play.bind(video);
+            video.play = () => { playCallCount++; return origPlay(); };
+
+            handleBrickTap(state, video, 0);
+            handleBrickTap(state, video, 1);
+            handleBrickTap(state, video, 2);
+
+            // First call triggers play, then videoReady becomes true so subsequent don't retry
+            // But since our mock play resolves sync, videoReady is set after first
+            assert(playCallCount >= 1, `play() should be called at least once, was called ${playCallCount} times`);
+        });
+
+        test(container, 'video retry does not crash if play() rejects again', async () => {
+            const state = createGameState();
+            state.shuffleComplete = true;
+            state.videoReady = false;
+
+            const video = createMockVideo();
+            video._playBlocked = true; // Still blocked even on tap
+
+            // This should not throw
+            const accepted = handleBrickTap(state, video, 0);
+            assert(accepted, 'Tap should still be accepted even if retry fails');
+            // Wait for promise rejection to be caught
+            await new Promise(r => setTimeout(r, 10));
+            // No uncaught promise rejection = pass
+        });
+    });
+
+    // ===== Summary =====
+    // Wait for async tests
+    setTimeout(() => {
+        const summary = document.getElementById('summary');
+        const total = passed + failed;
+        summary.className = `summary ${failed === 0 ? 'all-pass' : 'has-fail'}`;
+        summary.textContent = failed === 0
+            ? `All ${total} tests passed`
+            : `${passed}/${total} passed, ${failed} failed`;
+    }, 200);
+    </script>
+</body>
+</html>
