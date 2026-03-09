@@ -10072,8 +10072,19 @@
             window.location.replace(cleanUrl);
         }
 
+        // One-time reset for level 56 (video was missing from deploy on 2026-03-09)
+        if (!localStorage.getItem('phrazyReset56')) {
+            localStorage.setItem('phrazyReset56', '1');
+            const progress = JSON.parse(localStorage.getItem('phraseArcadeProgress') || '{}');
+            if (progress.completedLevels && progress.completedLevels[56]) {
+                delete progress.completedLevels[56];
+                localStorage.setItem('phraseArcadeProgress', JSON.stringify(progress));
+            }
+            localStorage.removeItem('phrazyGameInProgress');
+        }
+
         // Stale cache detection: if today's level exceeds what this HTML knows about, force refresh
-        const BUILD_VERSION = '2026-02-18';
+        const BUILD_VERSION = '2026-03-09';
         const todayLevelCheck = getTodayLevel();
         if (todayLevelCheck > IDIOM_LIBRARY.length && !urlParams.get('debug')) {
             console.warn('Stale HTML detected: today is level', todayLevelCheck, 'but library only has', IDIOM_LIBRARY.length, 'levels. Forcing refresh.');
