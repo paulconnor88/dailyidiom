@@ -7867,6 +7867,107 @@
                 video: "day_61_water_off_a_ducks_back.mp4",
                 meaning: "Criticism or negative comments that have no effect on someone.",
                 origin: "From the fact that duck feathers are waterproof, so water simply rolls off."
+            },
+            {
+                id: 62,
+                phrase: "don't count your chickens before they hatch",
+                accepts: [
+                    "don't count your chickens before they hatch",
+                    "dont count your chickens before they hatch",
+                    "don't count your chickens",
+                    "dont count your chickens",
+                    "counting your chickens before they hatch",
+                    "counting your chickens",
+                    "count your chickens before they hatch",
+                    "never count your chickens before they hatch",
+                    "don't count your chickens before they've hatched",
+                    "dont count your chickens before theyve hatched"
+                ],
+                video: "day_62_dont_count_your_chickens_before_they_hatch.mp4",
+                meaning: "Don't assume something will happen before it actually does; don't rely on uncertain outcomes.",
+                origin: "From Aesop's fable 'The Milkmaid and Her Pail', where a girl fantasises about what she'll buy with money from eggs that haven't yet hatched."
+            },
+            {
+                id: 63,
+                phrase: "until the cows come home",
+                accepts: [
+                    "until the cows come home",
+                    "til the cows come home",
+                    "'til the cows come home",
+                    "till the cows come home",
+                    "wait until the cows come home",
+                    "waiting until the cows come home",
+                    "when the cows come home"
+                ],
+                video: "day_63_until_the_cows_come_home.mp4",
+                meaning: "For a very long time, or indefinitely.",
+                origin: "Cows left to graze will eventually return to the barn on their own, but they take their time — so waiting for them means waiting a very long while."
+            },
+            {
+                id: 64,
+                phrase: "open a can of worms",
+                accepts: [
+                    "open a can of worms",
+                    "opening a can of worms",
+                    "opened a can of worms",
+                    "open up a can of worms",
+                    "a can of worms",
+                    "can of worms"
+                ],
+                video: "day_64_open_a_can_of_worms.mp4",
+                meaning: "To create a complicated situation or reveal a set of problems that are difficult to deal with.",
+                origin: "From the bait tins used by fishermen — once opened, the worms would wriggle everywhere and be nearly impossible to put back."
+            },
+            {
+                id: 65,
+                phrase: "a red herring",
+                accepts: [
+                    "a red herring",
+                    "red herring",
+                    "its a red herring",
+                    "it's a red herring",
+                    "thats a red herring",
+                    "that's a red herring"
+                ],
+                video: "day_65_a_red_herring.mp4",
+                meaning: "Something misleading or distracting from the real issue.",
+                origin: "Smoked herrings turn red and have a strong smell. They were supposedly dragged across trails to throw hunting dogs off the scent."
+            },
+            {
+                id: 66,
+                phrase: "a bun in the oven",
+                accepts: [
+                    "a bun in the oven",
+                    "bun in the oven",
+                    "got a bun in the oven",
+                    "she's got a bun in the oven",
+                    "shes got a bun in the oven",
+                    "having a bun in the oven",
+                    "have a bun in the oven"
+                ],
+                video: "day_66_a_bun_in_the_oven.mp4",
+                meaning: "To be pregnant.",
+                origin: "The 'bun' represents the baby growing inside the 'oven' of the womb. The phrase became popular in the mid-20th century."
+            },
+            {
+                id: 67,
+                phrase: "over-egg the pudding",
+                accepts: [
+                    "over-egg the pudding",
+                    "over egg the pudding",
+                    "overegg the pudding",
+                    "over-egging the pudding",
+                    "over egging the pudding",
+                    "overegging the pudding",
+                    "over-egged the pudding",
+                    "over egged the pudding",
+                    "overegged the pudding",
+                    "don't over-egg the pudding",
+                    "dont over egg the pudding"
+                ],
+                video: "day_67_over_egg_the_pudding.mp4",
+                meaning: "To spoil something by trying too hard or adding too much to it.",
+                origin: "From baking — adding too many eggs to a pudding mixture ruins the texture and taste. Used figuratively since the mid-19th century."
             }
         ];
 
@@ -10084,7 +10185,7 @@
         }
 
         // Stale cache detection: if today's level exceeds what this HTML knows about, force refresh
-        const BUILD_VERSION = '2026-03-09';
+        const BUILD_VERSION = '2026-03-10';
         const todayLevelCheck = getTodayLevel();
         if (todayLevelCheck > IDIOM_LIBRARY.length && !urlParams.get('debug')) {
             console.warn('Stale HTML detected: today is level', todayLevelCheck, 'but library only has', IDIOM_LIBRARY.length, 'levels. Forcing refresh.');
