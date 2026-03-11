@@ -8452,6 +8452,11 @@
             landingVideo.src = VIDEO_BASE_PATH + levelData.video + '?v=' + getTodayLevel();
             landingVideo.play().catch(() => {});
 
+            // Preload into game video element so it's cached when player taps PLAY
+            const gameVideo = $('game-video');
+            gameVideo.src = VIDEO_BASE_PATH + levelData.video + '?v=' + getTodayLevel();
+            gameVideo.load();
+
             // Streak and XP hidden for now (code kept)
             $('streak-display').style.display = 'none';
             $('xp-landing-display').style.display = 'none';
@@ -8586,12 +8591,28 @@
             // Set up video with readiness tracking
             const gameVideo = $('game-video');
             state.videoReady = false;
-            gameVideo.addEventListener('playing', function onPlaying() {
+            const videoUrl = VIDEO_BASE_PATH + levelData.video + '?v=' + getTodayLevel();
+
+            // Use canplaythrough — ensures enough data is buffered to display frames
+            function onVideoReady() {
                 state.videoReady = true;
-                gameVideo.removeEventListener('playing', onPlaying);
-            }, { once: true });
-            gameVideo.src = VIDEO_BASE_PATH + levelData.video + '?v=' + getTodayLevel();
-            gameVideo.load();
+                gameVideo.removeEventListener('canplaythrough', onVideoReady);
+                // Update hint if bricks were waiting
+                if ($('reveal-hint').textContent === 'Loading video...') {
+                    $('reveal-hint').textContent = 'Tap any brick to reveal!';
+                }
+                // Ensure playback has started
+                gameVideo.play().catch(() => {});
+            }
+            gameVideo.addEventListener('canplaythrough', onVideoReady, { once: true });
+
+            // If video src is already set (preloaded from landing), skip reload
+            if (gameVideo.src && gameVideo.src.includes(levelData.video) && gameVideo.readyState >= 3) {
+                state.videoReady = true;
+            } else {
+                gameVideo.src = videoUrl;
+                gameVideo.load();
+            }
             gameVideo.play().catch(() => {
                 // Autoplay blocked — will retry on first user interaction (brick tap)
                 console.warn('Phrazy: video autoplay blocked, will retry on tap');
@@ -8629,7 +8650,7 @@
             // Enable tapping immediately
             state.shuffleComplete = true;
             renderBricks();
-            $('reveal-hint').textContent = 'Tap any brick to reveal!';
+            $('reveal-hint').textContent = state.videoReady ? 'Tap any brick to reveal!' : 'Loading video...';
 
             // Hide chrome now so there's no layout shift
             document.querySelector('.logo').style.display = 'none';
@@ -8673,10 +8694,12 @@
             // Allow tapping any unrevealed brick
             if (state.revealedBricks.includes(pos)) return;
 
-            // Ensure video is playing — retry on user gesture if autoplay was blocked
+            // Block taps until video is buffered — prevents blue screen flash
             if (!state.videoReady) {
                 const gameVideo = $('game-video');
                 gameVideo.play().catch(() => {});
+                $('reveal-hint').textContent = 'Loading video...';
+                return;
             }
 
             // First brick tap: start timer, show guess input, hide prompt
@@ -10185,7 +10208,7 @@
         }
 
         // Stale cache detection: if today's level exceeds what this HTML knows about, force refresh
-        const BUILD_VERSION = '2026-03-10';
+        const BUILD_VERSION = '2026-03-11';
         const todayLevelCheck = getTodayLevel();
         if (todayLevelCheck > IDIOM_LIBRARY.length && !urlParams.get('debug')) {
             console.warn('Stale HTML detected: today is level', todayLevelCheck, 'but library only has', IDIOM_LIBRARY.length, 'levels. Forcing refresh.');
@@ -10225,10 +10248,15 @@
                 // Set up video with readiness tracking
                 const gameVideo = $('game-video');
                 state.videoReady = false;
-                gameVideo.addEventListener('playing', function onPlaying() {
+                function onRestoreReady() {
                     state.videoReady = true;
-                    gameVideo.removeEventListener('playing', onPlaying);
-                }, { once: true });
+                    gameVideo.removeEventListener('canplaythrough', onRestoreReady);
+                    if ($('reveal-hint').textContent === 'Loading video...') {
+                        $('reveal-hint').textContent = 'Tap any brick to reveal!';
+                    }
+                    gameVideo.play().catch(() => {});
+                }
+                gameVideo.addEventListener('canplaythrough', onRestoreReady, { once: true });
                 gameVideo.src = VIDEO_BASE_PATH + levelData.video + '?v=' + getTodayLevel();
                 gameVideo.load();
                 gameVideo.play().catch(() => {
@@ -10243,7 +10271,7 @@
                 $('guess-input').value = '';
                 $('feedback').textContent = '';
                 $('feedback').className = 'feedback';
-                $('reveal-hint').textContent = 'Tap any brick to reveal!';
+                $('reveal-hint').textContent = state.videoReady ? 'Tap any brick to reveal!' : 'Loading video...';
 
                 // Render restored state
                 renderBricks();
