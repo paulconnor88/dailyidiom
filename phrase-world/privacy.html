@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy – Phrase World</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0E1A2E;
+            --navy-mid: #162640;
+            --brass: #C9A24D;
+            --parchment: #F5EAD0;
+            --parchment-dim: #BFB49A;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--navy);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background: var(--navy-mid);
+            border-radius: 16px;
+            border: 2px solid rgba(201,162,77,0.15);
+            padding: 32px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 14px;
+            color: var(--brass);
+            margin-bottom: 8px;
+        }
+        .updated {
+            font-size: 12px;
+            color: var(--parchment-dim);
+            opacity: 0.6;
+            margin-bottom: 24px;
+        }
+        h2 {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--parchment);
+            margin-top: 24px;
+            margin-bottom: 8px;
+        }
+        p, li {
+            font-size: 14px;
+            color: var(--parchment);
+            opacity: 0.8;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+        ul { margin-left: 20px; }
+        strong { color: var(--parchment); opacity: 1; }
+        a { color: var(--brass); }
+        .back-link {
+            display: inline-block;
+            margin-top: 24px;
+            font-weight: 700;
+            color: var(--brass);
+            text-decoration: none;
+        }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PRIVACY POLICY</h1>
+        <p class="updated">Last updated: March 2026</p>
+
+        <p>Phrase World ("we", "our", "us") is a mobile app for learning English idioms, operated by Word Nerd Arcade. We take your privacy seriously and keep data collection to a minimum.</p>
+
+        <h2>What we collect</h2>
+        <ul>
+            <li><strong>Game progress:</strong> Stored locally on your device using AsyncStorage. We don't have access to this data.</li>
+            <li><strong>Push notification tokens:</strong> If you opt in to push notifications, we store your device token to send you idiom reminders. You can opt out at any time via your device settings.</li>
+            <li><strong>Feedback:</strong> If you choose to submit feedback via the in-app form, we store your message. No personal information is required.</li>
+            <li><strong>Purchase information:</strong> In-app purchases are processed by Apple via RevenueCat. We do not store your payment details. We receive confirmation of your entitlement status only.</li>
+        </ul>
+
+        <h2>What we don't collect</h2>
+        <ul>
+            <li>Your real name or email address (we only store the character name you create in the game)</li>
+            <li>Precise location data</li>
+            <li>Contacts, photos, or any other device data</li>
+        </ul>
+
+        <h2>Third-party services</h2>
+        <p>We use:</p>
+        <ul>
+            <li><strong>RevenueCat</strong> — to manage in-app purchases and subscriptions</li>
+            <li><strong>Supabase</strong> — to store feedback submissions and push notification tokens</li>
+            <li><strong>Expo</strong> — for push notification delivery</li>
+        </ul>
+        <p>We don't sell or share your data with anyone else.</p>
+
+        <h2>Data storage</h2>
+        <p>Feedback and push tokens are stored on servers hosted by Supabase (AWS, eu-west region). Data is transmitted over HTTPS.</p>
+
+        <h2>Children</h2>
+        <p>Phrase World is suitable for all ages. We don't knowingly collect personal information from children under 13. The app does not require account creation.</p>
+
+        <h2>Your rights</h2>
+        <p>You can request deletion of any data we hold by emailing us. You can also reset the app at any time to clear all local data.</p>
+
+        <h2>Changes</h2>
+        <p>We may update this policy occasionally. Check back here for the latest version.</p>
+
+        <h2>Contact</h2>
+        <p>Questions? Reach out at <a href="mailto:hello@phrazy.co">hello@phrazy.co</a></p>
+
+        <a href="https://phrazy.co" class="back-link">&larr; Back to Phrazy</a>
+    </div>
+</body>
+</html>
