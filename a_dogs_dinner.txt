@@ -1,0 +1,9 @@
+=================================================================
+
+1. A DOG'S DINNER
+Meaning: A mess, something done badly (or in some contexts, dressed up fancy)
+
+NEW SORA PROMPT:
+Create a 16-bit pixel art animation that serves as a visual clue for the English idiom "a dog's dinner". Detailed 16-bit pixel art animation style like classic SNES games such as Earthbound or Harvest Moon. This video will be displayed behind a 3x3 grid of tiles that reveal one at a time, so composition matters. Simple clean scene. A fancy fine dining restaurant setting. In the centre of the frame, a cute dog sits at a table with a white tablecloth as a distinguished guest. The dog has a napkin tucked into its collar and looks refined and expectant. On the table there are lit candles and a wine glass. On the left side of the frame, a waiter in a bow tie presents a silver platter to the dog. The restaurant background has warm lighting, a chandelier, and elegant decor. The dog at the fancy table is in the centre. The waiter with platter is on the left. Do not draw any grid lines. Simple scene with minimal animation — candles flickering, waiter presenting platter, dog looking pleased. Clean cartoon style. Rich warm restaurant colors with candlelight glow. Simple character design. Consistent throughout. No morphing, no distortion. Smooth motion. No text, UI elements, or watermarks. No speech or dialogue. Elegant fancy chiptune video game style background music.
+
+=================================================================
