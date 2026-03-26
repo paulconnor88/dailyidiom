@@ -1265,9 +1265,105 @@
             font-size: 18px;
         }
 
+        .archive-difficulty {
+            font-size: 12px;
+            white-space: nowrap;
+            margin-left: auto;
+            padding-left: 8px;
+        }
+
         .archive-back {
             text-align: center;
             margin-top: 16px;
+        }
+
+        /* ===== HALL OF FAME ===== */
+        .hof-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 16px;
+            color: var(--navy);
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        body.gp-mode .hof-title {
+            color: #f5c542;
+        }
+
+        .hof-subtitle {
+            text-align: center;
+            font-size: 13px;
+            color: var(--navy);
+            opacity: 0.6;
+            margin-bottom: 16px;
+        }
+
+        body.gp-mode .hof-subtitle {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .hof-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .hof-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 1px solid rgba(245,197,66,0.3);
+            border-radius: 12px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .hof-card-crown {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .hof-card-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .hof-card-week {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 8px;
+            color: #f5c542;
+            margin-bottom: 4px;
+        }
+
+        .hof-card-name {
+            font-size: 15px;
+            font-weight: 800;
+            color: white;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .hof-card-dates {
+            font-size: 10px;
+            color: rgba(255,255,255,0.4);
+            margin-top: 2px;
+        }
+
+        .hof-card-stats {
+            font-size: 10px;
+            color: rgba(255,255,255,0.5);
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .hof-empty {
+            text-align: center;
+            color: rgba(255,255,255,0.4);
+            padding: 32px 16px;
+            font-size: 14px;
         }
 
         /* ===== HOW TO PLAY ===== */
@@ -1908,6 +2004,35 @@
             color: rgba(255,255,255,0.2);
             padding: 4px;
             font-size: 11px;
+        }
+
+        .gp-standings-pinned-separator {
+            text-align: center;
+            color: rgba(255,255,255,0.15);
+            font-size: 10px;
+            padding: 2px 0;
+        }
+
+        .gp-standing-row.gp-pinned-row {
+            border-top: 1px solid rgba(245,197,66,0.2);
+            background: rgba(255,215,0,0.04);
+            margin-top: 4px;
+        }
+
+        .gp-week-nav {
+            cursor: pointer;
+            opacity: 0.5;
+            transition: opacity 0.2s ease;
+            padding: 0 8px;
+            user-select: none;
+        }
+
+        .gp-week-nav:hover {
+            opacity: 1;
+        }
+
+        .gp-week-nav.hidden {
+            visibility: hidden;
         }
 
         .gp-footer {
@@ -4243,11 +4368,21 @@
             </div>
         </div>
 
+        <div class="screen" id="screen-halloffame">
+            <div class="hof-title">🏆 HALL OF FAME</div>
+            <div class="hof-subtitle">Grand Prix Champions</div>
+            <div class="hof-list" id="hof-list"></div>
+            <div class="archive-back">
+                <button class="btn btn-tertiary" id="btn-hof-back">← Back to Today</button>
+            </div>
+        </div>
+
     </div>
 
     <!-- NAV -->
     <div class="nav-row">
         <a class="nav-link" id="nav-archive" style="display: none;">Archive</a>
+        <a class="nav-link" id="nav-halloffame" style="display: none;">Hall of Fame</a>
         <a class="nav-link" id="nav-leagues" style="display: none;">My Leagues</a>
         <a class="nav-link" id="nav-howto">How to Play</a>
     </div>
@@ -4758,12 +4893,18 @@
             });
         }
 
-        function renderGpHq(containerEl, weeklyData, playerId) {
-            const { startLevel, endLevel } = getWeekLevelRange();
+        function renderGpHq(containerEl, weeklyData, playerId, weekNumber = null) {
+            const currentWeekNum = getWeekNumber();
+            const isPastWeek = weekNumber !== null && weekNumber < currentWeekNum;
+            const weekNum = weekNumber || currentWeekNum;
+            const { startLevel, endLevel } = isPastWeek ? getWeekLevelRangeForWeek(weekNum) : getWeekLevelRange();
             const todayLevel = getTodayLevel();
             const todayCompleted = hasCompletedLevel(todayLevel);
-            const weekNum = getWeekNumber();
-            const weekDates = formatWeekDates();
+            const weekDates = isPastWeek ? formatWeekDatesForWeek(weekNum) : formatWeekDates();
+
+            // Nav arrow visibility
+            const hideLeft = weekNum <= 1;
+            const hideRight = weekNum >= currentWeekNum;
 
             // Get current day index (0=Mon, 6=Sun)
             const now = new Date();
@@ -4785,7 +4926,16 @@
                 const won = levelProgress?.won || false;
                 const bricks = levelProgress?.reveals;
 
-                if (level === todayLevel) {
+                if (isPastWeek) {
+                    // Past week: all days are final — completed or missed, no "today"/"upcoming"
+                    if (completed) {
+                        const scoreText = won ? `${bricks}🧱` : '✗';
+                        pipsHtml += `<div class="gp-pip completed"><span class="gp-pip-day">${DAY_LABELS[i]}</span><span class="gp-pip-score">${scoreText}</span></div>`;
+                        if (won) { playerTotalBricks += bricks; playerTotalTime += levelProgress.time || 0; playerDaysPlayed++; }
+                    } else {
+                        pipsHtml += `<div class="gp-pip missed" style="cursor:default;"><span class="gp-pip-day">${DAY_LABELS[i]}</span><span class="gp-pip-score">-</span></div>`;
+                    }
+                } else if (level === todayLevel) {
                     if (todayCompleted) {
                         const scoreText = won ? `${bricks}🧱` : '✗';
                         pipsHtml += `<div class="gp-pip today done"><span class="gp-pip-day">${DAY_LABELS[i]}</span><span class="gp-pip-score">${scoreText}</span></div>`;
@@ -4811,8 +4961,8 @@
                 }
             }
 
-            // Catchup hint
-            const catchupHtml = hasMissedCatchup
+            // Catchup hint (not for past weeks)
+            const catchupHtml = (hasMissedCatchup && !isPastWeek)
                 ? `<div class="gp-catchup-label">⚡ Tap a missed day to catch up</div>`
                 : '';
 
@@ -4831,6 +4981,7 @@
             // Standings rows (top 5 + player neighbourhood)
             const medals = ['🥇', '🥈', '🥉'];
             let standingsHtml = '';
+            let playerShownInStandings = false;
             const maxShow = Math.min(weeklyData.length, 5);
 
             if (playerRank && playerRank <= 5) {
@@ -4839,6 +4990,7 @@
                 for (let i = 0; i < showCount; i++) {
                     const e = weeklyData[i];
                     const isP = e.player_id === playerId;
+                    if (isP) playerShownInStandings = true;
                     const medal = medals[i] || (i + 1);
                     const crown = lastWeekChampionId && e.player_id === lastWeekChampionId ? '👑 ' : '';
                     standingsHtml += `<div class="gp-standing-row${isP ? ' is-player' : ''}">
@@ -4856,6 +5008,7 @@
                 for (let i = 0; i < Math.min(3, weeklyData.length); i++) {
                     const e = weeklyData[i];
                     const isP = e.player_id === playerId;
+                    if (isP) playerShownInStandings = true;
                     const crown = lastWeekChampionId && e.player_id === lastWeekChampionId ? '👑 ' : '';
                     standingsHtml += `<div class="gp-standing-row${isP ? ' is-player' : ''}">
                         <span class="gp-standing-rank">${medals[i]}</span>
@@ -4874,6 +5027,7 @@
                     for (let i = start - 1; i < end; i++) {
                         const e = weeklyData[i];
                         const isP = e.player_id === playerId;
+                        if (isP) playerShownInStandings = true;
                         const crown = lastWeekChampionId && e.player_id === lastWeekChampionId ? '👑 ' : '';
                         standingsHtml += `<div class="gp-standing-row${isP ? ' is-player' : ''}">
                             <span class="gp-standing-rank">${i + 1}</span>
@@ -4887,35 +5041,86 @@
                 }
             }
 
+            // Pinned player row if not already shown in standings
+            if (!playerShownInStandings && playerEntry) {
+                standingsHtml += `<div class="gp-standings-pinned-separator">···</div>`;
+                const crown = lastWeekChampionId && playerEntry.player_id === lastWeekChampionId ? '👑 ' : '';
+                standingsHtml += `<div class="gp-standing-row is-player gp-pinned-row">
+                    <span class="gp-standing-rank">${playerRank}</span>
+                    <span class="gp-standing-name">${crown}${playerEntry.display_name} ← you</span>
+                    <span class="gp-standing-bricks">${playerEntry.total_bricks}🧱</span>
+                    <span class="gp-standing-time">${playerEntry.total_time.toFixed(1)}s</span>
+                </div>`;
+            }
+
+            // Crown on winner for past weeks
+            const standingsTitleHtml = isPastWeek && weeklyData.length > 0
+                ? `FINAL STANDINGS`
+                : `STANDINGS`;
+
+            // Footer text
+            const footerText = isPastWeek
+                ? `Final results for Week ${weekNum}.`
+                : `Missed days = 9🧱 + 180s penalty. Catch up before Sunday.`;
+
             // Assemble
             containerEl.innerHTML = `
                 <div class="gp-hq">
                     <div class="gp-hq-header">
-                        <div class="gp-hq-week">🏁 WEEK ${weekNum} GRAND PRIX</div>
+                        <div class="gp-hq-week">
+                            <span class="gp-week-nav${hideLeft ? ' hidden' : ''}" id="gp-week-prev">◀</span>
+                            🏁 WEEK ${weekNum} GRAND PRIX
+                            <span class="gp-week-nav${hideRight ? ' hidden' : ''}" id="gp-week-next">▶</span>
+                        </div>
                         <div class="gp-hq-dates">${weekDates}</div>
                     </div>
                     <div class="gp-pips">${pipsHtml}</div>
                     ${catchupHtml}
                     ${statusHtml}
                     <div class="gp-standings">
-                        <div class="gp-standings-title">STANDINGS</div>
+                        <div class="gp-standings-title">${standingsTitleHtml}</div>
                         ${standingsHtml}
                     </div>
                     <div class="gp-footer">
-                        <div class="gp-footer-text">Missed days = 9🧱 + 180s penalty. Catch up before Sunday.</div>
+                        <div class="gp-footer-text">${footerText}</div>
                     </div>
                 </div>`;
 
-            // Wire up catchup pip clicks
-            containerEl.querySelectorAll('.gp-pip.missed[data-catchup-level]').forEach(pip => {
-                pip.addEventListener('click', () => {
-                    const level = parseInt(pip.dataset.catchupLevel);
-                    trackEvent('catchup_started', { level: level, from_level: todayLevel });
-                    state.isCatchupPlay = true;
-                    startGame(level, true);
-                    showScreen('game');
+            // Wire up week nav arrows
+            const prevBtn = containerEl.querySelector('#gp-week-prev');
+            const nextBtn = containerEl.querySelector('#gp-week-next');
+            if (prevBtn && !hideLeft) {
+                prevBtn.addEventListener('click', () => navigateGpWeek(containerEl, playerId, weekNum - 1));
+            }
+            if (nextBtn && !hideRight) {
+                nextBtn.addEventListener('click', () => navigateGpWeek(containerEl, playerId, weekNum + 1));
+            }
+
+            // Wire up catchup pip clicks (current week only)
+            if (!isPastWeek) {
+                containerEl.querySelectorAll('.gp-pip.missed[data-catchup-level]').forEach(pip => {
+                    pip.addEventListener('click', () => {
+                        const level = parseInt(pip.dataset.catchupLevel);
+                        trackEvent('catchup_started', { level: level, from_level: todayLevel });
+                        state.isCatchupPlay = true;
+                        startGame(level, true);
+                        showScreen('game');
+                    });
                 });
-            });
+            }
+        }
+
+        async function navigateGpWeek(containerEl, playerId, weekNumber) {
+            const currentWeekNum = getWeekNumber();
+            gpViewWeekNumber = weekNumber === currentWeekNum ? null : weekNumber;
+
+            // Show loading
+            containerEl.innerHTML = `<div style="text-align:center;padding:24px;color:rgba(255,255,255,0.5);">Loading Week ${weekNumber}...</div>`;
+
+            const data = gpViewWeekNumber !== null
+                ? await fetchWeeklyLeaderboardForWeek(weekNumber)
+                : await fetchWeeklyLeaderboard();
+            renderGpHq(containerEl, data, playerId, gpViewWeekNumber);
         }
 
         // --- Supabase API calls ---
@@ -5093,6 +5298,47 @@
             // Cap endLevel at today's level
             const todayLevel = getTodayLevel();
             return { startLevel, endLevel: Math.min(endLevel, todayLevel), totalDays: Math.min(endLevel, todayLevel) - startLevel + 1 };
+        }
+
+        function getWeekBoundsForWeek(weekNumber) {
+            // Get Monday/Sunday for any given week number
+            const monday = new Date(LAUNCH_DATE);
+            monday.setUTCDate(monday.getUTCDate() + (weekNumber - 1) * 7);
+            // Align to Monday
+            const day = monday.getUTCDay();
+            const mondayOffset = day === 0 ? -6 : 1 - day;
+            monday.setUTCDate(monday.getUTCDate() + mondayOffset);
+            monday.setUTCHours(0, 0, 0, 0);
+            const sunday = new Date(monday);
+            sunday.setUTCDate(sunday.getUTCDate() + 6);
+            sunday.setUTCHours(23, 59, 59, 999);
+            return { monday, sunday };
+        }
+
+        function getWeekLevelRangeForWeek(weekNumber) {
+            const { monday, sunday } = getWeekBoundsForWeek(weekNumber);
+            const startLevel = Math.max(1, Math.floor((monday - LAUNCH_DATE) / (1000 * 60 * 60 * 24)) + 1);
+            const endLevel = Math.max(1, Math.floor((sunday - LAUNCH_DATE) / (1000 * 60 * 60 * 24)) + 1);
+            const todayLevel = getTodayLevel();
+            return { startLevel, endLevel: Math.min(endLevel, todayLevel), totalDays: 7 };
+        }
+
+        function formatWeekDatesForWeek(weekNumber) {
+            const { monday, sunday } = getWeekBoundsForWeek(weekNumber);
+            const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            const mDay = monday.getUTCDate();
+            const mMon = months[monday.getUTCMonth()];
+            const sDay = sunday.getUTCDate();
+            const sMon = months[sunday.getUTCMonth()];
+            if (mMon === sMon) return `${mDay} - ${sDay} ${sMon}`;
+            return `${mDay} ${mMon} - ${sDay} ${sMon}`;
+        }
+
+        async function fetchWeeklyLeaderboardForWeek(weekNumber) {
+            const { startLevel, endLevel } = getWeekLevelRangeForWeek(weekNumber);
+            const todayLevel = getTodayLevel();
+            const raw = await fetchAggregateLeaderboard(startLevel, endLevel);
+            return aggregateScoresWithPenalty(raw, startLevel, endLevel, Math.min(endLevel, todayLevel));
         }
 
         function getPreviousWeekBounds() {
@@ -5468,6 +5714,7 @@
         let currentLeaderboardView = 'today';
         let leaderboardCache = {};
         let lastWeekChampionId = null;
+        let gpViewWeekNumber = null; // null = current week
 
         async function fetchLastWeekChampion() {
             try {
@@ -5508,6 +5755,11 @@
                 gameCard.classList.toggle('gp-dark-mode', view === 'week');
             }
             document.body.classList.toggle('gp-mode', view === 'week');
+
+            // Reset week navigation when switching to week tab
+            if (view === 'week') {
+                gpViewWeekNumber = null;
+            }
 
             // Swap level badge to GP badge
             const levelBadge = $('level-badge');
@@ -7150,7 +7402,7 @@
         }
 
         // Comeback screen with leaderboard for signed-up players who return same day
-        async function showComebackWithLeaderboard(levelNumber) {
+        async function showComebackWithLeaderboard(levelNumber, initialView = 'today') {
             const player = getLocalPlayer();
             const wonIt = hasWonLevel(levelNumber);
             
@@ -7175,11 +7427,11 @@
                     $('comeback-week-progress-section').style.display = 'none';
                 }
 
-                // Reset tabs to today
-                currentLeaderboardView = 'today';
+                // Reset tabs to initialView
+                currentLeaderboardView = initialView;
                 const tabContainer = $('comeback-lb-tabs');
                 tabContainer.querySelectorAll('.leaderboard-tab').forEach(t => {
-                    t.classList.toggle('active', t.dataset.view === 'today');
+                    t.classList.toggle('active', t.dataset.view === initialView);
                 });
 
                 if (player) {
@@ -7242,6 +7494,11 @@
 
                 // Bank weekly champion
                 bankWeeklyChampion();
+
+                // If initialView is 'week', switch to GP week tab immediately
+                if (initialView === 'week') {
+                    await switchLeaderboardView('week', 'comeback', levelNumber);
+                }
             } else {
                 // Lost today - show loss comeback with leaderboard
                 $('comeback-loss').style.display = 'block';
@@ -8110,6 +8367,21 @@
                 meaning: "An alcoholic drink taken to cure a hangover.",
                 origin: "From the medieval belief that if you were bitten by a rabid dog, placing hair from that same dog on the wound would heal you. Applied to drinking: the cure for too much alcohol is a little more alcohol.",
                 revealOrder: [1, 2, 3, 7, 9, 4, 8, 6, 5]
+            },
+            {
+                id: 74,
+                phrase: "swings and roundabouts",
+                accepts: [
+                    "swings and roundabouts",
+                    "it's swings and roundabouts",
+                    "its swings and roundabouts",
+                    "what you lose on the swings you gain on the roundabouts",
+                    "lose on the swings gain on the roundabouts",
+                    "swings or roundabouts"
+                ],
+                video: "day_74_swings_and_roundabouts.mp4",
+                meaning: "What you gain in one area, you lose in another — advantages and disadvantages balance out over time.",
+                origin: "From the fairground expression 'what you lose on the swings you gain on the roundabouts,' meaning that profits from one attraction offset losses from another. First recorded in the early 20th century."
             }
         ];
 
@@ -8521,7 +8793,8 @@
             game: $('screen-game'),
             win: $('screen-win'),
             lose: $('screen-lose'),
-            archive: $('screen-archive')
+            archive: $('screen-archive'),
+            halloffame: $('screen-halloffame')
         };
 
         // Tutorial config removed - old mechanics
@@ -8543,8 +8816,8 @@
 
             // Show/hide level badge based on screen
             const levelContainer = $('level-container');
-            if (screenName === 'landing' || screenName === 'archive' || screenName === 'howto' || 
-                screenName === 'whatsNext' || screenName === 'comeback') {
+            if (screenName === 'landing' || screenName === 'archive' || screenName === 'howto' ||
+                screenName === 'whatsNext' || screenName === 'comeback' || screenName === 'halloffame') {
                 levelContainer.style.display = 'none';
             } else {
                 levelContainer.style.display = 'flex';
@@ -8552,11 +8825,21 @@
 
             // Hide archive nav on certain screens
             const navArchive = $('nav-archive');
-            if (screenName === 'win' || screenName === 'lose' ||
-                screenName === 'whatsNext' || screenName === 'comeback') {
+            if (screenName === 'whatsNext') {
                 navArchive.style.display = 'none';
             } else {
                 navArchive.style.display = 'inline';
+            }
+
+            // Hide Hall of Fame nav on certain screens
+            const navHof = $('nav-halloffame');
+            if (navHof) {
+                if (screenName === 'whatsNext') {
+                    navHof.style.display = 'none';
+                } else {
+                    // Only show if it was previously made visible (champions exist)
+                    if (navHof._visible) navHof.style.display = 'inline';
+                }
             }
 
             // Restore layout when leaving gameplay
@@ -9567,12 +9850,12 @@
                     bricks: reveals,
                     time: state.timeElapsed
                 });
-                // Brief delay then return to today's result with updated pips
+                // Brief delay then return to GP week view with updated pips
                 state.isCatchupPlay = false;
                 setTimeout(() => {
                     const todayLevel = getTodayLevel();
                     state.currentLevel = todayLevel;
-                    showComebackWithLeaderboard(todayLevel);
+                    showComebackWithLeaderboard(todayLevel, 'week');
                 }, 2000);
             }
         }
@@ -9619,7 +9902,7 @@
                 setTimeout(() => {
                     const todayLevel = getTodayLevel();
                     state.currentLevel = todayLevel;
-                    showComebackWithLeaderboard(todayLevel);
+                    showComebackWithLeaderboard(todayLevel, 'week');
                 }, 3000);
                 return; // Skip normal loss flow
             }
@@ -9901,10 +10184,142 @@
         }
 
         // ============================================
+        // HALL OF FAME
+        // ============================================
+
+        async function fetchAllChampions() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('weekly_champions')
+                    .select('week_start, player_id, days_played, total_bricks, total_time, players(display_name)')
+                    .order('week_start', { ascending: false });
+                if (error) throw error;
+                return data || [];
+            } catch (err) {
+                console.error('Failed to fetch champions:', err);
+                return [];
+            }
+        }
+
+        async function showHallOfFame() {
+            // Enter GP dark mode for the gold styling
+            document.body.classList.add('gp-mode');
+            const gameCard = document.querySelector('.game-card');
+            if (gameCard) gameCard.classList.add('gp-dark-mode');
+
+            showScreen('halloffame');
+
+            const list = $('hof-list');
+            list.innerHTML = '<div class="hof-empty">Loading champions...</div>';
+
+            const champions = await fetchAllChampions();
+
+            if (champions.length === 0) {
+                list.innerHTML = '<div class="hof-empty">No champions crowned yet. The first Grand Prix is underway!</div>';
+                return;
+            }
+
+            list.innerHTML = '';
+            champions.forEach(champ => {
+                // Calculate week number from week_start date
+                const weekStart = new Date(champ.week_start + 'T00:00:00Z');
+                const diffWeeks = Math.floor((weekStart - LAUNCH_DATE) / (1000 * 60 * 60 * 24 * 7));
+                const weekNum = Math.max(1, diffWeeks + 1);
+                const weekDates = formatWeekDatesForWeek(weekNum);
+                const champName = champ.players?.display_name || 'Unknown';
+
+                const card = document.createElement('div');
+                card.className = 'hof-card';
+                card.innerHTML = `
+                    <div class="hof-card-crown">👑</div>
+                    <div class="hof-card-info">
+                        <div class="hof-card-week">WEEK ${weekNum}</div>
+                        <div class="hof-card-name">${champName}</div>
+                        <div class="hof-card-dates">${weekDates}</div>
+                    </div>
+                    <div class="hof-card-stats">
+                        ${champ.days_played}/7 days<br>
+                        ${champ.total_bricks}🧱<br>
+                        ${champ.total_time.toFixed(1)}s
+                    </div>`;
+                list.appendChild(card);
+            });
+
+            trackEvent('hall_of_fame_viewed', { champions_count: champions.length });
+        }
+
+        // ============================================
+        // DIFFICULTY RATINGS
+        // ============================================
+
+        let difficultyCache = null;
+        let difficultyCacheTime = 0;
+        const DIFFICULTY_CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
+        async function fetchLevelDifficulties(maxLevel) {
+            // Return cached if fresh
+            if (difficultyCache && (Date.now() - difficultyCacheTime < DIFFICULTY_CACHE_TTL)) {
+                return difficultyCache;
+            }
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('scores')
+                    .select('level_number, bricks_revealed, won')
+                    .lte('level_number', maxLevel);
+                if (error) throw error;
+
+                // Group by level
+                const levels = {};
+                (data || []).forEach(s => {
+                    if (!levels[s.level_number]) {
+                        levels[s.level_number] = { wins: [], total: 0 };
+                    }
+                    levels[s.level_number].total++;
+                    if (s.won) {
+                        levels[s.level_number].wins.push(s.bricks_revealed);
+                    }
+                });
+
+                // Calculate ratings
+                const ratings = {};
+                Object.entries(levels).forEach(([level, info]) => {
+                    if (info.total < 5) return; // Skip levels with too few plays
+                    const winRate = (info.wins.length / info.total) * 100;
+                    const avgBricks = info.wins.length > 0
+                        ? info.wins.reduce((a, b) => a + b, 0) / info.wins.length
+                        : 9;
+                    if (avgBricks <= 4 && winRate >= 70) {
+                        ratings[level] = 'easy';
+                    } else if (avgBricks >= 7 || winRate <= 40) {
+                        ratings[level] = 'hard';
+                    } else {
+                        ratings[level] = 'medium';
+                    }
+                });
+
+                difficultyCache = ratings;
+                difficultyCacheTime = Date.now();
+                return ratings;
+            } catch (err) {
+                console.error('Failed to fetch difficulties:', err);
+                return {};
+            }
+        }
+
+        function getDifficultyDisplay(difficulty) {
+            if (!difficulty) return '';
+            if (difficulty === 'easy') return '<span style="color:var(--green);">🌶️</span>';
+            if (difficulty === 'medium') return '<span style="color:var(--yellow);">🌶️🌶️</span>';
+            if (difficulty === 'hard') return '<span style="color:var(--coral);">🌶️🌶️🌶️</span>';
+            return '';
+        }
+
+        // ============================================
         // ARCHIVE SCREEN
         // ============================================
 
-        function showArchive() {
+        async function showArchive() {
             const list = $('archive-list');
             list.innerHTML = '';
 
@@ -9914,10 +10329,14 @@
             // Show all levels up to today (or 12, whichever is less for now)
             const maxLevel = Math.min(todayLevel, IDIOM_LIBRARY.length);
 
+            // Fetch difficulty ratings
+            const difficulties = await fetchLevelDifficulties(maxLevel);
+
             for (let level = maxLevel; level >= 1; level--) {
                 const levelData = getLevelData(level);
                 const completed = progress.completedLevels[level];
                 const levelDate = formatDate(getLevelDate(level));
+                const diffHtml = getDifficultyDisplay(difficulties[level]);
 
                 const item = document.createElement('div');
                 item.className = 'archive-item';
@@ -9929,6 +10348,7 @@
                             <span class="archive-date">${levelDate}</span>
                         </div>
                     </div>
+                    ${diffHtml ? `<span class="archive-difficulty">${diffHtml}</span>` : ''}
                     <span style="opacity: 0.5;">→</span>
                 `;
 
@@ -10247,8 +10667,15 @@
         $('btn-archive-from-win').addEventListener('click', showArchive);
         // btn-archive-from-lose removed (Phase 1: archive hidden)
         $('btn-back-to-today').addEventListener('click', initLanding);
+        $('btn-hof-back').addEventListener('click', () => {
+            document.body.classList.remove('gp-mode');
+            const gameCard = document.querySelector('.game-card');
+            if (gameCard) gameCard.classList.remove('gp-dark-mode');
+            initLanding();
+        });
 
         $('nav-archive').addEventListener('click', showArchive);
+        $('nav-halloffame').addEventListener('click', showHallOfFame);
         $('nav-howto').addEventListener('click', () => showHowTo(true));
 
         // XP breakdown toggle (how to play screen)
@@ -10441,6 +10868,15 @@
                 initLeagueUI();
                 processLeagueInviteParam();
                 initLanding();
+
+                // Check if Hall of Fame should be visible
+                fetchAllChampions().then(champions => {
+                    const navHof = $('nav-halloffame');
+                    if (navHof && champions.length > 0) {
+                        navHof._visible = true;
+                        navHof.style.display = 'inline';
+                    }
+                }).catch(() => {});
             }
         }
 
