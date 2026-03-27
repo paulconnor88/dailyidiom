@@ -1272,6 +1272,31 @@
             padding-left: 8px;
         }
 
+        .archive-filters {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .archive-filter-btn {
+            font-family: 'Nunito', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 2px solid var(--navy);
+            background: white;
+            color: var(--navy);
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .archive-filter-btn.active {
+            background: var(--navy);
+            color: white;
+        }
+
         .archive-back {
             text-align: center;
             margin-top: 16px;
@@ -4215,8 +4240,8 @@
 
                 <!-- CTAs (dynamically swapped based on league membership) -->
                 <div id="win-cta-container">
-                    <!-- No leagues: League callout + Share -->
-                    <div id="win-cta-no-leagues" style="display: none;">
+                    <!-- No leagues: League callout + Share (HIDDEN - leagues disabled) -->
+                    <div id="win-cta-no-leagues" style="display: none !important;">
                         <button class="btn btn-share" id="btn-share-secondary" style="margin-bottom: 4px;">Share Result</button>
                         <div class="league-mini-card" id="btn-challenge-friends">
                             <span class="lp-icon">⚔️</span>
@@ -4224,8 +4249,8 @@
                             <button class="lp-btn">START</button>
                         </div>
                     </div>
-                    <!-- Has leagues: Share primary, start new league subtle -->
-                    <div id="win-cta-has-leagues" style="display: none;">
+                    <!-- Has leagues: Share primary, start new league subtle (HIDDEN - leagues disabled) -->
+                    <div id="win-cta-has-leagues" style="display: none !important;">
                         <button class="btn btn-share" id="btn-share">Share Result</button>
                         <a class="start-league-link" id="btn-start-league">+ Start a new league</a>
                     </div>
@@ -4362,6 +4387,12 @@
         <!-- ARCHIVE SCREEN -->
         <div class="screen" id="screen-archive">
             <div class="archive-title">ARCHIVE</div>
+            <div class="archive-filters" id="archive-filters">
+                <button class="archive-filter-btn active" data-filter="all">All</button>
+                <button class="archive-filter-btn" data-filter="easy">⭐ Easy</button>
+                <button class="archive-filter-btn" data-filter="medium">⭐⭐ Medium</button>
+                <button class="archive-filter-btn" data-filter="hard">⭐⭐⭐ Hard</button>
+            </div>
             <div class="archive-list" id="archive-list"></div>
             <div class="archive-back">
                 <button class="btn btn-tertiary" id="btn-back-to-today">← Back to Today</button>
@@ -4383,7 +4414,7 @@
     <div class="nav-row">
         <a class="nav-link" id="nav-archive" style="display: none;">Archive</a>
         <a class="nav-link" id="nav-halloffame" style="display: none;">Hall of Fame</a>
-        <a class="nav-link" id="nav-leagues" style="display: none;">My Leagues</a>
+        <!-- <a class="nav-link" id="nav-leagues" style="display: none;">My Leagues</a> -->
         <a class="nav-link" id="nav-howto">How to Play</a>
     </div>
     
@@ -7363,22 +7394,13 @@
                 const leagues = await fetchPlayerLeagues(player.id);
                 const container = $('win-league-standings');
 
-                // Swap CTAs based on league membership
-                $('win-cta-unsigned').style.display = 'none';
-                if (leagues.length > 0) {
-                    $('win-cta-no-leagues').style.display = 'none';
-                    $('win-cta-has-leagues').style.display = 'block';
-                } else {
-                    $('win-cta-no-leagues').style.display = 'block';
-                    $('win-cta-has-leagues').style.display = 'none';
-                }
+                // Swap CTAs based on league membership (leagues hidden)
+                $('win-cta-unsigned').style.display = 'block';
+                $('win-cta-no-leagues').style.display = 'none';
+                $('win-cta-has-leagues').style.display = 'none';
 
-                if (leagues.length > 0) {
-                    state.bestLeagueRankText = null;
-                    await renderLeagueStandingsForView(container, leagues, 'today', levelNumber, player.id);
-                } else {
-                    container.innerHTML = '';
-                }
+                // League standings hidden
+                container.innerHTML = '';
             } else {
                 $('win-cta-unsigned').style.display = 'block';
                 $('win-cta-no-leagues').style.display = 'none';
@@ -7470,22 +7492,9 @@
                     // Wire up tabs for comeback context
                     setupLeaderboardTabs('comeback-lb-tabs', 'comeback', levelNumber);
 
-                    // Show league mini card if player has no leagues
+                    // Show league mini card if player has no leagues (leagues hidden)
                     const comebackCallout = $('comeback-league-callout');
-                    const comebackLeagues = await fetchPlayerLeagues(player.id);
-                    if (comebackLeagues.length === 0) {
-                        comebackCallout.innerHTML = `
-                            <div class="league-mini-card" id="btn-challenge-friends-comeback">
-                                <span class="lp-icon">⚔️</span>
-                                <span class="lp-text"><strong>Friend Leagues</strong><br>Compete with friends daily</span>
-                                <button class="lp-btn">START</button>
-                            </div>`;
-                        $('btn-challenge-friends-comeback').addEventListener('click', () => {
-                            showLeagueCreateModal();
-                        });
-                    } else {
-                        comebackCallout.innerHTML = '';
-                    }
+                    comebackCallout.innerHTML = '';
 
                     // Grand Prix CTA now lives in Week tab
                     const comebackGpCta = $('comeback-gp-cta');
@@ -8382,6 +8391,42 @@
                 video: "day_74_swings_and_roundabouts.mp4",
                 meaning: "What you gain in one area, you lose in another — advantages and disadvantages balance out over time.",
                 origin: "From the fairground expression 'what you lose on the swings you gain on the roundabouts,' meaning that profits from one attraction offset losses from another. First recorded in the early 20th century."
+            },
+            {
+                id: 75,
+                phrase: "snowed under",
+                accepts: [
+                    "snowed under",
+                    "snowed under with work",
+                    "snowed under at work",
+                    "i'm snowed under",
+                    "im snowed under",
+                    "being snowed under",
+                    "completely snowed under",
+                    "absolutely snowed under"
+                ],
+                video: "day_75_snowed_under.mp4",
+                meaning: "Overwhelmed with a large amount of work or responsibilities.",
+                origin: "From the image of being buried under a heavy snowfall, unable to move or escape. Used figuratively since the mid-19th century to describe being overwhelmed by tasks or obligations."
+            },
+            {
+                id: 76,
+                phrase: "moving the goalposts",
+                accepts: [
+                    "moving the goalposts",
+                    "move the goalposts",
+                    "moved the goalposts",
+                    "stop moving the goalposts",
+                    "moving the goal posts",
+                    "move the goal posts",
+                    "moved the goal posts",
+                    "they moved the goalposts",
+                    "keep moving the goalposts",
+                    "changing the goalposts"
+                ],
+                video: "day_76_moving_the_goalposts.mp4",
+                meaning: "Changing the rules or criteria after something has already started, making it harder to succeed.",
+                origin: "From football — if someone literally moved the goalposts during a match, it would be impossible to score. Used figuratively since the 1960s to describe unfairly changing expectations or targets."
             }
         ];
 
@@ -10309,9 +10354,9 @@
 
         function getDifficultyDisplay(difficulty) {
             if (!difficulty) return '';
-            if (difficulty === 'easy') return '<span style="color:var(--green);">🌶️</span>';
-            if (difficulty === 'medium') return '<span style="color:var(--yellow);">🌶️🌶️</span>';
-            if (difficulty === 'hard') return '<span style="color:var(--coral);">🌶️🌶️🌶️</span>';
+            if (difficulty === 'easy') return '<span style="color:var(--green);">⭐</span>';
+            if (difficulty === 'medium') return '<span style="color:var(--yellow);">⭐⭐</span>';
+            if (difficulty === 'hard') return '<span style="color:var(--coral);">⭐⭐⭐</span>';
             return '';
         }
 
@@ -10319,24 +10364,57 @@
         // ARCHIVE SCREEN
         // ============================================
 
+        let archiveDifficulties = {};
+        let archiveMaxLevel = 0;
+
         async function showArchive() {
-            const list = $('archive-list');
-            list.innerHTML = '';
-
             const todayLevel = getTodayLevel();
-            const progress = getProgress();
-
-            // Show all levels up to today (or 12, whichever is less for now)
-            const maxLevel = Math.min(todayLevel, IDIOM_LIBRARY.length);
+            archiveMaxLevel = Math.min(todayLevel, IDIOM_LIBRARY.length);
 
             // Fetch difficulty ratings
-            const difficulties = await fetchLevelDifficulties(maxLevel);
+            archiveDifficulties = await fetchLevelDifficulties(archiveMaxLevel);
 
-            for (let level = maxLevel; level >= 1; level--) {
-                const levelData = getLevelData(level);
+            // Wire up filter buttons
+            const filterBtns = document.querySelectorAll('.archive-filter-btn');
+            filterBtns.forEach(btn => {
+                btn.onclick = () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    renderArchiveList(btn.dataset.filter);
+                };
+            });
+
+            // Reset to "All" filter
+            filterBtns.forEach(b => b.classList.remove('active'));
+            document.querySelector('.archive-filter-btn[data-filter="all"]').classList.add('active');
+
+            renderArchiveList('all');
+
+            // Track archive visited (GA4)
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'archive_visited', {
+                    levels_available: archiveMaxLevel
+                });
+                trackEvent('archive_visited', {
+                    levels_available: archiveMaxLevel
+                });
+            }
+
+            showScreen('archive');
+        }
+
+        function renderArchiveList(filter) {
+            const list = $('archive-list');
+            list.innerHTML = '';
+            const progress = getProgress();
+
+            for (let level = archiveMaxLevel; level >= 1; level--) {
+                const diff = archiveDifficulties[level];
+                if (filter !== 'all' && diff !== filter) continue;
+
                 const completed = progress.completedLevels[level];
                 const levelDate = formatDate(getLevelDate(level));
-                const diffHtml = getDifficultyDisplay(difficulties[level]);
+                const diffHtml = getDifficultyDisplay(diff);
 
                 const item = document.createElement('div');
                 item.className = 'archive-item';
@@ -10358,18 +10436,6 @@
 
                 list.appendChild(item);
             }
-
-            // Track archive visited (GA4)
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'archive_visited', {
-                    levels_available: maxLevel
-                });
-                trackEvent('archive_visited', {
-                    levels_available: maxLevel
-                });
-            }
-
-            showScreen('archive');
         }
 
         // ============================================
