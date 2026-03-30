@@ -3912,9 +3912,18 @@
 
     <!-- LEVEL BADGE -->
     <div class="level-container" id="level-container">
-        <div class="level-badge" id="level-badge">LEVEL 13</div>
-        <div class="level-date" id="level-date">21 Jan 2026</div>
+        <div class="level-badge" id="level-badge"></div>
+        <div class="level-date" id="level-date"></div>
     </div>
+    <script>
+    (function(){
+        var ld=new Date('2026-01-13T00:00:00Z'),n=new Date(),d=Math.floor((n-ld)/(864e5))+1,
+            dd=new Date(ld.getTime()+(d-1)*864e5),
+            m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        document.getElementById('level-badge').textContent='LEVEL '+d;
+        document.getElementById('level-date').textContent=dd.getDate()+' '+m[dd.getMonth()]+' '+dd.getFullYear();
+    })();
+    </script>
 
     <!-- TIMER -->
     <div class="timer-container" id="timer-container">
@@ -6978,7 +6987,12 @@
             const nameInput = freshInput;
 
             // Load a generated name
-            const generatedName = await generateOneUsername();
+            let generatedName;
+            try {
+                generatedName = await generateOneUsername();
+            } catch (e) {
+                generatedName = USERNAMES[Math.floor(Math.random() * USERNAMES.length)];
+            }
             generatedBtn.textContent = generatedName;
 
             // Generated name click
@@ -8427,6 +8441,33 @@
                 video: "day_76_moving_the_goalposts.mp4",
                 meaning: "Changing the rules or criteria after something has already started, making it harder to succeed.",
                 origin: "From football — if someone literally moved the goalposts during a match, it would be impossible to score. Used figuratively since the 1960s to describe unfairly changing expectations or targets."
+            },
+            {
+                id: 77,
+                phrase: "break the ice",
+                accepts: ["break the ice", "breaking the ice"],
+                video: "day_77_break_the_ice.mp4",
+                meaning: "To initiate conversation in a social setting or ease tension between people meeting for the first time.",
+                origin: "From the practice of breaking ice to allow ships to pass through frozen waters."
+            },
+            {
+                id: 78,
+                phrase: "over the moon",
+                accepts: [
+                    "over the moon",
+                    "i'm over the moon",
+                    "im over the moon",
+                    "he's over the moon",
+                    "he is over the moon",
+                    "she's over the moon",
+                    "they're over the moon",
+                    "they are over the moon",
+                    "we're over the moon"
+                ],
+                video: "day_78_over_the_moon.mp4",
+                meaning: "Extremely happy or delighted.",
+                origin: "First recorded in the 1700s and popularised by the nursery rhyme 'Hey Diddle Diddle' where the cow jumped over the moon. Later adopted in everyday English to express great joy.",
+                brickOrder: [2, 0, 5, 3, 1, 4, 6, 8, 7]
             }
         ];
 
