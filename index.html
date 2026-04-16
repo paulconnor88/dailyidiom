@@ -4817,18 +4817,20 @@
         }
 
         async function checkAndShowCeremony() {
+            const forceCeremony = urlParams.get('ceremony') === '1';
+
             // Only for opted-in players
-            if (!isGrandPrixOptedIn()) return false;
+            if (!forceCeremony && !isGrandPrixOptedIn()) return false;
 
             // Only on Mondays (UTC)
             const now = new Date();
             const dayOfWeek = now.getUTCDay();
-            if (dayOfWeek !== 1) return false;
+            if (!forceCeremony && dayOfWeek !== 1) return false;
 
             // Check if already seen this week
             const todayStr = now.toISOString().split('T')[0];
             const lastSeen = localStorage.getItem('phrazyCeremonyLastSeen');
-            if (lastSeen === todayStr) return false;
+            if (!forceCeremony && lastSeen === todayStr) return false;
 
             // Fetch last week's full results
             const { startLevel, endLevel } = getPreviousWeekLevelRange();
@@ -5724,7 +5726,7 @@
                 if (startLevel < 1) return; // No previous week data
 
                 const raw = await fetchAggregateLeaderboard(startLevel, endLevel);
-                const sorted = aggregateScores(raw, 7);
+                const sorted = aggregateScoresWithPenalty(raw, startLevel, endLevel, endLevel);
 
                 if (sorted.length === 0) return;
 
@@ -8711,6 +8713,119 @@
                 video: "day_94_the_lions_share.mp4",
                 meaning: "The largest or best portion of something — far more than anyone else gets.",
                 origin: "From one of Aesop's Fables (6th century BC), where a lion hunts with other animals but claims all the meat for himself — one share as king, one for being strongest, one for being bravest, and daring anyone to take the fourth. The moral: don't go into partnership with the powerful. The phrase entered English in the 18th century."
+            },
+            {
+                id: 95,
+                phrase: "turn over a new leaf",
+                accepts: [
+                    "turn over a new leaf",
+                    "turning over a new leaf",
+                    "turned over a new leaf",
+                    "to turn over a new leaf",
+                    "a new leaf",
+                    "new leaf",
+                    "turn a new leaf",
+                    "turning a new leaf",
+                    "turned a new leaf"
+                ],
+                video: "day_95_turn_over_a_new_leaf.mp4",
+                meaning: "To make a fresh start and change your behaviour for the better.",
+                origin: "From the practice of turning to a new page (leaf) in a book — starting a clean page to write a better chapter."
+            },
+            {
+                id: 96,
+                phrase: "cold turkey",
+                accepts: [
+                    "cold turkey",
+                    "go cold turkey",
+                    "going cold turkey",
+                    "went cold turkey",
+                    "gone cold turkey",
+                    "goes cold turkey",
+                    "quit cold turkey",
+                    "quitting cold turkey",
+                    "stopped cold turkey"
+                ],
+                video: "day_96_cold_turkey.mp4",
+                meaning: "To quit something abruptly and completely, especially an addictive habit.",
+                origin: "Possibly from the cold, clammy, goose-bumped skin of someone going through withdrawal — resembling a plucked turkey."
+            },
+            {
+                id: 97,
+                phrase: "have a change of heart",
+                accepts: [
+                    "change of heart",
+                    "a change of heart",
+                    "have a change of heart",
+                    "had a change of heart",
+                    "having a change of heart",
+                    "has a change of heart",
+                    "changed heart",
+                    "change my heart",
+                    "change of heart about"
+                ],
+                video: "day_97_have_a_change_of_heart.mp4",
+                meaning: "To change your mind or feelings about something, especially reversing a decision.",
+                origin: "The heart has been seen as the seat of emotions since ancient times. A change of heart literally meant your feelings shifted direction."
+            },
+            {
+                id: 98,
+                phrase: "face the music",
+                accepts: [
+                    "face the music",
+                    "facing the music",
+                    "faced the music",
+                    "to face the music",
+                    "face up to the music",
+                    "faces the music",
+                    "time to face the music"
+                ],
+                video: "day_98_face_the_music.mp4",
+                meaning: "To accept the unpleasant consequences of your actions.",
+                origin: "Possibly from theatre, where actors had to face the orchestra pit (the music) and a potentially hostile audience, or from military ceremonies where disgraced soldiers were drummed out while facing the band."
+            },
+            {
+                id: 99,
+                phrase: "steal someone's thunder",
+                accepts: [
+                    "steal someones thunder",
+                    "steal someone's thunder",
+                    "stealing someones thunder",
+                    "stealing someone's thunder",
+                    "stole someones thunder",
+                    "stole someone's thunder",
+                    "stolen someones thunder",
+                    "stolen someone's thunder",
+                    "steal my thunder",
+                    "stealing my thunder",
+                    "stole my thunder",
+                    "stolen my thunder",
+                    "steal his thunder",
+                    "stealing his thunder",
+                    "stole his thunder",
+                    "stolen his thunder",
+                    "steal her thunder",
+                    "stealing her thunder",
+                    "stole her thunder",
+                    "stolen her thunder",
+                    "steal their thunder",
+                    "stealing their thunder",
+                    "stole their thunder",
+                    "stolen their thunder",
+                    "steal your thunder",
+                    "stealing your thunder",
+                    "stole your thunder",
+                    "stolen your thunder",
+                    "steal thunder",
+                    "stealing thunder",
+                    "stole thunder",
+                    "stole the thunder",
+                    "steal the thunder",
+                    "stealing the thunder"
+                ],
+                video: "day_99_steal_someones_thunder.mp4",
+                meaning: "To take credit for someone else's achievement or upstage them.",
+                origin: "From playwright John Dennis (1709), who invented a thunder machine for his play. The play flopped, but another theatre used his technique — prompting Dennis to cry: 'They will not let my play run, but they steal my thunder!'"
             }
         ];
 
@@ -9355,6 +9470,8 @@
                 if ($('reveal-hint').textContent === 'Loading video...') {
                     $('reveal-hint').textContent = 'Tap any brick to reveal!';
                 }
+                // Unlock bricks now that video is ready
+                renderBricks();
                 // Ensure playback has started
                 gameVideo.play().catch(() => {});
             }
@@ -9678,7 +9795,7 @@
                         brick.classList.add('translucent');
                     }
                     
-                    if (gameplayStarted) {
+                    if (gameplayStarted && state.videoReady) {
                         // All unrevealed bricks are tappable
                         brick.classList.add('tappable');
                     } else {
@@ -11127,7 +11244,7 @@
         }
 
         // Stale cache detection: if today's level exceeds what this HTML knows about, force refresh
-        const BUILD_VERSION = '2026-03-11';
+        const BUILD_VERSION = '2026-04-14';
         const todayLevelCheck = getTodayLevel();
         if (todayLevelCheck > IDIOM_LIBRARY.length && !urlParams.get('debug')) {
             console.warn('Stale HTML detected: today is level', todayLevelCheck, 'but library only has', IDIOM_LIBRARY.length, 'levels. Forcing refresh.');
@@ -11146,6 +11263,10 @@
         } else {
             // Check for in-progress game that was interrupted (tab switch, browser unload)
             const savedGame = getGameInProgress();
+            if (savedGame && hasCompletedLevel(savedGame.currentLevel)) {
+                // Stale save — level already completed, clear it and fall through to landing
+                clearGameInProgress();
+            }
             if (savedGame && savedGame.currentLevel === getTodayLevel() && !hasCompletedLevel(savedGame.currentLevel)) {
                 // Restore the game
                 state.currentLevel = savedGame.currentLevel;
@@ -11173,6 +11294,8 @@
                     if ($('reveal-hint').textContent === 'Loading video...') {
                         $('reveal-hint').textContent = 'Tap any brick to reveal!';
                     }
+                    // Unlock bricks now that video is ready
+                    renderBricks();
                     gameVideo.play().catch(() => {});
                 }
                 gameVideo.addEventListener('canplaythrough', onRestoreReady, { once: true });
@@ -11219,15 +11342,16 @@
                 processLeagueInviteParam();
                 initLanding();
 
-                // Check if Hall of Fame should be visible
-                fetchAllChampions().then(champions => {
-                    const navHof = $('nav-halloffame');
-                    if (navHof && champions.length > 0) {
-                        navHof._visible = true;
-                        navHof.style.display = 'inline';
-                    }
-                }).catch(() => {});
             }
+
+            // Check if Hall of Fame should be visible (runs in all code paths)
+            fetchAllChampions().then(champions => {
+                const navHof = $('nav-halloffame');
+                if (navHof && champions.length > 0) {
+                    navHof._visible = true;
+                    navHof.style.display = 'inline';
+                }
+            }).catch(() => {});
         }
 
         // ============================================
